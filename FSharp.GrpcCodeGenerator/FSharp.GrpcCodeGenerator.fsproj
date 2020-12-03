@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="FSharpFileWriter.fs" />
+    <Compile Include="Types.fs" />
+    <Compile Include="Helpers.fs" />
+    <Compile Include="EnumConverter.fs" />
+    <Compile Include="FieldConverter.fs" />
+    <Compile Include="MessageConverter.fs" />
+    <Compile Include="ServiceConverter.fs" />
+    <Compile Include="FileConverter.fs" />
+    <Compile Include="CodeGenerator.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FSharp.GrpcCodeGenerator.CompilerContracts\FSharp.GrpcCodeGenerator.CompilerContracts.fsproj" />
+  </ItemGroup>
+
+</Project>
