@@ -50,8 +50,12 @@ let tryRemovePrefix (prefix: string) (s: string) =
 
 let enumValueName (enumName, valueName) =
     let name =
-        tryRemovePrefix enumName valueName
-        |> shoutyToPascalCase
+        let withoutPrefix =
+            tryRemovePrefix enumName valueName
+            |> shoutyToPascalCase
+        if withoutPrefix = ""
+        then shoutyToPascalCase valueName
+        else withoutPrefix
     if Char.IsDigit name.[0]
     then "_" + name
     else name
