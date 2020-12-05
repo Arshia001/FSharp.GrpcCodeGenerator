@@ -236,8 +236,6 @@ type FileDescriptorSet = {
         FileDescriptorSet.File = me.File.Clone()
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         me.File.WriteTo(&output, FileDescriptorSet.RepeatedFileCodec)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
@@ -326,8 +324,6 @@ type FileDescriptorProto = {
         FileDescriptorProto.WeakDependency = me.WeakDependency.Clone()
         FileDescriptorProto.Syntax = me.Syntax
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Name <> ValueNone
@@ -538,8 +534,6 @@ type DescriptorProto = {
         DescriptorProto.ReservedName = me.ReservedName.Clone()
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Name <> ValueNone
         then
@@ -704,8 +698,6 @@ module DescriptorProto =
                 ExtensionRange.Options = me.Options |> global.Microsoft.FSharp.Core.ValueOption.map (fun x -> (x :> global.Google.Protobuf.IMessage<global.Google.Protobuf.FSharp.Reflection.ExtensionRangeOptions>).Clone())
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-            override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
                 if me.Start <> ValueNone
                 then
@@ -807,8 +799,6 @@ module DescriptorProto =
                 ReservedRange.End = me.End
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-            override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
                 if me.Start <> ValueNone
                 then
@@ -892,8 +882,6 @@ type ExtensionRangeOptions = {
         ExtensionRangeOptions.UninterpretedOption = me.UninterpretedOption.Clone()
         _Extensions = global.Google.Protobuf.ExtensionSet.Clone(me._Extensions)
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         me.UninterpretedOption.WriteTo(&output, ExtensionRangeOptions.RepeatedUninterpretedOptionCodec)
@@ -1001,8 +989,6 @@ type FieldDescriptorProto = {
         FieldDescriptorProto.JsonName = me.JsonName
         FieldDescriptorProto.Proto3Optional = me.Proto3Optional
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Name <> ValueNone
@@ -1225,8 +1211,6 @@ type OneofDescriptorProto = {
         OneofDescriptorProto.Options = me.Options |> global.Microsoft.FSharp.Core.ValueOption.map (fun x -> (x :> global.Google.Protobuf.IMessage<global.Google.Protobuf.FSharp.Reflection.OneofOptions>).Clone())
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Name <> ValueNone
         then
@@ -1321,8 +1305,6 @@ type EnumDescriptorProto = {
         EnumDescriptorProto.ReservedRange = me.ReservedRange.Clone()
         EnumDescriptorProto.ReservedName = me.ReservedName.Clone()
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Name <> ValueNone
@@ -1441,8 +1423,6 @@ module EnumDescriptorProto =
                 EnumReservedRange.End = me.End
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-            override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
                 if me.Start <> ValueNone
                 then
@@ -1528,8 +1508,6 @@ type EnumValueDescriptorProto = {
         EnumValueDescriptorProto.Number = me.Number
         EnumValueDescriptorProto.Options = me.Options |> global.Microsoft.FSharp.Core.ValueOption.map (fun x -> (x :> global.Google.Protobuf.IMessage<global.Google.Protobuf.FSharp.Reflection.EnumValueOptions>).Clone())
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Name <> ValueNone
@@ -1633,8 +1611,6 @@ type ServiceDescriptorProto = {
         ServiceDescriptorProto.Method = me.Method.Clone()
         ServiceDescriptorProto.Options = me.Options |> global.Microsoft.FSharp.Core.ValueOption.map (fun x -> (x :> global.Google.Protobuf.IMessage<global.Google.Protobuf.FSharp.Reflection.ServiceOptions>).Clone())
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Name <> ValueNone
@@ -1741,8 +1717,6 @@ type MethodDescriptorProto = {
         MethodDescriptorProto.ClientStreaming = me.ClientStreaming
         MethodDescriptorProto.ServerStreaming = me.ServerStreaming
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Name <> ValueNone
@@ -1920,8 +1894,6 @@ type FileOptions = {
         FileOptions.UninterpretedOption = me.UninterpretedOption.Clone()
         _Extensions = global.Google.Protobuf.ExtensionSet.Clone(me._Extensions)
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.JavaPackage <> ValueNone
@@ -2265,8 +2237,6 @@ type MessageOptions = {
         _Extensions = global.Google.Protobuf.ExtensionSet.Clone(me._Extensions)
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.MessageSetWireFormat <> ValueNone
         then
@@ -2415,8 +2385,6 @@ type FieldOptions = {
         FieldOptions.UninterpretedOption = me.UninterpretedOption.Clone()
         _Extensions = global.Google.Protobuf.ExtensionSet.Clone(me._Extensions)
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Ctype <> ValueNone
@@ -2588,8 +2556,6 @@ type OneofOptions = {
         _Extensions = global.Google.Protobuf.ExtensionSet.Clone(me._Extensions)
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         me.UninterpretedOption.WriteTo(&output, OneofOptions.RepeatedUninterpretedOptionCodec)
         if not <| isNull me._Extensions then me._Extensions.WriteTo(&output)
@@ -2682,8 +2648,6 @@ type EnumOptions = {
         EnumOptions.UninterpretedOption = me.UninterpretedOption.Clone()
         _Extensions = global.Google.Protobuf.ExtensionSet.Clone(me._Extensions)
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.AllowAlias <> ValueNone
@@ -2800,8 +2764,6 @@ type EnumValueOptions = {
         _Extensions = global.Google.Protobuf.ExtensionSet.Clone(me._Extensions)
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Deprecated <> ValueNone
         then
@@ -2904,8 +2866,6 @@ type ServiceOptions = {
         ServiceOptions.UninterpretedOption = me.UninterpretedOption.Clone()
         _Extensions = global.Google.Protobuf.ExtensionSet.Clone(me._Extensions)
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Deprecated <> ValueNone
@@ -3011,8 +2971,6 @@ type MethodOptions = {
         MethodOptions.UninterpretedOption = me.UninterpretedOption.Clone()
         _Extensions = global.Google.Protobuf.ExtensionSet.Clone(me._Extensions)
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         if me.Deprecated <> ValueNone
@@ -3141,8 +3099,6 @@ type UninterpretedOption = {
         UninterpretedOption.StringValue = me.StringValue
         UninterpretedOption.AggregateValue = me.AggregateValue
     }
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         me.Name.WriteTo(&output, UninterpretedOption.RepeatedNameCodec)
@@ -3286,8 +3242,6 @@ module UninterpretedOption =
                 NamePart.IsExtension = me.IsExtension
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-            override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
                 if me.NamePart <> NamePart.DefaultValue.NamePart
                 then
@@ -3370,8 +3324,6 @@ type SourceCodeInfo = {
         SourceCodeInfo.Location = me.Location.Clone()
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         me.Location.WriteTo(&output, SourceCodeInfo.RepeatedLocationCodec)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
@@ -3447,8 +3399,6 @@ module SourceCodeInfo =
                 Location.TrailingComments = me.TrailingComments
                 Location.LeadingDetachedComments = me.LeadingDetachedComments.Clone()
             }
-            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-            override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
                 me.Path.WriteTo(&output, Location.RepeatedPathCodec)
@@ -3559,8 +3509,6 @@ type GeneratedCodeInfo = {
         GeneratedCodeInfo.Annotation = me.Annotation.Clone()
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
-    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         me.Annotation.WriteTo(&output, GeneratedCodeInfo.RepeatedAnnotationCodec)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
@@ -3634,8 +3582,6 @@ module GeneratedCodeInfo =
                 Annotation.Begin = me.Begin
                 Annotation.End = me.End
             }
-            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-            override me.ToString() = global.Google.Protobuf.JsonFormatter.ToDiagnosticString(me)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
                 me.Path.WriteTo(&output, Annotation.RepeatedPathCodec)

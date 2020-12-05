@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.0</TargetFrameworks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="BuiltinTypes\Any.fs" />
+		<Compile Include="BuiltinTypes\Descriptor.fs" />
+		<Compile Include="BuiltinTypes\Duration.fs" />
+		<Compile Include="BuiltinTypes\Empty.fs" />
+		<Compile Include="BuiltinTypes\FieldMask.fs" />
+		<Compile Include="BuiltinTypes\SourceContext.fs" />
+		<Compile Include="BuiltinTypes\Struct.fs" />
+		<Compile Include="BuiltinTypes\Timestamp.fs" />
+		<Compile Include="BuiltinTypes\Type.fs" />
+		<Compile Include="BuiltinTypes\Wrappers.fs" />
+		<Compile Include="BuiltinTypes\Api.fs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Google.Protobuf" Version="3.14.0" />
+	</ItemGroup>
+
+</Project>
