@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Plugin.fs" />
     <Compile Include="FSharpFileWriter.fs" />
     <Compile Include="Types.fs" />
     <Compile Include="Helpers.fs" />
@@ -19,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FSharp.GrpcCodeGenerator.CompilerContracts\FSharp.GrpcCodeGenerator.CompilerContracts.fsproj" />
+    <ProjectReference Include="..\Protobuf.FSharp\Protobuf.FSharp.fsproj" />
   </ItemGroup>
 
 </Project>

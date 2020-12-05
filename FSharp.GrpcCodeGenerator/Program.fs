@@ -1,9 +1,9 @@
 ﻿// Learn more about F# at http://fsharp.org
 
 open System
+open Google.Protobuf
 open Google.Protobuf.FSharp
 
-//?? also offer prebuilt versions of built-in stuff like any and reflection
 [<EntryPoint>]
 let main _ =
     let debugMode =
@@ -19,7 +19,7 @@ let main _ =
             let req = Compiler.CodeGeneratorRequest.Parser.ParseFrom(stdIn)
             IO.File.Delete "req.bin"
             use file = IO.File.OpenWrite "req.bin"
-            Google.Protobuf.MessageExtensions.WriteTo(req, file)
+            req.WriteTo(file)
             req
     let resp = CodeGenerator.generate req
     if debugMode
@@ -27,5 +27,5 @@ let main _ =
         IO.Directory.CreateDirectory "__DEBUG" |> ignore
         resp.File |> Seq.iter (fun f -> IO.File.WriteAllText(IO.Path.Combine("__DEBUG", f.Name.Value), f.Content.Value))
     use stdOut = Console.OpenStandardOutput()
-    Google.Protobuf.MessageExtensions.WriteTo(resp, stdOut)
+    resp.WriteTo(stdOut)
     0
