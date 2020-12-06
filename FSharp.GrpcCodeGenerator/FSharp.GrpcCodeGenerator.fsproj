@@ -1,32 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <PackAsTool>true</PackAsTool>
-    <ToolCommandName>protoc-gen-fsharp</ToolCommandName>
-    <PackageId>grpc-fsharp</PackageId>
-    <Version>0.1.0</Version>
-    <Authors>Arshia001</Authors>
-    <PackageOutputPath>./nupkg</PackageOutputPath>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>netcoreapp2.1</TargetFramework>
+		<PackAsTool>true</PackAsTool>
+		<ToolCommandName>protoc-gen-fsharp</ToolCommandName>
+		<PackageId>grpc-fsharp</PackageId>
+		<Version>0.1.0</Version>
+		<Authors>Arshia001</Authors>
+		<PackageOutputPath>./nupkg</PackageOutputPath>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/Arshia001/FSharp.GrpcCodeGenerator</PackageProjectUrl>
+		<PackageTags>F#,FSharp,functional,Protocol,Buffers,Binary,Serialization,Format,Google,proto,proto3,protoc</PackageTags>
+		<Description>F# plugin for the Protocol Buffers compiler</Description>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Include="Plugin.fs" />
-    <Compile Include="FSharpFileWriter.fs" />
-    <Compile Include="Types.fs" />
-    <Compile Include="Helpers.fs" />
-    <Compile Include="EnumConverter.fs" />
-    <Compile Include="FieldConverter.fs" />
-    <Compile Include="MessageConverter.fs" />
-    <Compile Include="ServiceConverter.fs" />
-    <Compile Include="FileConverter.fs" />
-    <Compile Include="CodeGenerator.fs" />
-    <Compile Include="Program.fs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Include="Plugin.fs" />
+		<Compile Include="FSharpFileWriter.fs" />
+		<Compile Include="Types.fs" />
+		<Compile Include="Helpers.fs" />
+		<Compile Include="EnumConverter.fs" />
+		<Compile Include="FieldConverter.fs" />
+		<Compile Include="MessageConverter.fs" />
+		<Compile Include="ServiceConverter.fs" />
+		<Compile Include="FileConverter.fs" />
+		<Compile Include="CodeGenerator.fs" />
+		<Compile Include="Program.fs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Protobuf.FSharp\Protobuf.FSharp.fsproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Protobuf.FSharp\Protobuf.FSharp.fsproj" />
+	</ItemGroup>
 
 </Project>
