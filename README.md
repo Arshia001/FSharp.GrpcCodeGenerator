@@ -124,6 +124,8 @@ Here you are.
 First, reading and writing messages directly:
 
 ```fsharp
+open Google.Protobuf
+
 // Read a message
 use stdIn = Console.OpenStandardInput()
 let req = Compiler.CodeGeneratorRequest.Parser.ParseFrom(stdIn)
@@ -137,7 +139,8 @@ resp.File.AddRange files
 
 // Write it somewhere
 use stdOut = Console.OpenStandardOutput()
-Google.Protobuf.MessageExtensions.WriteTo(resp, stdOut)
+// WriteTo is provided in Google.Protobuf.MessageExtensions
+resp.WriteTo(stdOut)
 ```
 
 Here's a service client:
