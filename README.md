@@ -8,10 +8,23 @@ While this is enough to be able to use GRPC in pure F#, it is in no way a comple
 This project should be considered a work in progress.
 At least the following will have to be implemented to offer a good development experience:
 
-* The code generator available as an installable dotnet tool
-* Server and Client nuget packages
+* Server and Client nuget (meta-)packages
 * A compile-time package to add a `Protobuf` MSBuild target which enables automatic code generation
 * Integration with existing web servers (e.g. Saturn)
+
+## How do I use it?
+
+This project is in an early stage; so this is going to be a bit harder than necessary.
+
+* Install the plugin as a *global* dotnet tool: `dotnet tool install -g grpc-fsharp`
+* Invoke it by running `protoc` with the `--fsharp_out` flag: `protoc my-proto-file.proto --fsharp_out=./generated-sources`
+  * Do not run the tool directly. It can only be used by `protoc`.
+  * You can use the `--fsharp_opt=no_server` and `--fsharp_opt=no_client` flags to control GRPC service code generation.
+  * You can use `--fsharp_opt=internal_access` to generate an internal module.
+* Place the generated files inside your project.
+* Add a reference to the `Protobuf.FSharp` and, if you use GRPC services, `Grpc.Core` packages.
+  * To create a GRPC server, you need the `Grpc.AspNetCore` package.
+  * To create a client, you need `Grpc.Net.Client`.
 
 ## How does it work?
 
@@ -104,23 +117,6 @@ I don't know whether this behaviour needs to be changed.
 * Contrary to the C# version, this code generator has no special handling for the types in `wrappers.proto`,
 since a `ValueOption<uint64>` is completely adequate for use in place of a `Nullable<uint64>`.
 See [here](https://docs.microsoft.com/en-us/aspnet/core/grpc/protobuf?view=aspnetcore-5.0#nullable-types) for more info.
-
-## How do I use it?
-
-This project is in an early stage; so this is going to be a bit harder than necessary.
-
-* Clone this repo.
-* Build the `FSharp.GrpcCodeGenerator` project into an executable for your OS.
-A .NET DLL without an accompanying OS-specific executable can't be used.
-* Rename the executable to `protoc-gen-fsharp` and place it somewhere inside your `PATH`.
-* Invoke it by running `protoc` with the `--fsharp_out` flag: `protoc my-proto-file.proto --fsharp_out=./generated-sources`
-  * Bear in mind that for now, you will have to generate sources for all built-in types (e.g. `any`) yourself.
-  You don't need to do this if you don't use the built-in types.
-  * You can use the `--fsharp_opt=no-server` and `--fsharp_opt=no-client` flags to control GRPC service code generation.
-* Place the generated files inside your project.
-* Add a reference to the `Google.Protobuf` and, if you use GRPC services, `Grpc.Core` packages.
-  * To create a GRPC server, you need the `Grpc.AspNetCore` package.
-  * To create a client, you need `Grpc.Net.Client`.
 
 ## Show me some code
 
