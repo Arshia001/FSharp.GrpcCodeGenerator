@@ -218,7 +218,7 @@ let writeClientStub (ctx: FileContext, svc: Service) =
     ctx.Writer.Outdent()
 
 let writeServiceBinderClass (ctx: FileContext, svc: Service) =
-    ctx.Writer.WriteLine $"type private {serviceClassName svc}MethodBinder ="
+    ctx.Writer.WriteLine $"type {serviceClassName svc}MethodBinder ="
     ctx.Writer.Indent()
 
     ctx.Writer.WriteLine $"static member BindService(serviceImpl: {serverClassName svc}) : global.Grpc.Core.ServerServiceDefinition ="
