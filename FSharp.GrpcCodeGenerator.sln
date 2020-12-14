@@ -7,11 +7,11 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSharp.GrpcCodeGenerator", 
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Protobuf.FSharp", "Protobuf.FSharp\Protobuf.FSharp.fsproj", "{7BD09E4B-EEDD-4818-A0D2-288B3687A1E9}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc.AspNetCore.FSharp", "Grpc.AspNetCore.FSharp\Grpc.AspNetCore.FSharp.fsproj", "{99752859-6DF1-4098-BA19-641E17907980}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc-FSharp.AspNetCore.FSharp", "Grpc-FSharp.AspNetCore\Grpc-FSharp.AspNetCore.fsproj", "{99752859-6DF1-4098-BA19-641E17907980}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc.Net.Client.FSharp", "Grpc.Net.Client.FSharp\Grpc.Net.Client.FSharp.fsproj", "{65780751-B04F-469C-A81E-C42B2F2D97D6}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc-FSharp.Net.Client.FSharp", "Grpc-FSharp.Net.Client\Grpc-FSharp.Net.Client.fsproj", "{65780751-B04F-469C-A81E-C42B2F2D97D6}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc.Net.ClientFactory.FSharp", "Grpc.Net.ClientFactory.FSharp\Grpc.Net.ClientFactory.FSharp.fsproj", "{B632FAEA-56A6-499D-BC72-0A2BE01CF51C}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc-FSharp.Net.ClientFactory", "Grpc-FSharp.Net.ClientFactory\Grpc-FSharp.Net.ClientFactory.fsproj", "{B632FAEA-56A6-499D-BC72-0A2BE01CF51C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta-packages", "Meta-packages", "{287A3EBD-CBE1-490C-BD8C-81A278578770}"
 EndProject
@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Grpc.Saturn", "Grpc.Saturn\Grpc.Saturn.fsproj", "{36C3A647-7A0E-49A9-B23F-9FFA6B5DA9E8}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Grpc-FSharp.Saturn", "Grpc-FSharp.Saturn\Grpc-FSharp.Saturn.fsproj", "{36C3A647-7A0E-49A9-B23F-9FFA6B5DA9E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

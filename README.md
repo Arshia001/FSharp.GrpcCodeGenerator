@@ -22,9 +22,9 @@ This project is in an early stage; so this is going to be a bit harder than nece
 * Place the generated files inside your project.
 * If you only need protobuf serialization, add a reference to the `Protobuf.FSharp` package.
 * Otherwise:
-  * To create a GRPC server with ASP.NET Core or Giraffe, you need the `Grpc.AspNetCore.FSharp` meta-package.
-  * If you're using Saturn, you can use the `Grpc.Saturn` package which adds a `use_grpc` custom operation to the `application` builder.
-  * To create a client, you need `Grpc.Net.Client.FSharp`. There is also a `Grpc.Net.ClientFactory.FSharp`, in case you need to use `IHttpClientFactory`.
+  * To create a GRPC server with ASP.NET Core or Giraffe, you need the `Grpc-FSharp.AspNetCore` meta-package.
+  * If you're using Saturn, you can use the `Grpc-FSharp.Saturn` package which adds a `use_grpc` custom operation to the `application` builder.
+  * To create a client, you need `Grpc-FSharp.Net.Client`. There is also a `Grpc-FSharp.Net.ClientFactory`, in case you need to use `IHttpClientFactory`.
 
 ## How does it work?
 

@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Grpc.AspNetCore.FSharp\Grpc.AspNetCore.FSharp.fsproj" PrivateAssets="None" />
+    <ProjectReference Include="..\Grpc-FSharp.AspNetCore\Grpc-FSharp.AspNetCore.fsproj" PrivateAssets="None" />
   </ItemGroup>
 
 </Project>
