@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Grpc.Saturn", "Grpc.Saturn\Grpc.Saturn.fsproj", "{36C3A647-7A0E-49A9-B23F-9FFA6B5DA9E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{B632FAEA-56A6-499D-BC72-0A2BE01CF51C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B632FAEA-56A6-499D-BC72-0A2BE01CF51C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B632FAEA-56A6-499D-BC72-0A2BE01CF51C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36C3A647-7A0E-49A9-B23F-9FFA6B5DA9E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36C3A647-7A0E-49A9-B23F-9FFA6B5DA9E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36C3A647-7A0E-49A9-B23F-9FFA6B5DA9E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C3A647-7A0E-49A9-B23F-9FFA6B5DA9E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

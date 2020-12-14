@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+	<Version>0.1.0</Version>
+	<Authors>Arshia001</Authors>
+	<PackageOutputPath>../nupkg</PackageOutputPath>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageProjectUrl>https://github.com/Arshia001/FSharp.GrpcCodeGenerator</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="SaturnApplicationBuilderExtensions.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Saturn" Version="0.14.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Grpc.AspNetCore.FSharp\Grpc.AspNetCore.FSharp.fsproj" PrivateAssets="None" />
+  </ItemGroup>
+
+</Project>

@@ -9,7 +9,6 @@ This project should be considered a work in progress.
 At least the following will have to be implemented to offer a good development experience:
 
 * A compile-time package to add a `Protobuf` MSBuild target which enables automatic code generation
-* Integration with existing web servers (e.g. Saturn)
 
 ## How do I use it?
 
