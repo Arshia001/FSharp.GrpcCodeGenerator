@@ -20,9 +20,11 @@ This project is in an early stage; so this is going to be a bit harder than nece
   * You can use the `--fsharp_opt=no_server` and `--fsharp_opt=no_client` flags to control GRPC service code generation.
   * You can use `--fsharp_opt=internal_access` to generate an internal module.
 * Place the generated files inside your project.
-* Add a reference to the `Protobuf.FSharp` and, if you use GRPC services, `Grpc.Core` packages.
-  * To create a GRPC server, you need the `Grpc.AspNetCore` package.
-  * To create a client, you need `Grpc.Net.Client`.
+* If you only need protobuf serialization, add a reference to the `Protobuf.FSharp` package.
+* Otherwise:
+  * To create a GRPC server with ASP.NET Core or Giraffe, you need the `Grpc.AspNetCore.FSharp` meta-package.
+  * If you're using Saturn, you can use the `Grpc.Saturn` package which adds a `use_grpc` custom operation to the `application` builder.
+  * To create a client, you need `Grpc.Net.Client.FSharp`. There is also a `Grpc.Net.ClientFactory.FSharp`, in case you need to use `IHttpClientFactory`.
 
 ## How does it work?
 
