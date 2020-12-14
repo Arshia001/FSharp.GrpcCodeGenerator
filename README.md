@@ -8,7 +8,6 @@ While this is enough to be able to use GRPC in pure F#, it is in no way a comple
 This project should be considered a work in progress.
 At least the following will have to be implemented to offer a good development experience:
 
-* Server and Client nuget (meta-)packages
 * A compile-time package to add a `Protobuf` MSBuild target which enables automatic code generation
 * Integration with existing web servers (e.g. Saturn)
 

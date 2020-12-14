@@ -8,7 +8,7 @@
 		<PackageId>grpc-fsharp</PackageId>
 		<Version>0.1.0</Version>
 		<Authors>Arshia001</Authors>
-		<PackageOutputPath>./nupkg</PackageOutputPath>
+		<PackageOutputPath>../nupkg</PackageOutputPath>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/Arshia001/FSharp.GrpcCodeGenerator</PackageProjectUrl>
 		<PackageTags>F#,FSharp,functional,Protocol,Buffers,Binary,Serialization,Format,Google,proto,proto3,protoc</PackageTags>

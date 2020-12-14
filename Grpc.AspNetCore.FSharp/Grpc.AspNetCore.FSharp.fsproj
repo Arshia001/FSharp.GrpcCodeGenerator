@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>F# gRPC meta-package for ASP.NET Core</Description>
+    <PackageTags>F# FSharp functional gRPC RPC HTTP/2 aspnetcore</PackageTags>
+
+    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>
+
+
+	<Version>0.1.0</Version>
+	<Authors>Arshia001</Authors>
+	<PackageOutputPath>../nupkg</PackageOutputPath>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<PackageProjectUrl>https://github.com/Arshia001/FSharp.GrpcCodeGenerator</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Avoid NU5128 warning. TFM in dependencies group of the nuspec must match lib/ref content. -->
+    <None Include="lib\**\*">
+      <Pack>True</Pack>
+      <PackagePath>lib</PackagePath>
+    </None>
+
+    <PackageReference Include="Protobuf.FSharp" Version="0.1.0" />
+    <PackageReference Include="Grpc.AspNetCore.Server.ClientFactory" Version="2.34.0" PrivateAssets="None"/>
+    <!-- PrivateAssets set to None to ensure the build targets/props are propagated to parent project -->
+    <!-- <PackageReference Include="Grpc.Tools.FSharp" Version="0.1.0" PrivateAssets="None" /> -->
+  </ItemGroup>
+
+</Project>
