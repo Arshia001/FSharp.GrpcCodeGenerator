@@ -10,8 +10,8 @@ module Metadata =
     let grpcServices = "GrpcServices"
     
 module Platform =
-    type OSKind = Windows | Linux | MacOSX | Unknown
-    type ProcessorArchitecture = X64 | X86 | Unknown
+    type OSKind = Windows | Linux | MacOSX | UnknownOS
+    type ProcessorArchitecture = X64 | X86 | UnknownProcessor
 
 #if NETCOREAPP
     let os =
@@ -21,13 +21,13 @@ module Platform =
         then Linux
         elif RuntimeInformation.IsOSPlatform(OSPlatform.OSX)
         then MacOSX
-        else OSKind.Unknown
+        else UnknownOS
 
     let processorArchitecture =
         match RuntimeInformation.ProcessArchitecture with
         | Architecture.X86 -> X86
         | Architecture.X64 -> X64
-        | _ -> Unknown
+        | _ -> UnknownProcessor
 #else
     [<DllImport("libc")>]
     extern int uname(IntPtr buffer)
@@ -50,7 +50,7 @@ module Platform =
         | PlatformID.Win32NT | PlatformID.Win32S | PlatformID.Win32Windows -> Windows
         | PlatformID.Unix when GetUname() = "Darwin" -> MacOSX
         | PlatformID.Unix -> Linux
-        | _ -> OSKind.Unknown
+        | _ -> UnknownOS
 
     let processorArchitecture =
         // The official Grpc.Tools package has this to say:
@@ -59,6 +59,10 @@ module Platform =
         then X64
         else X86
 #endif
+
+    let isWindows = os = Windows
+
+    let isFSCaseInsensitive = isWindows
 
 module Exceptions =
     let isIORelated (ex: Exception) =
@@ -71,3 +75,21 @@ module Exceptions =
 module String =
     let equalsIgnoreCase a b =
         String.Equals(a, b, StringComparison.OrdinalIgnoreCase)
+
+module Result =
+    let rec sequenceListM l =
+        let (>>=) x f = Result.bind f x
+        
+        match l with
+        | [] -> Ok []
+        | x :: xs ->
+            x >>= (fun x ->
+                sequenceListM xs >>= (fun xs ->
+                    Ok (x :: xs)
+                )
+            )
+
+    let unwrapWith f r =
+        match r with
+        | Ok x -> x
+        | Error e -> f e

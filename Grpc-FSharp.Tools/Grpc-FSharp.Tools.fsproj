@@ -8,10 +8,11 @@
   <ItemGroup>
     <Compile Include="Helpers.fs" />
     <Compile Include="ProtoToolsPlatform.fs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    
+    <Compile Include="GeneratorServices.fs" />
+    <Compile Include="ProtoCompilerOutputs.fs" />
+    <Compile Include="DependencyFile.fs" />
+    <Compile Include="ProtoReadDependencies.fs" />
+    <Compile Include="ProtoCompile.fs" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
