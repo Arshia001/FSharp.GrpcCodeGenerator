@@ -2,8 +2,10 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	<Version>0.1.0</Version>
 	<Authors>Arshia001</Authors>
+	<Description>Adds a Saturn application extension to enable hosting .proto based gRPC services</Description>
 	<PackageOutputPath>../nupkg</PackageOutputPath>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	<PackageProjectUrl>https://github.com/Arshia001/FSharp.GrpcCodeGenerator</PackageProjectUrl>
