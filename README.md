@@ -1,30 +1,47 @@
 # FSharp.GrpcCodeGenerator
 
-This project is aimed at providing complete integration of GRPC and Protobuf into the F# language.
+This project is aimed at providing complete integration of gRPC and protocol buffers into the F# language.
+The project is early in development and, while all features have been implemented, it's not guranteed to work correctly.
 
-First, a word of warning:
-Currently, only a `protoc` plugin is implemented which enables the generation of F# sources from `.proto` files.
-While this is enough to be able to use GRPC in pure F#, it is in no way a complete solution and takes effort to set up correctly.
-This project should be considered a work in progress.
-At least the following will have to be implemented to offer a good development experience:
-
-* A compile-time package to add a `Protobuf` MSBuild target which enables automatic code generation
+Suggestions, bug reports and pull requests are very welcome.
 
 ## How do I use it?
 
-This project is in an early stage; so this is going to be a bit harder than necessary.
+* Install the plugin as a **global** dotnet tool: `dotnet tool install -g grpc-fsharp`. This is needed for the build scripts to work.
 
-* Install the plugin as a *global* dotnet tool: `dotnet tool install -g grpc-fsharp`
-* Invoke it by running `protoc` with the `--fsharp_out` flag: `protoc my-proto-file.proto --fsharp_out=./generated-sources`
-  * Do not run the tool directly. It can only be used by `protoc`.
-  * You can use the `--fsharp_opt=no_server` and `--fsharp_opt=no_client` flags to control GRPC service code generation.
-  * You can use `--fsharp_opt=internal_access` to generate an internal module.
-* Place the generated files inside your project.
-* If you only need protobuf serialization, add a reference to the `Protobuf.FSharp` package.
-* Otherwise:
+* Install the `Grpc-FSharp.Tools` package into your project.
+  * If you get an error that looks like
+  `Invalid command line switch for "...\tools\windows_x64\protoc.exe". System.ArgumentNullException: Parameter "message" cannot be null.`,
+  you probably haven't installed the `grpc-fsharp` tool globally.
+  Verify the tool is installed and available by running `protoc-gen-fsharp` from a terminal window.
+
+* Add your `.proto` files into the project:
+
+  ```xml
+  <ItemGroup>
+    <Protobuf Include="path\to\definition.proto" GrpcServices="Both" Link="greet.proto" />
+  </ItemGroup>
+  ```
+
+  * You can control Grpc service stub generation via the `GrpcServices` setting. It can be one of `Both`, `Server`, `Client` and `None`.
+  * By including the `Link` setting, Visual Studio will include the `.proto` file in the solution explorer.
+  * The `Tools` package's source was taken from the official `Grpc.Tools` package, so any settings that work with that package should also work here.
+
+* Reference the correct nuget packages:
+  * If you only need protobuf serialization, add a reference to the `Protobuf.FSharp` package.
   * To create a GRPC server with ASP.NET Core or Giraffe, you need the `Grpc-FSharp.AspNetCore` meta-package.
-  * If you're using Saturn, you can use the `Grpc-FSharp.Saturn` package which adds a `use_grpc` custom operation to the `application` builder.
+  * If you're using Saturn, you can use the `Grpc-FSharp.Saturn` meta-package which adds a `use_grpc` custom operation to the `application` builder.
   * To create a client, you need `Grpc-FSharp.Net.Client`. There is also a `Grpc-FSharp.Net.ClientFactory`, in case you need to use `IHttpClientFactory`.
+
+* If Visual Studio is having trouble building your project, restart it.
+It sometimes happens when build dependencies are updated.
+
+* Should you need to use the plugin manually for some reason, you can do it:
+  * Run `protoc` with the `--fsharp_out` flag: `protoc my-proto-file.proto --fsharp_out=./generated-sources`
+    * Do not run the tool directly and expect good things to happen. It can only be used by `protoc`.
+    * You can use the `--fsharp_opt=no_server` and `--fsharp_opt=no_client` flags to control GRPC service code generation.
+    * You can use `--fsharp_opt=internal_access` to generate an internal module.
+  * Place the generated files inside your project.
 
 ## How does it work?
 
@@ -105,6 +122,10 @@ The one divergence from the C# code generator is that the server base class cont
 you get abstract methods instead.
 
 ### What else?
+
+* As you know, the F# compiler is single-pass and takes file order into account.
+The `Tools` package adds the converted F# sources **before all other sources**, regardless of where in the project file the `<Protobuf>` elements appear.
+This means that any generated code should be accessible throughout your entire project.
 
 * You may need to be aware of the fact that any type inside the `Google.Protobuf.*` namespace will have its namespace rewritten to `Google.Protobuf.FSharp.*`.
 This is to keep the types from clashing with the ones provided inside the `Google.Protobuf` package, which you always need to reference.

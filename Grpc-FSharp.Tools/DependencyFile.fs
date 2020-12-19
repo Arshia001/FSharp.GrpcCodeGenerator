@@ -106,7 +106,7 @@ let readDependencyOutputs (depFileName: string, log: TaskLoggingHelper) =
     then []
     else
         lines
-        |> List.take (List.findIndex (fun line -> findLineSeparator line < 0) lines + 1)
+        |> List.take (List.findIndex (fun line -> findLineSeparator line >= 0) lines + 1)
         |> List.map (fun line ->
             let ix = findLineSeparator line
             let file = extractFileNameFromLine (line, 0, if ix >= 0 then ix else line.Length)

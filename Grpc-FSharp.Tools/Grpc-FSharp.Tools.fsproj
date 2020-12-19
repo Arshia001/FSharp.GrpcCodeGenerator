@@ -1,72 +1,93 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
-		<RootNamespace>Grpc.FSharp.Tools</RootNamespace>
-		<Version>0.0.1</Version>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  <PropertyGroup>
+    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
+    <RootNamespace>Grpc.FSharp.Tools</RootNamespace>
+    <Version>0.1.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
-		<BuildOutputTargetFolder>build\_protobuf\</BuildOutputTargetFolder>
-		<DevelopmentDependency>true</DevelopmentDependency>
-		<NoPackageAnalysis>true</NoPackageAnalysis>
-		<Authors>Arshia001</Authors>
-		<Description>
-			gRPC and Protocol Buffer compiler for managed F# projects.
+    <BuildOutputTargetFolder>build\_protobuf\</BuildOutputTargetFolder>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <NoPackageAnalysis>true</NoPackageAnalysis>
+    <Authors>Arshia001</Authors>
+    <Description>
+      gRPC and Protocol Buffer compiler for managed F# projects.
 
-			Add this package to a project that contains .proto files to be compiled to code.
-			It contains the compilers, include files and project system integration for gRPC
-			and Protocol buffer service description files necessary to build them on Windows,
-			Linux and MacOS. Managed runtime is supplied separately in the Grpc-FSharp.Core package.
-		</Description>
-		<PackageOutputPath>../nupkg</PackageOutputPath>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/Arshia001/FSharp.GrpcCodeGenerator</PackageProjectUrl>
-		<PackageTags>F# FSharp gRPC RPC HTTP/2</PackageTags>
-	</PropertyGroup>
+      Add this package to a project that contains .proto files to be compiled to code.
+      It contains the compilers, include files and project system integration for gRPC
+      and Protocol buffer service description files necessary to build them on Windows,
+      Linux and MacOS. Managed runtime is supplied separately in the Grpc-FSharp.Core package.
+    </Description>
+    <PackageOutputPath>../nupkg</PackageOutputPath>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Arshia001/FSharp.GrpcCodeGenerator</PackageProjectUrl>
+    <PackageTags>F# FSharp gRPC RPC HTTP/2</PackageTags>
 
-	<PropertyGroup Label="Asset root folders">
-		<Assets_ProtoInclude>../Proto/google/protobuf/</Assets_ProtoInclude>
-		<Assets_ProtoCompiler>../Protoc/</Assets_ProtoCompiler>
-	</PropertyGroup>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
 
-	<ItemGroup Label="NuGet package assets">
-		<None Pack="true" PackagePath="build\" Include="build\**\*.xml; build\**\*.props; build\**\*.targets;" />
-		<EmbeddedResource Remove="build\native\**" />
+  <PropertyGroup Label="Asset root folders">
+    <Assets_ProtoInclude>../Proto/google/protobuf/</Assets_ProtoInclude>
+    <Assets_ProtoCompiler>../Protoc/</Assets_ProtoCompiler>
+  </PropertyGroup>
 
-		<_ProtoAssetName Include="any;api;descriptor;duration;empty;field_mask;source_context;struct;timestamp;type;wrappers" />
-		<_Asset PackagePath="build/native/include/google/protobuf/" Include="@(_ProtoAssetName->'$(Assets_ProtoInclude)%(Identity).proto')" />
+  <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
+    <!--
+    The include needs to happen after output has been copied to build output folder
+    but before NuGet generates a nuspec. See https://github.com/NuGet/Home/issues/4704.
+    -->
+    <ItemGroup>
+      <_PackageFiles Include="bin\$(Configuration)\net45\FSharp.Core.dll">
+        <PackagePath>build\_protobuf\net45</PackagePath>
+        <Visible>false</Visible>
+        <BuildAction>Content</BuildAction>
+      </_PackageFiles>
+      <_PackageFiles Include="bin\$(Configuration)\netstandard2.0\FSharp.Core.dll">
+        <PackagePath>build\_protobuf\netstandard2.0</PackagePath>
+        <Visible>false</Visible>
+        <BuildAction>Content</BuildAction>
+      </_PackageFiles>
+    </ItemGroup>
+  </Target>
 
-		<_Asset PackagePath="tools/windows_x86/" Include="$(Assets_ProtoCompiler)windows_x86/protoc.exe" />
-		<_Asset PackagePath="tools/windows_x64/" Include="$(Assets_ProtoCompiler)windows_x64/protoc.exe" />
-		<_Asset PackagePath="tools/linux_x86/" Include="$(Assets_ProtoCompiler)linux_x86/protoc" />
-		<_Asset PackagePath="tools/linux_x64/" Include="$(Assets_ProtoCompiler)linux_x64/protoc" />
-		<_Asset PackagePath="tools/macosx_x64/" Include="$(Assets_ProtoCompiler)macosx_x64/protoc" />
-		<_Asset PackagePath="tools/macosx_x86/" Include="$(Assets_ProtoCompiler)macosx_x86/protoc" />
+  <ItemGroup Label="NuGet package assets">
+    <None Pack="true" PackagePath="build\" Include="build\**\*.xml; build\**\*.props; build\**\*.targets;" />
+    <EmbeddedResource Remove="build\native\**" />
 
-		<None Include="@(_Asset)" Pack="true" Visible="false" />
-	</ItemGroup>
+    <_ProtoAssetName Include="any;api;descriptor;duration;empty;field_mask;source_context;struct;timestamp;type;wrappers" />
+    <_Asset PackagePath="build/native/include/google/protobuf/" Include="@(_ProtoAssetName->'$(Assets_ProtoInclude)%(Identity).proto')" />
 
-	<ItemGroup>
-		<Compile Include="Helpers.fs" />
-		<Compile Include="ProtoToolsPlatform.fs" />
-		<Compile Include="GeneratorServices.fs" />
-		<Compile Include="ProtoCompilerOutputs.fs" />
-		<Compile Include="DependencyFile.fs" />
-		<Compile Include="ProtoReadDependencies.fs" />
-		<Compile Include="ProtoCompile.fs" />
-	</ItemGroup>
+    <_Asset PackagePath="tools/windows_x86/" Include="$(Assets_ProtoCompiler)windows_x86/protoc.exe" />
+    <_Asset PackagePath="tools/windows_x64/" Include="$(Assets_ProtoCompiler)windows_x64/protoc.exe" />
+    <_Asset PackagePath="tools/linux_x86/" Include="$(Assets_ProtoCompiler)linux_x86/protoc" />
+    <_Asset PackagePath="tools/linux_x64/" Include="$(Assets_ProtoCompiler)linux_x64/protoc" />
+    <_Asset PackagePath="tools/macosx_x64/" Include="$(Assets_ProtoCompiler)macosx_x64/protoc" />
+    <_Asset PackagePath="tools/macosx_x86/" Include="$(Assets_ProtoCompiler)macosx_x86/protoc" />
 
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-		<Reference Include="Microsoft.Build.Framework; Microsoft.Build.Utilities.v4.0" Pack="false" />
-	</ItemGroup>
-	<PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
-		<FSharpCoreImplicitPackageVersion>4.7.0</FSharpCoreImplicitPackageVersion>
-	</PropertyGroup>
-	<ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
-		<PackageReference Include="Microsoft.Build.Framework; Microsoft.Build.Utilities.Core" Version="15.6.*" />
-		<!--  Set PrivateAssets="All" on all items, even those implicitly added,
+    <None Include="@(_Asset)" Pack="true" Visible="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Helpers.fs" />
+    <Compile Include="ProtoToolsPlatform.fs" />
+    <Compile Include="GeneratorServices.fs" />
+    <Compile Include="ProtoCompilerOutputs.fs" />
+    <Compile Include="DependencyFile.fs" />
+    <Compile Include="ProtoReadDependencies.fs" />
+    <Compile Include="ProtoCompile.fs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Reference Include="Microsoft.Build.Framework; Microsoft.Build.Utilities.v4.0" Pack="false" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <FSharpCoreImplicitPackageVersion>4.7.0</FSharpCoreImplicitPackageVersion>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(TargetFramework)' != 'net45' ">
+    <PackageReference Include="Microsoft.Build.Framework; Microsoft.Build.Utilities.Core" Version="15.6.*" />
+    <!--  Set PrivateAssets="All" on all items, even those implicitly added,
           so that they do not become dependencies of this package. -->
-		<PackageReference Update="@(PackageReference)" PrivateAssets="All" />
-	</ItemGroup>
+    <PackageReference Update="@(PackageReference)" PrivateAssets="All" />
+  </ItemGroup>
 
 </Project>

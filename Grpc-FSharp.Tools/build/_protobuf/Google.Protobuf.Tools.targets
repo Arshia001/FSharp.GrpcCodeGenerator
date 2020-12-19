@@ -8,10 +8,10 @@
     <_Protobuf_MsBuildAssembly Condition=" '$(MSBuildRuntimeType)' != 'Core' ">net45\Grpc-FSharp.Tools.dll</_Protobuf_MsBuildAssembly>
   </PropertyGroup>
 
-  <UsingTask AssemblyFile="$(_Protobuf_MsBuildAssembly)" TaskName="Grpc.Tools.ProtoToolsPlatform" />
-  <UsingTask AssemblyFile="$(_Protobuf_MsBuildAssembly)" TaskName="Grpc.Tools.ProtoCompilerOutputs" />
-  <UsingTask AssemblyFile="$(_Protobuf_MsBuildAssembly)" TaskName="Grpc.Tools.ProtoReadDependencies" />
-  <UsingTask AssemblyFile="$(_Protobuf_MsBuildAssembly)" TaskName="Grpc.Tools.ProtoCompile" />
+  <UsingTask AssemblyFile="$(_Protobuf_MsBuildAssembly)" TaskName="Grpc.FSharp.Tools.ProtoToolsPlatform" />
+  <UsingTask AssemblyFile="$(_Protobuf_MsBuildAssembly)" TaskName="Grpc.FSharp.Tools.ProtoCompilerOutputs" />
+  <UsingTask AssemblyFile="$(_Protobuf_MsBuildAssembly)" TaskName="Grpc.FSharp.Tools.ProtoReadDependencies" />
+  <UsingTask AssemblyFile="$(_Protobuf_MsBuildAssembly)" TaskName="Grpc.FSharp.Tools.ProtoCompile" />
 
   <PropertyGroup Condition=" '$(Protobuf_ProjectSupported)' == 'true' ">
     <Protobuf_IntermediatePath Condition=" '$(Protobuf_IntermediatePath)' == '' ">$(IntermediateOutputPath)</Protobuf_IntermediatePath>
@@ -180,7 +180,9 @@
     <ItemGroup>
       <_Protobuf_CodeCompile Include="@(Protobuf_ExpectedOutputs->Distinct())"
          Condition=" '%(Source)' != '' and '@(Protobuf_Compile->WithMetadataValue('CompileOutputs', 'true'))' != '' " />
-      <Compile Include="@(_Protobuf_CodeCompile)" />
+      <_ExistingCompile Include="@(Compile)" />
+      <Compile Remove="@(Compile)" />
+      <Compile Include="@(_Protobuf_CodeCompile);@(_ExistingCompile)" />
     </ItemGroup>
   </Target>
 

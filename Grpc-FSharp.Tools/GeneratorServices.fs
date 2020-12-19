@@ -59,5 +59,5 @@ let outputFileName (protoItem: ITaskItem) =
     let proto = protoItem.ItemSpec
     let baseName = IO.Path.GetFileNameWithoutExtension proto
     let outDir = protoItem.GetMetadata Metadata.outputDir
-    let fileName = snakeToPascalCase baseName
+    let fileName = snakeToPascalCase baseName + ".fs"
     IO.Path.Combine(outDir, fileName)
