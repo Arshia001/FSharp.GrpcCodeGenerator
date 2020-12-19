@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(Protobuf_ProjectSupported)' == 'true' and '$(Language)' == 'F#' ">
+    <!-- Extend property pages with gRPC properties. -->
+    <PropertyPageSchema Include="$(MSBuildThisFileDirectory)Grpc.FSharp.xml">
+      <Context>File;BrowseObject</Context>
+    </PropertyPageSchema>
+  </ItemGroup>
+
+  <ItemDefinitionGroup Condition=" '$(Protobuf_ProjectSupported)' == 'true' and '$(Language)' == 'F#' ">
+    <Protobuf>
+      <GrpcServices Condition=" '%(Protobuf.GrpcServices)' == '' ">Both</GrpcServices>
+    </Protobuf>
+  </ItemDefinitionGroup>
+
+  <Target Name="_gRPC_PrepareCompileOptions" AfterTargets="Protobuf_PrepareCompileOptions">
+    <ItemGroup Condition=" '$(Language)' == 'F#' ">
+      <Protobuf_Compile Condition=" '%(Protobuf_Compile.GrpcServices)' == 'Client' ">
+        <_OutputOptions>%(Protobuf_Compile._OutputOptions);no_server</_OutputOptions>
+      </Protobuf_Compile>
+      <Protobuf_Compile Condition=" '%(Protobuf_Compile.GrpcServices)' == 'Server' ">
+        <_OutputOptions>%(Protobuf_Compile._OutputOptions);no_client</_OutputOptions>
+      </Protobuf_Compile>
+    </ItemGroup>
+  </Target>
+</Project>
