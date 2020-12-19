@@ -22,7 +22,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc-FSharp.Saturn", "Grpc-FSharp.Saturn\Grpc-FSharp.Saturn.fsproj", "{36C3A647-7A0E-49A9-B23F-9FFA6B5DA9E8}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Grpc-FSharp.Tools", "Grpc-FSharp.Tools\Grpc-FSharp.Tools.fsproj", "{C9F7BF0F-7477-4490-B3CA-E9F693613B6E}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc-FSharp.Tools", "Grpc-FSharp.Tools\Grpc-FSharp.Tools.fsproj", "{C9F7BF0F-7477-4490-B3CA-E9F693613B6E}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc-FSharp.Core", "Grpc-FSharp.Core\Grpc-FSharp.Core.fsproj", "{54F0A547-10C3-45C6-8046-A3C84FED4E03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +60,10 @@ Global
 		{C9F7BF0F-7477-4490-B3CA-E9F693613B6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9F7BF0F-7477-4490-B3CA-E9F693613B6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9F7BF0F-7477-4490-B3CA-E9F693613B6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54F0A547-10C3-45C6-8046-A3C84FED4E03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54F0A547-10C3-45C6-8046-A3C84FED4E03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54F0A547-10C3-45C6-8046-A3C84FED4E03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54F0A547-10C3-45C6-8046-A3C84FED4E03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{99752859-6DF1-4098-BA19-641E17907980} = {287A3EBD-CBE1-490C-BD8C-81A278578770}
 		{65780751-B04F-469C-A81E-C42B2F2D97D6} = {287A3EBD-CBE1-490C-BD8C-81A278578770}
 		{B632FAEA-56A6-499D-BC72-0A2BE01CF51C} = {287A3EBD-CBE1-490C-BD8C-81A278578770}
+		{54F0A547-10C3-45C6-8046-A3C84FED4E03} = {287A3EBD-CBE1-490C-BD8C-81A278578770}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {62B40E8D-02F9-44A4-83EE-8663EF14917E}
