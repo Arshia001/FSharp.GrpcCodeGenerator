@@ -9,7 +9,7 @@ let serviceIndex (svc: Service, ctx: FileContext) =
     |> Seq.head
     |> fst
 
-let serviceFullName (ctx: FileContext, svc: Service) = $"{ctx.File.Package.Value}.{svc.Name.Value}"
+let serviceFullName (ctx: FileContext, svc: Service) = $"""{ctx.File.Package |> ValueOption.map ((+) ".") |> ValueOption.defaultValue ""}{svc.Name.Value}"""
 
 let serviceClassName (svc: Service) = svc.Name.Value
 

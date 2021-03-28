@@ -105,7 +105,7 @@ let messageIndex (msg: Message, messages: Message seq) =
 
 let isProto2 (file: File) = file.Syntax = ValueSome "proto2"
 
-let isBuiltInGoogleDefinition (file: File) = file.Package.Value.StartsWith "google.protobuf"
+let isBuiltInGoogleDefinition (file: File) = file.Package |> ValueOption.map (fun s -> s.StartsWith "google.protobuf") |> ValueOption.defaultValue false
 
 let qualifiedName (name: string, file: File) =
     let res =
@@ -235,7 +235,7 @@ let flatMapFileTypes fFile fMessage (file: File) =
         |> Seq.concat
         |> Seq.append [ fMessage (msg, containerTypes, ns) ]
 
-    let fileNs = "." + file.Package.Value
+    let fileNs = file.Package |> ValueOption.map ((+) ".") |> ValueOption.defaultValue "" 
     file.MessageType
     |> Seq.map (subTypes (fileNs, []))
     |> Seq.concat
