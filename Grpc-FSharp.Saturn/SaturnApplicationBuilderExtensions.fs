@@ -1,6 +1,7 @@
 ﻿module Saturn
 
 open Microsoft.AspNetCore.Builder
+open Microsoft.AspNetCore.Routing
 open Microsoft.Extensions.DependencyInjection
 
 type Saturn.Application.ApplicationBuilder with
@@ -12,9 +13,14 @@ type Saturn.Application.ApplicationBuilder with
             svcs
         
         let configureApplication(app: IApplicationBuilder) =
-            app
-                .UseRouting()
-                .UseEndpoints(fun ep -> ep.MapGrpcService<'a>() |> ignore)
+            // The EndpointRouteBuilder needs to be registered exactly once.
+            if
+                app.Properties.Values
+                |> Seq.filter (fun x -> x :? IEndpointRouteBuilder)
+                |> Seq.isEmpty
+            then app.UseRouting() |> ignore
+
+            app.UseEndpoints(fun ep -> ep.MapGrpcService<'a>() |> ignore)
         
         { state with
             AppConfigs = configureApplication :: state.AppConfigs
