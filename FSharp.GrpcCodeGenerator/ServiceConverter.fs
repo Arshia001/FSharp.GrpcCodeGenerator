@@ -42,8 +42,8 @@ let methodTypeName (t: MethodType) =
 let serverMethodTypeName (t: MethodType) =
     match t with
     | NoStreaming -> "global.Grpc.Core.UnaryServerMethod"
-    | ServerStreaming -> "global.Grpc.Core.ClientStreamingServerMethod"
-    | ClientStreaming -> "global.Grpc.Core.ServerStreamingServerMethod"
+    | ServerStreaming -> "global.Grpc.Core.ServerStreamingServerMethod"
+    | ClientStreaming -> "global.Grpc.Core.ClientStreamingServerMethod"
     | BiDiStreaming -> "global.Grpc.Core.DuplexStreamingServerMethod"
 
 let serviceNameFieldName () = "__ServiceName"
@@ -89,7 +89,7 @@ let methodRequestParamServer (ctx: FileContext, method: Method) =
     | NoStreaming
     | ServerStreaming -> $"request: {inputType.Value}"
     | ClientStreaming
-    | BiDiStreaming -> $"requestStream: global.Grpc.Core.IAsyncStreamReader<{protobufTypeNameToFSharpTypeName (ctx, inputType.Value)}>"
+    | BiDiStreaming -> $"requestStream: global.Grpc.Core.IAsyncStreamReader<{inputType.Value}>"
 
 let methodReturnTypeServer (ctx: FileContext, method: Method) =
     let _, outputType= getMethodInOutTypes (ctx, method)
@@ -105,7 +105,7 @@ let methodResponseStreamMaybe (ctx: FileContext, method: Method) =
     | NoStreaming
     | ClientStreaming -> ""
     | ServerStreaming
-    | BiDiStreaming -> $"* responseStream: global.Grpc.Core.IServerStreamWriter<{outputType.Value}>"
+    | BiDiStreaming -> $" -> responseStream: global.Grpc.Core.IServerStreamWriter<{outputType.Value}>"
 
 let usedMessages (svc: Service) =
     svc.Method
@@ -186,13 +186,14 @@ let writeClientStub (ctx: FileContext, svc: Service) =
     for method in svc.Method do
         let methodType = methodType method
         let inputType, outputType = getMethodInOutTypes (ctx, method)
+        let requestParam = if hasRequestParam method then "request, " else ""
         if methodType = NoStreaming
         then
             ctx.Writer.WriteLine $"member me.{methodName method}(request: {inputType.Value}, \
                 ?headers: global.Grpc.Core.Metadata, ?deadline: global.System.DateTime, \
                 ?cancellationToken: global.System.Threading.CancellationToken) : {outputType.Value} ="
             ctx.Writer.Indent()
-            ctx.Writer.WriteLine $"me.{methodName method}(request, global.Grpc.Core.CallOptions(\
+            ctx.Writer.WriteLine $"me.{methodName method}({requestParam}global.Grpc.Core.CallOptions(\
                 defaultArg headers null, Option.toNullable deadline, \
                 defaultArg cancellationToken global.System.Threading.CancellationToken.None))"
             ctx.Writer.Outdent()
@@ -207,7 +208,7 @@ let writeClientStub (ctx: FileContext, svc: Service) =
             ?headers: global.Grpc.Core.Metadata, ?deadline: global.System.DateTime, \
             ?cancellationToken: global.System.Threading.CancellationToken) : {methodReturnTypeClient (ctx, method)} ="
         ctx.Writer.Indent()
-        ctx.Writer.WriteLine $"me.{methodName method}Async(request, global.Grpc.Core.CallOptions(\
+        ctx.Writer.WriteLine $"me.{methodName method}Async({requestParam}global.Grpc.Core.CallOptions(\
             defaultArg headers null, Option.toNullable deadline, \
             defaultArg cancellationToken global.System.Threading.CancellationToken.None))"
         ctx.Writer.Outdent()
