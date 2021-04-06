@@ -116,8 +116,12 @@ It also contains descriptors for each message type, should you need to access th
 ### Services
 
 Services are transformed into classes.
-I plan to change this behaviour, but it will take effort to work around the very OO runtime,
-so for now, you get a client class and an abstract server base class.
+This is due to the OO nature of the runtime.
+For each service, you get a client class and an abstract server base class.
+
+You also get a `MyService.MyServiceClient.Functions` module with F# functions that take an instance of the client class as input.
+This is meant to facilitate function composition, since composing instance methods (when possible at all) is kind of a nightmare...
+
 The one divergence from the C# code generator is that the server base class contains no default logic to return a "not implemented" response;
 you get abstract methods instead.
 

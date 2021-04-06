@@ -9,6 +9,14 @@ let private firstCharToUpper (s: string) =
     | 1 -> s.ToUpper()
     | _ -> string (Char.ToUpper s.[0]) + s.[1..]
 
+let private firstCharToLower (s: string) =
+    match s.Length with
+    | 0 -> s
+    | 1 -> s.ToLower()
+    | _ -> string (Char.ToLower s.[0]) + s.[1..]
+
+let pascalToCamelCase s = firstCharToLower s
+
 let snakeToPascalCase includesDots (s: string) =
     let convertOne (s: string) =
         s.Split '_' |> Seq.map firstCharToUpper |> String.concat ""

@@ -67,4 +67,8 @@ let generate (req: Compiler.CodeGeneratorRequest) : Compiler.CodeGeneratorRespon
         let r = { Compiler.CodeGeneratorResponse.empty() with SupportedFeatures = ValueSome <| uint64 Compiler.CodeGeneratorResponse.Types.Feature.Proto3Optional }
         r.File.AddRange files
         r
+#if DEBUG
+    with ex -> { Compiler.CodeGeneratorResponse.empty() with Error = ValueSome (string ex) }
+#else
     with ex -> { Compiler.CodeGeneratorResponse.empty() with Error = ValueSome ex.Message }
+#endif

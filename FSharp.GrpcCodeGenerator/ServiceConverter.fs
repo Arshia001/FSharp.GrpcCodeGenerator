@@ -9,11 +9,15 @@ let serviceIndex (svc: Service, ctx: FileContext) =
     |> Seq.head
     |> fst
 
-let serviceFullName (ctx: FileContext, svc: Service) = $"""{ctx.File.Package |> ValueOption.map ((+) ".") |> ValueOption.defaultValue ""}{svc.Name.Value}"""
+let serviceFullName (ctx: FileContext, svc: Service) = $"""{ctx.File.Package |> ValueOption.map (fun n -> n + ".") |> ValueOption.defaultValue ""}{svc.Name.Value}"""
 
 let serviceClassName (svc: Service) = svc.Name.Value
 
 let clientClassName (svc: Service) = serviceClassName svc + "Client"
+
+let clientClassFullName (ctx: FileContext, svc: Service) =
+    let serviceClassName = serviceClassName svc
+    "global." + Helpers.fileNamespace (ctx.File) + "." + serviceClassName + "." + serviceClassName + "Client"
 
 let serverClassName (svc: Service) = serviceClassName svc + "Base"
 
@@ -53,12 +57,18 @@ let protobufTypeNameToFSharpTypeName (ctx: FileContext, name: string) =
     let t = Helpers.findMessageType ctx name
     Helpers.qualifiedInnerNameFromMessages (t.Message.Name.Value, t.ContainerMessages, t.File)
 
-let methodRequestParamMaybe (ctx: FileContext, method: Method, invocationParam: bool) =
-    if method.ClientStreaming = ValueSome true
+let hasRequestParam (method: Method) =
+    method.ClientStreaming <> ValueSome true
+
+let methodRequestParamMaybe (ctx: FileContext, method: Method) =
+    if not <| hasRequestParam method
     then ""
-    elif invocationParam
-    then "request, "
     else $"request: {protobufTypeNameToFSharpTypeName (ctx, method.InputType.Value)}, "
+
+let functionRequestParamMaybe (ctx: FileContext, method: Method) =
+    if not <| hasRequestParam method
+    then ""
+    else $"(request: {protobufTypeNameToFSharpTypeName (ctx, method.InputType.Value)}) "
 
 let getMethodInOutTypes (ctx: FileContext, method: Method) =
     let inputType = lazy protobufTypeNameToFSharpTypeName (ctx, method.InputType.Value)
@@ -193,7 +203,7 @@ let writeClientStub (ctx: FileContext, svc: Service) =
             ctx.Writer.WriteLine $"me.CallInvoker.BlockingUnaryCall({methodFieldName method}, null, callOptions, request)"
             ctx.Writer.Outdent()
 
-        ctx.Writer.WriteLine $"member me.{methodName method}Async({methodRequestParamMaybe(ctx, method, false)}\
+        ctx.Writer.WriteLine $"member me.{methodName method}Async({methodRequestParamMaybe(ctx, method)}\
             ?headers: global.Grpc.Core.Metadata, ?deadline: global.System.DateTime, \
             ?cancellationToken: global.System.Threading.CancellationToken) : {methodReturnTypeClient (ctx, method)} ="
         ctx.Writer.Indent()
@@ -202,7 +212,7 @@ let writeClientStub (ctx: FileContext, svc: Service) =
             defaultArg cancellationToken global.System.Threading.CancellationToken.None))"
         ctx.Writer.Outdent()
 
-        ctx.Writer.WriteLine $"member me.{methodName method}Async({methodRequestParamMaybe(ctx, method, false)}\
+        ctx.Writer.WriteLine $"member me.{methodName method}Async({methodRequestParamMaybe(ctx, method)}\
             callOptions: global.Grpc.Core.CallOptions) : {methodReturnTypeClient (ctx, method)} ="
         ctx.Writer.Indent()
         match methodType with
@@ -215,6 +225,43 @@ let writeClientStub (ctx: FileContext, svc: Service) =
     ctx.Writer.WriteLine $"override __.NewInstance(configuration: global.Grpc.Core.ClientBase.ClientBaseConfiguration) = \
         {clientClassName svc}(configuration)"
 
+    ctx.Writer.Outdent()
+
+let writeClientFunctions (ctx: FileContext, svc: Service) =
+    ctx.Writer.WriteLine $"module {clientClassName svc} ="
+    ctx.Writer.Indent()
+
+    ctx.Writer.WriteLine "module Functions ="
+    ctx.Writer.Indent()
+
+    for method in svc.Method do
+        let methodType = methodType method
+        let inputType, outputType = getMethodInOutTypes (ctx, method)
+        let methodName = methodName method 
+        let functionName = methodName |> Helpers.pascalToCamelCase
+        let clientParam = $"(client: {clientClassFullName (ctx, svc)})"
+        let requestParam = $"(request: {inputType.Value})"
+        let requestInputParamMaybe = functionRequestParamMaybe(ctx, method)
+        let returnType = methodReturnTypeClient (ctx, method)
+        let optionsParam = $"(options: global.Grpc.Core.CallOptions)"
+        let headersParam = $"(headers: global.Grpc.Core.Metadata)"
+        if methodType = NoStreaming
+        then
+            ctx.Writer.WriteLine $"let {functionName} {clientParam} {requestParam} \
+                : {outputType.Value} = client.{methodName}(request)"
+            ctx.Writer.WriteLine $"let {functionName}Options {clientParam} {optionsParam} {requestParam} \
+                : {outputType.Value} = client.{methodName}(request, options)"
+            ctx.Writer.WriteLine $"let {functionName}Headers {clientParam} {headersParam} {requestParam} \
+                : {outputType.Value} = client.{methodName}(request, headers)"
+
+        ctx.Writer.WriteLine ($"let {functionName}Async {clientParam} {requestInputParamMaybe}" +
+            $""": {returnType} = client.{methodName}Async({if hasRequestParam method then "request" else ""})""")
+        ctx.Writer.WriteLine ($"let {functionName}OptionsAsync {clientParam} {optionsParam} {requestInputParamMaybe}" +
+            $""": {returnType} = client.{methodName}Async({if hasRequestParam method then "request, " else ""}options)""")
+        ctx.Writer.WriteLine ($"let {functionName}HeadersAsync {clientParam} {headersParam} {requestInputParamMaybe}" +
+            $""": {returnType} = client.{methodName}Async({if hasRequestParam method then "request, " else ""}headers)""")
+
+    ctx.Writer.Outdent()
     ctx.Writer.Outdent()
 
 let writeServiceBinderClass (ctx: FileContext, svc: Service) =
@@ -263,6 +310,8 @@ let writeService (ctx: FileContext, svc: Service) =
         writeServerClass (ctx, svc)
 
     if ctx.Options.ClientServices
-    then writeClientStub (ctx, svc)
+    then
+        writeClientStub (ctx, svc)
+        writeClientFunctions (ctx, svc)
 
     ctx.Writer.Outdent()
