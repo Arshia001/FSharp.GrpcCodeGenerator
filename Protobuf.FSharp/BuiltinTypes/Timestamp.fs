@@ -38,6 +38,14 @@ type Timestamp = {
     mutable Nanos: ValueOption<int32>
 } with
     // Start of hand-written code
+    static member FromDateTime(dt: System.DateTime) : Timestamp =
+        let ticks = (dt.ToUniversalTime() - Timestamp.unixEpoch).Ticks
+        let seconds = ticks / System.TimeSpan.TicksPerSecond
+        let nanos = int ((ticks % System.TimeSpan.TicksPerSecond) * 100L)
+        { Timestamp.empty() with
+            Seconds = ValueSome seconds
+            Nanos = ValueSome nanos
+        }
     member me.ToDateTime() : ValueOption<System.DateTime> =
         match me.Seconds with
         | ValueNone -> ValueNone
