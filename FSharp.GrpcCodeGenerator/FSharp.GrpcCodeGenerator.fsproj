@@ -7,7 +7,7 @@
 		<PackAsTool>true</PackAsTool>
 		<ToolCommandName>protoc-gen-fsharp</ToolCommandName>
 		<PackageId>grpc-fsharp</PackageId>
-		<Version>0.1.2</Version>
+		<Version>0.1.4</Version>
 		<Authors>Arshia001</Authors>
 		<PackageOutputPath>../nupkg</PackageOutputPath>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>

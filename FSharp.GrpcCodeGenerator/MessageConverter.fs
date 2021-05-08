@@ -186,6 +186,50 @@ let writeMergingMethods (ctx: MessageContext) =
 
     ctx.File.Writer.Outdent()
 
+let writeAdditionalOneOfMethods (ctx: MessageContext) =
+    let oneOfFields =
+        ctx.OrderedFSFields
+        |> Seq.choose (function Single _ -> None | OneOf (o, f) -> Some (o, f))
+    for (oneOf, fields) in oneOfFields do
+        let oneOfName = FieldConverter.oneOfPropertyName oneOf
+        
+        Helpers.writeGeneratedCodeAttribute ctx.File
+        ctx.File.Writer.WriteLine $"member me.{oneOfName}Case ="
+        ctx.File.Writer.Indent()
+        
+        ctx.File.Writer.WriteLine $"match me.{oneOfName} with"
+        ctx.File.Writer.WriteLine $"| ValueNone -> 0"
+        for field in fields do
+            ctx.File.Writer.WriteLine $"| ValueSome({FieldConverter.oneOfCaseName (oneOf, field, ctx.Message, ctx.ContainerMessages, ctx.File.File)} _) -> {field.Number.Value}"
+        
+        ctx.File.Writer.Outdent()
+
+        Helpers.writeGeneratedCodeAttribute ctx.File
+        ctx.File.Writer.WriteLine $"member me.Clear{oneOfName}() = me.{oneOfName} <- ValueNone"
+
+        for field in fields do
+            Helpers.writeGeneratedCodeAttribute ctx.File
+            ctx.File.Writer.WriteLine $"member me.{FieldConverter.propertyName (ctx.Message, field)}"
+            ctx.File.Writer.Indent()
+
+            ctx.File.Writer.WriteLine $"with get() ="
+            ctx.File.Writer.Indent()
+            
+            ctx.File.Writer.WriteLine $"match me.{oneOfName} with"
+            ctx.File.Writer.WriteLine $"| ValueSome({FieldConverter.oneOfCaseName (oneOf, field, ctx.Message, ctx.ContainerMessages, ctx.File.File)} x) -> x"
+            ctx.File.Writer.WriteLine $"| _ -> Unchecked.defaultof<_>"
+            
+            ctx.File.Writer.Outdent()
+
+            ctx.File.Writer.WriteLine $"and set(x) ="
+            ctx.File.Writer.Indent()
+            
+            ctx.File.Writer.WriteLine $"me.{oneOfName} <- ValueSome({FieldConverter.oneOfCaseName (oneOf, field, ctx.Message, ctx.ContainerMessages, ctx.File.File)} x)"
+            
+            ctx.File.Writer.Outdent()
+            
+            ctx.File.Writer.Outdent()
+
 let rec writeMessageModule (ctx: MessageContext) =
     ctx.File.Writer.WriteLine $"module {typeName ctx} ="
     ctx.File.Writer.Indent()
@@ -312,6 +356,7 @@ and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Messag
     writeCloneMethod ctx
     writeMessageSerializationMethods ctx
     writeMergingMethods ctx
+    writeAdditionalOneOfMethods ctx
 
     writeMessageInterfaces ctx
 
