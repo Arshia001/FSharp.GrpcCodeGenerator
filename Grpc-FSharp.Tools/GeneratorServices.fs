@@ -14,8 +14,8 @@ let endWithSlash s =
     else s + string IO.Path.DirectorySeparatorChar
 
 let relativeDir (root: string, proto: string, log: TaskLoggingHelper) =
-    let protoDir = IO.Path.GetDirectoryName proto
-    let rootDir = endWithSlash root |> IO.Path.GetDirectoryName |> endWithSlash
+    let protoDir = endWithSlash proto |> IO.Path.GetDirectoryName |> IO.Path.GetFullPath |> endWithSlash
+    let rootDir = endWithSlash root |> IO.Path.GetDirectoryName |> IO.Path.GetFullPath |> endWithSlash
     
     if rootDir = dotSlash
     then protoDir
