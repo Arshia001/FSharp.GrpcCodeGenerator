@@ -3,6 +3,9 @@
 open System
 open Google.Protobuf
 
+let accessSpecifier (ctx: FileContext) =
+    if ctx.Options.InternalAccess then "private " else ""
+
 let private firstCharToUpper (s: string) =
     match s.Length with
     | 0 -> s

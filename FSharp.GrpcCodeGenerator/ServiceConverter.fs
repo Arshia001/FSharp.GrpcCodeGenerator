@@ -293,7 +293,7 @@ let writeService (ctx: FileContext, svc: Service) =
     then ()
     else
 
-    ctx.Writer.WriteLine $"module {serviceClassName svc} ="
+    ctx.Writer.WriteLine $"module {Helpers.accessSpecifier ctx}{serviceClassName svc} ="
     ctx.Writer.Indent()
 
     ctx.Writer.WriteLine $"let {serviceNameFieldName ()} : string = \"{serviceFullName (ctx, svc)}\""

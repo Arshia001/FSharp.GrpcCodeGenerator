@@ -231,7 +231,7 @@ let writeAdditionalOneOfMethods (ctx: MessageContext) =
             ctx.File.Writer.Outdent()
 
 let rec writeMessageModule (ctx: MessageContext) =
-    ctx.File.Writer.WriteLine $"module {typeName ctx} ="
+    ctx.File.Writer.WriteLine $"module {Helpers.accessSpecifier ctx.File}{typeName ctx} ="
     ctx.File.Writer.Indent()
 
     Helpers.writeGeneratedCodeAttribute ctx.File
@@ -337,7 +337,7 @@ and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Messag
 
     addDeprecatedFlag ctx
 
-    ctx.File.Writer.WriteLine $"type {typeName ctx} = {{"
+    ctx.File.Writer.WriteLine $"type {Helpers.accessSpecifier ctx.File}{typeName ctx} = {{"
     ctx.File.Writer.Indent()
 
     ctx.File.Writer.WriteLine "mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet"
