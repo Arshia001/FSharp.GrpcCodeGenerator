@@ -271,7 +271,7 @@
     <ProtoCompile Condition=" '@(_Protobuf_OutOfDateProto)' != '' "
       ToolExe="$(Protobuf_ProtocFullPath)"
       Protobuf="%(_Protobuf_OutOfDateProto.Source)"
-      ProtoPath="%(_Protobuf_OutOfDateProto.AdditionalImportDirs);$(Protobuf_StandardImportsPath);%(_Protobuf_OutOfDateProto.ProtoRoot)"
+      ProtoPath="%(_Protobuf_OutOfDateProto.AdditionalImportDirs);$(Protobuf_StandardImportsPath);%(_Protobuf_OutOfDateProto.ProtoRoot);$(Protobuf_AdditionalImportsPath)"
       ProtoDepDir="$(Protobuf_DepFilesPath)"
       OutputDir="%(_Protobuf_OutOfDateProto.OutputDir)"
       OutputOptions="%(_Protobuf_OutOfDateProto._OutputOptions)"
