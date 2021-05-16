@@ -48,7 +48,7 @@ type ProtoCompile() =
             fun log match' ->
                 let _, line = Int32.TryParse(match'.Groups.["LINE"].Value)
                 let _, column = Int32.TryParse(match'.Groups.["COLUMN"].Value)
-                log.LogWarning(null, null, match'.Groups.["FILENAME"].Value, line, column, 0, 0, match'.Groups.["TEXT"].Value)
+                log.LogWarning(null, null, null, match'.Groups.["FILENAME"].Value, line, column, 0, 0, match'.Groups.["TEXT"].Value, [| |])
         )
         (
             Regex(
@@ -58,21 +58,21 @@ type ProtoCompile() =
             fun log match' ->
                 let _, line = Int32.TryParse(match'.Groups.["LINE"].Value)
                 let _, column = Int32.TryParse(match'.Groups.["COLUMN"].Value)
-                log.LogError(null, null, match'.Groups.["FILENAME"].Value, line, column, 0, 0, match'.Groups.["TEXT"].Value)
+                log.LogError(null, null, null, match'.Groups.["FILENAME"].Value, line, column, 0, 0, match'.Groups.["TEXT"].Value, [| |])
         )
         (
             Regex(
                 "^(?'FILENAME'.+?): ?warning: ?(?'TEXT'.*)",
                 RegexOptions.Compiled ||| RegexOptions.IgnoreCase, regexTimeout
             ),
-            fun log match' -> log.LogWarning(null, null, match'.Groups.["FILENAME"].Value, 0, 0, 0, 0, match'.Groups.["TEXT"].Value)
+            fun log match' -> log.LogWarning(null, null, null, match'.Groups.["FILENAME"].Value, 0, 0, 0, 0, match'.Groups.["TEXT"].Value, [| |])
         )
         (
             Regex(
                 "^(?'FILENAME'.+?): ?(?'TEXT'.*)",
                 RegexOptions.Compiled ||| RegexOptions.IgnoreCase, regexTimeout
             ),
-            fun log match' -> log.LogError(null, null, match'.Groups.["FILENAME"].Value, 0, 0, 0, 0, match'.Groups.["TEXT"].Value)
+            fun log match' -> log.LogError(null, null, null, match'.Groups.["FILENAME"].Value, 0, 0, 0, 0, match'.Groups.["TEXT"].Value, [| |])
         )
     ]
 
