@@ -2,6 +2,7 @@
 
 open System
 open Google.Protobuf
+open System.IO
 
 let writeIntroduction (ctx: FileContext) =
     ctx.Writer.WriteLines [
@@ -70,7 +71,7 @@ let rec writeGeneratedCodeInfo (ctx: FileContext, outerTypeName: string, msg: Me
             "[| "
             (
                 msg.Extension
-                |> Seq.map (fun e -> Helpers.fullExtensionName(ctx.File, e) + ":> global.Google.Protobuf.Extension")
+                |> Seq.map (fun e -> Helpers.fullExtensionName(ctx.File, e))
                 |> String.concat "; "
             )
             " |], "
@@ -190,7 +191,7 @@ let writeReflectionDescriptor (ctx: FileContext) =
         ctx.Writer.Indent()
 
         ctx.File.Extension
-        |> Seq.map (fun e -> Helpers.fullExtensionName (ctx.File, e) + ":> global.Google.Protobuf.Extension")
+        |> Seq.map (fun e -> Helpers.fullExtensionName (ctx.File, e))
         |> ctx.Writer.WriteLines
 
         ctx.Writer.Outdent()
@@ -242,13 +243,54 @@ let generateCode (ctx: FileContext) =
         ctx.Writer.WriteLine $"module {Helpers.accessSpecifier ctx}{Helpers.extensionClassUnqualifiedName ctx.File} ="
 
         ctx.Writer.Indent()
+// let http: global.Google.Protobuf.Extension<global.Google.Protobuf.Reflection.MethodOptions, global.Google.Api.HttpRule> =
+//     global.Google.Protobuf.Extension<global.Google.Protobuf.Reflection.MethodOptions, global.Google.Api.HttpRule>(72295728, global.Google.Protobuf.FieldCodec.ForMessage(578365826u, global.Google.Api.HttpRule.Parser))
+
+        // ctx.File.Extension
+        // |> Seq.iter (fun f ->
+        //     use sw = new StreamWriter(Path.GetTempFileName())
+        //     sw.WriteLine(f.Extendee.Value)
+        //     sw.WriteLine(f.JsonName.Value)
+        //     sw.WriteLine(f.Label.Value)
+        //     sw.WriteLine(f.Name.Value)
+        //     sw.WriteLine(f.Number.Value)
+        //     // sw.WriteLine(f.TypeName.Value)
+        //     sw.WriteLine(f.Type.Value)
+
+
+        //     let fieldName = f.Name.Value
+        //     let fieldNumber = f.Number.Value
+        //     let extendee =
+        //         if f.Extendee.Value.StartsWith(".google.protobuf") then
+        //             f.Extendee.Value.Replace(".google.protobuf", "global.Google.Protobuf.Reflection")
+        //         else
+        //             f.Extendee.Value
+
+        //     let typeName =
+        //         match f.TypeName with
+        //         | ValueSome(t) -> 
+        //             if t.StartsWith(".") then
+        //                 "global" + ((t).Split('.') |> Array.map (fun s -> Helpers.firstCharToUpper s) |> String.concat ".")
+        //             else
+        //                 t
+        //         | ValueNone ->
+        //             f.Type.Value.ToString()
+                
+        //     let tag = Helpers.makeTag f
+
+    
+        //     ctx.Writer.WriteLine $"let {Helpers.pascalToCamelCase fieldName}: global.Google.Protobuf.Extension<{extendee}, {typeName}> ="
+        //     ctx.Writer.Indent()
+        //     ctx.Writer.WriteLine $"global.Google.Protobuf.Extension<{extendee}, {typeName}>({fieldNumber}, global.Google.Protobuf.FieldCodec.ForMessage({tag}u, {typeName}.Parser))"
+        //     ctx.Writer.Outdent()
+        // )
 
         // TODO: Do we even need to support extensions? AFAIK, it's a proto2 concept
-        //ctx.File.Extension
-        //|> Seq.iter (fun f ->
-        //    let conv = SingleFieldConverterFactory.createWriter (f, ctx, None, [])
-        //    conv.WriteExtensionCode ctx
-        //)
+        ctx.File.Extension
+        |> Seq.iter (fun f ->
+           let conv = SingleFieldConverterFactory.createWriter (f, ctx, None, [])
+           conv.WriteExtensionCode ctx
+        )
 
         ctx.Writer.Outdent()
 

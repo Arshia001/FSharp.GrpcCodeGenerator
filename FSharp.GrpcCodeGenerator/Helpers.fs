@@ -6,7 +6,7 @@ open Google.Protobuf
 let accessSpecifier (ctx: FileContext) =
     if ctx.Options.InternalAccess then "private " else ""
 
-let private firstCharToUpper (s: string) =
+let firstCharToUpper (s: string) =
     match s.Length with
     | 0 -> s
     | 1 -> s.ToUpper()
@@ -97,6 +97,7 @@ let fileNamespace (file: File) =
 let messageTypeName (msg: Message) = msg.Name.Value
 
 let reflectionClassUnqualifiedName file = fileNameBase file + "Reflection"
+let extensionsClassUnqualifiedName file = fileNameBase file + "Extensions"
 
 let extensionClassUnqualifiedName file = fileNameBase file + "Extensions"
 
@@ -155,6 +156,14 @@ let reflectionClassName file =
         else ns + "."
     "global." + ns + reflectionClassUnqualifiedName file
 
+let extensionsClassName file =
+    let ns =
+        let ns = fileNamespace file
+        if ns = ""
+        then ""
+        else ns + "."
+    "global." + ns + extensionsClassUnqualifiedName file
+
 let private fieldName (msg: Message, field: Field) =
     if field.Type = ValueSome FieldType.Group
     then msg.Name.Value
@@ -169,7 +178,8 @@ let fullExtensionName (file: File, field: Field) = // TODO: correct?
     then failwithf "Extension field of type Group not supported: %s" field.Name.Value
 
     match field.Extendee with
-    | ValueSome e when e <> "" -> qualifiedName (e, file) + ".Extensions." + propertyName Unchecked.defaultof<_> field
+    | ValueSome e when e <> "" -> 
+        extensionsClassName file + "." + pascalToCamelCase (propertyName Unchecked.defaultof<_> field)
     | _ -> extensionClassUnqualifiedName file + "." + propertyName Unchecked.defaultof<_> field
 
 let outputFileName (file: File) = fileNameBase file + ".fs"
@@ -363,3 +373,9 @@ let getStringBytes (s: string) =
             res.WriteByte <| byte s.[i]
             i <- i + 1
     res.ToArray()
+
+let getExtendee (field: Field) =
+    if field.Extendee.Value.StartsWith(".google.protobuf") then
+        field.Extendee.Value.Replace(".google.protobuf", "global.Google.Protobuf.Reflection")
+    else
+        field.Extendee.Value
