@@ -20,6 +20,7 @@ let private firstCharToLower (s: string) =
 
 let pascalToCamelCase s = firstCharToLower s
 
+    
 let snakeToPascalCase includesDots (s: string) =
     let convertOne (s: string) =
         s.Split '_' |> Seq.map firstCharToUpper |> String.concat ""
@@ -27,6 +28,10 @@ let snakeToPascalCase includesDots (s: string) =
     if includesDots
     then s.Split '.' |> Seq.map convertOne |> String.concat "."
     else convertOne s
+
+let snakeToCamelCase (s: string) =
+    snakeToPascalCase false s
+    |> pascalToCamelCase
 
 let shoutyToPascalCase (s: string) =
     s.Split '_'
