@@ -305,17 +305,12 @@ module PrimitiveFieldConverter =
     let writeCodecCode (field: Field) (ctx: FileContext) =
         ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}({Helpers.makeTag field}u, {defaultValueAccessIgnoreOption (ctx, field)})"
 
-    let writeExtensionCode (field: Field, containingType: Message option) (ctx: FileContext) =
+    let writeExtensionCode (field: Field) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
         
-        match containingType with
-        | Some(containingType) ->
-            ctx.Writer.Write
-                $"let {propertyName (containingType, field)} = global.Google.Protobuf.Extension<{Helpers.messageTypeName containingType},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
-        | None -> 
-            ctx.Writer.Write
-                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
-               
+        ctx.Writer.Write
+            $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+           
         writeCodecCode (field) ctx
         ctx.Writer.WriteLine ")"
 
@@ -336,11 +331,11 @@ module PrimitiveFieldConverter =
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = ignore
                 WriteCodecCode = writeCodecCode (field)
-                WriteExtensionCode = writeExtensionCode (field, Some(t))
+                WriteExtensionCode = fun _ -> raise <| System.NotImplementedException()
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>)
+                WriteExtensionCode = writeExtensionCode (field)
             }
 
 module RepeatedPrimitiveFieldConverter =
@@ -388,16 +383,11 @@ module RepeatedPrimitiveFieldConverter =
     let writeCodecCode (field: Field) (ctx: FileContext) =
         ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}({Helpers.makeTag field}u)"
     
-    let writeExtensionCode (field: Field, containingType: Message option) (ctx: FileContext) =
+    let writeExtensionCode (field: Field) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
         
-        match containingType with
-        | Some(containingType) ->
-            ctx.Writer.Write
-                $"let {propertyName (containingType, field)} = global.Google.Protobuf.RepeatedExtension<{Helpers.messageTypeName containingType},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
-        | None -> 
-            ctx.Writer.Write
-                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+        ctx.Writer.Write
+            $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
 
         writeCodecCode field ctx
         ctx.Writer.WriteLine ")"
@@ -424,11 +414,11 @@ module RepeatedPrimitiveFieldConverter =
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = writeModuleMembers (field, t)
                 WriteCodecCode = writeCodecCode field
-                WriteExtensionCode = writeExtensionCode (field, Some(t))
+                WriteExtensionCode = fun _ -> raise <| System.NotImplementedException()
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>)
+                WriteExtensionCode = writeExtensionCode (field)
             }
 
 module EnumFieldConverter =
@@ -474,16 +464,11 @@ module EnumFieldConverter =
     let writeCodecCode (field: Field) (ctx: FileContext) =
         ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForEnum({Helpers.makeTag field}u, global.System.Func<_,_>(fun x -> int x), global.System.Func<_,_>(fun x -> enum x), {defaultValueAccessIgnoreOption (ctx, field)})"
 
-    let writeExtensionCode (field: Field, containingType: Message option) (ctx: FileContext) =
+    let writeExtensionCode (field: Field) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
 
-        match containingType with
-        | Some(containingType) ->
-            ctx.Writer.Write
-                $"let {propertyName (containingType, field)} = global.Google.Protobuf.Extension<{Helpers.messageTypeName containingType},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
-        | None -> 
-            ctx.Writer.Write
-                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+        ctx.Writer.Write
+            $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
 
         writeCodecCode (field) ctx
         ctx.Writer.WriteLine ")"
@@ -505,27 +490,22 @@ module EnumFieldConverter =
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = ignore
                 WriteCodecCode = writeCodecCode(field)
-                WriteExtensionCode = writeExtensionCode (field, Some(t))
+                WriteExtensionCode = fun _ -> raise <| System.NotImplementedException()
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>)
+                WriteExtensionCode = writeExtensionCode (field)
             }
 
 module RepeatedEnumFieldConverter =
     let writeCodecCode (field: Field) (ctx: FileContext) =
         ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForEnum({Helpers.makeTag field}u, global.System.Func<_,_>(fun x -> int x), global.System.Func<_,_>(fun x -> enum x))"
 
-    let writeExtensionCode (field: Field, containingType: Message option) (ctx: FileContext) =
+    let writeExtensionCode (field: Field) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
 
-        match containingType with
-        | Some(containingType) ->
-            ctx.Writer.Write
-                $"let {propertyName (containingType, field)} = global.Google.Protobuf.RepeatedExtension<{Helpers.messageTypeName containingType},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
-        | None -> 
-            ctx.Writer.Write
-                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+        ctx.Writer.Write
+            $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
             
         writeCodecCode field ctx    
         ctx.Writer.WriteLine ")"
@@ -552,11 +532,11 @@ module RepeatedEnumFieldConverter =
                 WriteSerializationCodeWithoutCheck = RepeatedPrimitiveFieldConverter.writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = writeModuleMembers (field, t)
                 WriteCodecCode = writeCodecCode field
-                WriteExtensionCode = writeExtensionCode (field, Some(t))
+                WriteExtensionCode = fun _ -> raise <| System.NotImplementedException()
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>)
+                WriteExtensionCode = writeExtensionCode (field)
             }
 
 module MessageFieldConverter =
@@ -644,18 +624,13 @@ module MessageFieldConverter =
             else ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForMessage({Helpers.makeTag field}u, {typeNameWithoutOption (ctx, field)}.Parser)"
         | None -> ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForMessage({Helpers.makeTag field}u, {typeNameWithoutOption (ctx, field)}.Parser)"
 
-    let writeExtensionCode (field: Field, containingType: Message option, containerMessages: Message list) (ctx: FileContext) =
+    let writeExtensionCode (field: Field, containerMessages: Message list) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
 
-        match containingType with
-        | Some(containingType) ->
-            ctx.Writer.Write
-                $"let {propertyName (containingType, field)} = global.Google.Protobuf.Extension<{Helpers.messageTypeName containingType},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
-        | None -> 
-            ctx.Writer.Write
-                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+        ctx.Writer.Write
+            $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
 
-        writeCodecCode (field, containingType, containerMessages) ctx
+        writeCodecCode (field, None, containerMessages) ctx
         ctx.Writer.WriteLine ")"
 
     let create (field: Field, containingType: Message option, containerMessages: Message list) =
@@ -675,26 +650,21 @@ module MessageFieldConverter =
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t, containerMessages)
                 WriteModuleMembers = ignore
                 WriteCodecCode = writeCodecCode (field, Some(t), containerMessages)
-                WriteExtensionCode = writeExtensionCode (field, Some(t), containerMessages)
+                WriteExtensionCode = fun _ -> raise <| System.NotImplementedException()
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>, [])
+                WriteExtensionCode = writeExtensionCode (field, [])
             }
 
 module RepeatedMessageFieldConverter =
-    let writeExtensionCode (field: Field, containingType: Message option, containerMessages: Message list) (ctx: FileContext) =
+    let writeExtensionCode (field: Field, containerMessages: Message list) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
 
-        match containingType with
-        | Some(containingType) ->
-            ctx.Writer.Write
-                $"let {propertyName (containingType, field)} = global.Google.Protobuf.RepeatedExtension<{Helpers.messageTypeName containingType},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
-        | None -> 
-            ctx.Writer.Write
-                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+        ctx.Writer.Write
+            $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
 
-        MessageFieldConverter.writeCodecCode (field, containingType, containerMessages) ctx
+        MessageFieldConverter.writeCodecCode (field, None, containerMessages) ctx
         ctx.Writer.WriteLine ")"
 
     let writeModuleMembers (field: Field, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
@@ -719,11 +689,11 @@ module RepeatedMessageFieldConverter =
                 WriteSerializationCodeWithoutCheck = RepeatedPrimitiveFieldConverter.writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = writeModuleMembers (field, t, containerMessages)
                 WriteCodecCode = MessageFieldConverter.writeCodecCode (field, Some(t), containerMessages)
-                WriteExtensionCode = writeExtensionCode (field, Some(t), containerMessages)
+                WriteExtensionCode = fun _ -> raise <| System.NotImplementedException()
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>, [])
+                WriteExtensionCode = writeExtensionCode (field, [])
             }
 
 module MapFieldConverter =
@@ -784,15 +754,10 @@ module MapFieldConverter =
     let writeSerializationCode (field: Field, containingType: Message) (ctx: FileContext) =
         writeSerializationCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
 
-    let writeExtensionCode (field: Field, containingType: Message option) (ctx: FileContext) =
+    let writeExtensionCode (field: Field) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
-        match containingType with
-        | Some(containingType) ->
-            ctx.Writer.Write
-                $"let {propertyName (containingType, field)} = global.Google.Protobuf.RepeatedExtension<{Helpers.messageTypeName containingType},{typeNameWithoutOption (ctx, field)}>({field.Number}, global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}({Helpers.makeTag field}u))"
-        | None -> 
-            ctx.Writer.Write
-                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}({Helpers.makeTag field}u))"
+        ctx.Writer.Write
+            $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}({Helpers.makeTag field}u))"
 
     let writeCodecCode (field: Field, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
         let mapEntryType, keyField, valueField = getMapFields (ctx, field)
@@ -827,11 +792,11 @@ module MapFieldConverter =
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = writeModuleMembers (field, t, containerMessages)
                 WriteCodecCode = writeCodecCode (field, t, containerMessages)
-                WriteExtensionCode = writeExtensionCode (field, Some(t))
+                WriteExtensionCode = fun _ -> raise <| System.NotImplementedException()
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>)
+                WriteExtensionCode = writeExtensionCode (field)
             }
 
 module SingleFieldConverterFactory =
