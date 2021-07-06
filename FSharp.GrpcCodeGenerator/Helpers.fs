@@ -178,14 +178,15 @@ let propertyName (msg: Message) (desc: Field) = fieldName (msg, desc) |> snakeTo
 
 let fieldConstantName (msg: Message, desc: Field) = propertyName msg desc + "FieldNumber"
 
-let fullExtensionName (file: File, field: Field) = // TODO: correct?
+let fullExtensionName (file: File, field: Field) =
     if field.Type = ValueSome FieldType.Group
     then failwithf "Extension field of type Group not supported: %s" field.Name.Value
 
     match field.Extendee with
     | ValueSome e when e <> "" -> 
         extensionsClassName file + "." + pascalToCamelCase (propertyName Unchecked.defaultof<_> field)
-    | _ -> extensionClassUnqualifiedName file + "." + propertyName Unchecked.defaultof<_> field
+    | _ -> 
+        extensionClassUnqualifiedName file + "." + propertyName Unchecked.defaultof<_> field
 
 let outputFileName (file: File) = fileNameBase file + ".fs"
 
@@ -260,7 +261,7 @@ let flatMapFileTypes fFile fMessage (file: File) =
         |> Seq.map (subTypes (ns + "." + msg.Name.Value, msg :: containerTypes))
         |> Seq.concat
         |> Seq.append [ fMessage (msg, containerTypes, ns) ]
-
+        
     let fileNs = file.Package |> ValueOption.map ((+) ".") |> ValueOption.defaultValue "" 
     file.MessageType
     |> Seq.map (subTypes (fileNs, []))
