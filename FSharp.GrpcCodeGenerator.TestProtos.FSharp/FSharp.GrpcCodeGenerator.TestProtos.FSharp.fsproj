@@ -7,12 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Http.fs" />
+    <Compile Include="Annotations.fs" />
     <Compile Include="UnittestImportPublicProto3.fs" />
     <Compile Include="UnittestImportProto3.fs" />
     <Compile Include="UnittestProto3.fs" />
     <Compile Include="MapUnittestProto3.fs" />
     <Compile Include="UnittestCustomOptionsProto3.fs" />
     <Compile Include="UnittestProto3Optional.fs" />
+    <Compile Include="WellKnownProtos.fs" />
   </ItemGroup>
 
 	<ItemGroup>
