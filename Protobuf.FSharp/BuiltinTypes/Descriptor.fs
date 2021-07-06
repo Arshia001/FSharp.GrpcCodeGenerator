@@ -139,55 +139,55 @@ module DescriptorReflection =
             YW1lc3BhY2UYLCABKAlSFHBocE1ldGFkYXRhTmFtZXNwYWNlEiEKDHJ1YnlfcGFja2FnZRgtIAEoCVIL\
             cnVieVBhY2thZ2USWAoUdW5pbnRlcnByZXRlZF9vcHRpb24Y5wcgAygLMiQuZ29vZ2xlLnByb3RvYnVm\
             LlVuaW50ZXJwcmV0ZWRPcHRpb25SE3VuaW50ZXJwcmV0ZWRPcHRpb24iOgoMT3B0aW1pemVNb2RlEgkK\
-            BVNQRUVEEAESDQoJQ09ERV9TSVpFEAISEAoMTElURV9SVU5USU1FEAMqCQjoBxCAgICAAkoECCYQJyLR\
+            BVNQRUVEEAESDQoJQ09ERV9TSVpFEAISEAoMTElURV9SVU5USU1FEAMqCQjoBxCAgICAAkoECCYQJyLj\
             AgoOTWVzc2FnZU9wdGlvbnMSPAoXbWVzc2FnZV9zZXRfd2lyZV9mb3JtYXQYASABKAg6BWZhbHNlUhRt\
             ZXNzYWdlU2V0V2lyZUZvcm1hdBJMCh9ub19zdGFuZGFyZF9kZXNjcmlwdG9yX2FjY2Vzc29yGAIgASgI\
             OgVmYWxzZVIcbm9TdGFuZGFyZERlc2NyaXB0b3JBY2Nlc3NvchIlCgpkZXByZWNhdGVkGAMgASgIOgVm\
             YWxzZVIKZGVwcmVjYXRlZBIbCgltYXBfZW50cnkYByABKAhSCG1hcEVudHJ5ElgKFHVuaW50ZXJwcmV0\
             ZWRfb3B0aW9uGOcHIAMoCzIkLmdvb2dsZS5wcm90b2J1Zi5VbmludGVycHJldGVkT3B0aW9uUhN1bmlu\
-            dGVycHJldGVkT3B0aW9uKgkI6AcQgICAgAJKBAgIEAlKBAgJEAoi4gMKDEZpZWxkT3B0aW9ucxJBCgVj\
-            dHlwZRgBIAEoDjIjLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMuQ1R5cGU6BlNUUklOR1IFY3R5\
-            cGUSFgoGcGFja2VkGAIgASgIUgZwYWNrZWQSRwoGanN0eXBlGAYgASgOMiQuZ29vZ2xlLnByb3RvYnVm\
-            LkZpZWxkT3B0aW9ucy5KU1R5cGU6CUpTX05PUk1BTFIGanN0eXBlEhkKBGxhenkYBSABKAg6BWZhbHNl\
-            UgRsYXp5EiUKCmRlcHJlY2F0ZWQYAyABKAg6BWZhbHNlUgpkZXByZWNhdGVkEhkKBHdlYWsYCiABKAg6\
-            BWZhbHNlUgR3ZWFrElgKFHVuaW50ZXJwcmV0ZWRfb3B0aW9uGOcHIAMoCzIkLmdvb2dsZS5wcm90b2J1\
-            Zi5VbmludGVycHJldGVkT3B0aW9uUhN1bmludGVycHJldGVkT3B0aW9uIi8KBUNUeXBlEgoKBlNUUklO\
-            RxAAEggKBENPUkQQARIQCgxTVFJJTkdfUElFQ0UQAiI1CgZKU1R5cGUSDQoJSlNfTk9STUFMEAASDQoJ\
-            SlNfU1RSSU5HEAESDQoJSlNfTlVNQkVSEAIqCQjoBxCAgICAAkoECAQQBSJzCgxPbmVvZk9wdGlvbnMS\
-            WAoUdW5pbnRlcnByZXRlZF9vcHRpb24Y5wcgAygLMiQuZ29vZ2xlLnByb3RvYnVmLlVuaW50ZXJwcmV0\
-            ZWRPcHRpb25SE3VuaW50ZXJwcmV0ZWRPcHRpb24qCQjoBxCAgICAAiLAAQoLRW51bU9wdGlvbnMSHwoL\
-            YWxsb3dfYWxpYXMYAiABKAhSCmFsbG93QWxpYXMSJQoKZGVwcmVjYXRlZBgDIAEoCDoFZmFsc2VSCmRl\
-            cHJlY2F0ZWQSWAoUdW5pbnRlcnByZXRlZF9vcHRpb24Y5wcgAygLMiQuZ29vZ2xlLnByb3RvYnVmLlVu\
-            aW50ZXJwcmV0ZWRPcHRpb25SE3VuaW50ZXJwcmV0ZWRPcHRpb24qCQjoBxCAgICAAkoECAUQBiKeAQoQ\
-            RW51bVZhbHVlT3B0aW9ucxIlCgpkZXByZWNhdGVkGAEgASgIOgVmYWxzZVIKZGVwcmVjYXRlZBJYChR1\
-            bmludGVycHJldGVkX29wdGlvbhjnByADKAsyJC5nb29nbGUucHJvdG9idWYuVW5pbnRlcnByZXRlZE9w\
-            dGlvblITdW5pbnRlcnByZXRlZE9wdGlvbioJCOgHEICAgIACIpwBCg5TZXJ2aWNlT3B0aW9ucxIlCgpk\
-            ZXByZWNhdGVkGCEgASgIOgVmYWxzZVIKZGVwcmVjYXRlZBJYChR1bmludGVycHJldGVkX29wdGlvbhjn\
-            ByADKAsyJC5nb29nbGUucHJvdG9idWYuVW5pbnRlcnByZXRlZE9wdGlvblITdW5pbnRlcnByZXRlZE9w\
-            dGlvbioJCOgHEICAgIACIuACCg1NZXRob2RPcHRpb25zEiUKCmRlcHJlY2F0ZWQYISABKAg6BWZhbHNl\
-            UgpkZXByZWNhdGVkEnEKEWlkZW1wb3RlbmN5X2xldmVsGCIgASgOMi8uZ29vZ2xlLnByb3RvYnVmLk1l\
-            dGhvZE9wdGlvbnMuSWRlbXBvdGVuY3lMZXZlbDoTSURFTVBPVEVOQ1lfVU5LTk9XTlIQaWRlbXBvdGVu\
-            Y3lMZXZlbBJYChR1bmludGVycHJldGVkX29wdGlvbhjnByADKAsyJC5nb29nbGUucHJvdG9idWYuVW5p\
-            bnRlcnByZXRlZE9wdGlvblITdW5pbnRlcnByZXRlZE9wdGlvbiJQChBJZGVtcG90ZW5jeUxldmVsEhcK\
-            E0lERU1QT1RFTkNZX1VOS05PV04QABITCg9OT19TSURFX0VGRkVDVFMQARIOCgpJREVNUE9URU5UEAIq\
-            CQjoBxCAgICAAiKaAwoTVW5pbnRlcnByZXRlZE9wdGlvbhJBCgRuYW1lGAIgAygLMi0uZ29vZ2xlLnBy\
-            b3RvYnVmLlVuaW50ZXJwcmV0ZWRPcHRpb24uTmFtZVBhcnRSBG5hbWUSKQoQaWRlbnRpZmllcl92YWx1\
-            ZRgDIAEoCVIPaWRlbnRpZmllclZhbHVlEiwKEnBvc2l0aXZlX2ludF92YWx1ZRgEIAEoBFIQcG9zaXRp\
-            dmVJbnRWYWx1ZRIsChJuZWdhdGl2ZV9pbnRfdmFsdWUYBSABKANSEG5lZ2F0aXZlSW50VmFsdWUSIQoM\
-            ZG91YmxlX3ZhbHVlGAYgASgBUgtkb3VibGVWYWx1ZRIhCgxzdHJpbmdfdmFsdWUYByABKAxSC3N0cmlu\
-            Z1ZhbHVlEicKD2FnZ3JlZ2F0ZV92YWx1ZRgIIAEoCVIOYWdncmVnYXRlVmFsdWUaSgoITmFtZVBhcnQS\
-            GwoJbmFtZV9wYXJ0GAEgAigJUghuYW1lUGFydBIhCgxpc19leHRlbnNpb24YAiACKAhSC2lzRXh0ZW5z\
-            aW9uIqcCCg5Tb3VyY2VDb2RlSW5mbxJECghsb2NhdGlvbhgBIAMoCzIoLmdvb2dsZS5wcm90b2J1Zi5T\
-            b3VyY2VDb2RlSW5mby5Mb2NhdGlvblIIbG9jYXRpb24azgEKCExvY2F0aW9uEhYKBHBhdGgYASADKAVC\
-            AhABUgRwYXRoEhYKBHNwYW4YAiADKAVCAhABUgRzcGFuEikKEGxlYWRpbmdfY29tbWVudHMYAyABKAlS\
-            D2xlYWRpbmdDb21tZW50cxIrChF0cmFpbGluZ19jb21tZW50cxgEIAEoCVIQdHJhaWxpbmdDb21tZW50\
-            cxI6ChlsZWFkaW5nX2RldGFjaGVkX2NvbW1lbnRzGAYgAygJUhdsZWFkaW5nRGV0YWNoZWRDb21tZW50\
-            cyLRAQoRR2VuZXJhdGVkQ29kZUluZm8STQoKYW5ub3RhdGlvbhgBIAMoCzItLmdvb2dsZS5wcm90b2J1\
-            Zi5HZW5lcmF0ZWRDb2RlSW5mby5Bbm5vdGF0aW9uUgphbm5vdGF0aW9uGm0KCkFubm90YXRpb24SFgoE\
-            cGF0aBgBIAMoBUICEAFSBHBhdGgSHwoLc291cmNlX2ZpbGUYAiABKAlSCnNvdXJjZUZpbGUSFAoFYmVn\
-            aW4YAyABKAVSBWJlZ2luEhAKA2VuZBgEIAEoBVIDZW5kQn4KE2NvbS5nb29nbGUucHJvdG9idWZCEERl\
-            c2NyaXB0b3JQcm90b3NIAVotZ29vZ2xlLmdvbGFuZy5vcmcvcHJvdG9idWYvdHlwZXMvZGVzY3JpcHRv\
-            cnBi+AEBogIDR1BCqgIaR29vZ2xlLlByb3RvYnVmLlJlZmxlY3Rpb24=")
+            dGVycHJldGVkT3B0aW9uKgkI6AcQgICAgAJKBAgEEAVKBAgFEAZKBAgGEAdKBAgIEAlKBAgJEAoi4gMK\
+            DEZpZWxkT3B0aW9ucxJBCgVjdHlwZRgBIAEoDjIjLmdvb2dsZS5wcm90b2J1Zi5GaWVsZE9wdGlvbnMu\
+            Q1R5cGU6BlNUUklOR1IFY3R5cGUSFgoGcGFja2VkGAIgASgIUgZwYWNrZWQSRwoGanN0eXBlGAYgASgO\
+            MiQuZ29vZ2xlLnByb3RvYnVmLkZpZWxkT3B0aW9ucy5KU1R5cGU6CUpTX05PUk1BTFIGanN0eXBlEhkK\
+            BGxhenkYBSABKAg6BWZhbHNlUgRsYXp5EiUKCmRlcHJlY2F0ZWQYAyABKAg6BWZhbHNlUgpkZXByZWNh\
+            dGVkEhkKBHdlYWsYCiABKAg6BWZhbHNlUgR3ZWFrElgKFHVuaW50ZXJwcmV0ZWRfb3B0aW9uGOcHIAMo\
+            CzIkLmdvb2dsZS5wcm90b2J1Zi5VbmludGVycHJldGVkT3B0aW9uUhN1bmludGVycHJldGVkT3B0aW9u\
+            Ii8KBUNUeXBlEgoKBlNUUklORxAAEggKBENPUkQQARIQCgxTVFJJTkdfUElFQ0UQAiI1CgZKU1R5cGUS\
+            DQoJSlNfTk9STUFMEAASDQoJSlNfU1RSSU5HEAESDQoJSlNfTlVNQkVSEAIqCQjoBxCAgICAAkoECAQQ\
+            BSJzCgxPbmVvZk9wdGlvbnMSWAoUdW5pbnRlcnByZXRlZF9vcHRpb24Y5wcgAygLMiQuZ29vZ2xlLnBy\
+            b3RvYnVmLlVuaW50ZXJwcmV0ZWRPcHRpb25SE3VuaW50ZXJwcmV0ZWRPcHRpb24qCQjoBxCAgICAAiLA\
+            AQoLRW51bU9wdGlvbnMSHwoLYWxsb3dfYWxpYXMYAiABKAhSCmFsbG93QWxpYXMSJQoKZGVwcmVjYXRl\
+            ZBgDIAEoCDoFZmFsc2VSCmRlcHJlY2F0ZWQSWAoUdW5pbnRlcnByZXRlZF9vcHRpb24Y5wcgAygLMiQu\
+            Z29vZ2xlLnByb3RvYnVmLlVuaW50ZXJwcmV0ZWRPcHRpb25SE3VuaW50ZXJwcmV0ZWRPcHRpb24qCQjo\
+            BxCAgICAAkoECAUQBiKeAQoQRW51bVZhbHVlT3B0aW9ucxIlCgpkZXByZWNhdGVkGAEgASgIOgVmYWxz\
+            ZVIKZGVwcmVjYXRlZBJYChR1bmludGVycHJldGVkX29wdGlvbhjnByADKAsyJC5nb29nbGUucHJvdG9i\
+            dWYuVW5pbnRlcnByZXRlZE9wdGlvblITdW5pbnRlcnByZXRlZE9wdGlvbioJCOgHEICAgIACIpwBCg5T\
+            ZXJ2aWNlT3B0aW9ucxIlCgpkZXByZWNhdGVkGCEgASgIOgVmYWxzZVIKZGVwcmVjYXRlZBJYChR1bmlu\
+            dGVycHJldGVkX29wdGlvbhjnByADKAsyJC5nb29nbGUucHJvdG9idWYuVW5pbnRlcnByZXRlZE9wdGlv\
+            blITdW5pbnRlcnByZXRlZE9wdGlvbioJCOgHEICAgIACIuACCg1NZXRob2RPcHRpb25zEiUKCmRlcHJl\
+            Y2F0ZWQYISABKAg6BWZhbHNlUgpkZXByZWNhdGVkEnEKEWlkZW1wb3RlbmN5X2xldmVsGCIgASgOMi8u\
+            Z29vZ2xlLnByb3RvYnVmLk1ldGhvZE9wdGlvbnMuSWRlbXBvdGVuY3lMZXZlbDoTSURFTVBPVEVOQ1lf\
+            VU5LTk9XTlIQaWRlbXBvdGVuY3lMZXZlbBJYChR1bmludGVycHJldGVkX29wdGlvbhjnByADKAsyJC5n\
+            b29nbGUucHJvdG9idWYuVW5pbnRlcnByZXRlZE9wdGlvblITdW5pbnRlcnByZXRlZE9wdGlvbiJQChBJ\
+            ZGVtcG90ZW5jeUxldmVsEhcKE0lERU1QT1RFTkNZX1VOS05PV04QABITCg9OT19TSURFX0VGRkVDVFMQ\
+            ARIOCgpJREVNUE9URU5UEAIqCQjoBxCAgICAAiKaAwoTVW5pbnRlcnByZXRlZE9wdGlvbhJBCgRuYW1l\
+            GAIgAygLMi0uZ29vZ2xlLnByb3RvYnVmLlVuaW50ZXJwcmV0ZWRPcHRpb24uTmFtZVBhcnRSBG5hbWUS\
+            KQoQaWRlbnRpZmllcl92YWx1ZRgDIAEoCVIPaWRlbnRpZmllclZhbHVlEiwKEnBvc2l0aXZlX2ludF92\
+            YWx1ZRgEIAEoBFIQcG9zaXRpdmVJbnRWYWx1ZRIsChJuZWdhdGl2ZV9pbnRfdmFsdWUYBSABKANSEG5l\
+            Z2F0aXZlSW50VmFsdWUSIQoMZG91YmxlX3ZhbHVlGAYgASgBUgtkb3VibGVWYWx1ZRIhCgxzdHJpbmdf\
+            dmFsdWUYByABKAxSC3N0cmluZ1ZhbHVlEicKD2FnZ3JlZ2F0ZV92YWx1ZRgIIAEoCVIOYWdncmVnYXRl\
+            VmFsdWUaSgoITmFtZVBhcnQSGwoJbmFtZV9wYXJ0GAEgAigJUghuYW1lUGFydBIhCgxpc19leHRlbnNp\
+            b24YAiACKAhSC2lzRXh0ZW5zaW9uIqcCCg5Tb3VyY2VDb2RlSW5mbxJECghsb2NhdGlvbhgBIAMoCzIo\
+            Lmdvb2dsZS5wcm90b2J1Zi5Tb3VyY2VDb2RlSW5mby5Mb2NhdGlvblIIbG9jYXRpb24azgEKCExvY2F0\
+            aW9uEhYKBHBhdGgYASADKAVCAhABUgRwYXRoEhYKBHNwYW4YAiADKAVCAhABUgRzcGFuEikKEGxlYWRp\
+            bmdfY29tbWVudHMYAyABKAlSD2xlYWRpbmdDb21tZW50cxIrChF0cmFpbGluZ19jb21tZW50cxgEIAEo\
+            CVIQdHJhaWxpbmdDb21tZW50cxI6ChlsZWFkaW5nX2RldGFjaGVkX2NvbW1lbnRzGAYgAygJUhdsZWFk\
+            aW5nRGV0YWNoZWRDb21tZW50cyLRAQoRR2VuZXJhdGVkQ29kZUluZm8STQoKYW5ub3RhdGlvbhgBIAMo\
+            CzItLmdvb2dsZS5wcm90b2J1Zi5HZW5lcmF0ZWRDb2RlSW5mby5Bbm5vdGF0aW9uUgphbm5vdGF0aW9u\
+            Gm0KCkFubm90YXRpb24SFgoEcGF0aBgBIAMoBUICEAFSBHBhdGgSHwoLc291cmNlX2ZpbGUYAiABKAlS\
+            CnNvdXJjZUZpbGUSFAoFYmVnaW4YAyABKAVSBWJlZ2luEhAKA2VuZBgEIAEoBVIDZW5kQn4KE2NvbS5n\
+            b29nbGUucHJvdG9idWZCEERlc2NyaXB0b3JQcm90b3NIAVotZ29vZ2xlLmdvbGFuZy5vcmcvcHJvdG9i\
+            dWYvdHlwZXMvZGVzY3JpcHRvcnBi+AEBogIDR1BCqgIaR29vZ2xlLlByb3RvYnVmLlJlZmxlY3Rpb24=")
         global.System.Lazy<_>(
             (fun () ->
                 global.Google.Protobuf.Reflection.FileDescriptor.FromGeneratedCode(
@@ -255,7 +255,7 @@ type FileDescriptorSet = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.File.AddEntriesFrom(&input,FileDescriptorSet.RepeatedFileCodec)
+                me.File.AddEntriesFrom(&input, FileDescriptorSet.RepeatedFileCodec)
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -407,15 +407,15 @@ type FileDescriptorProto = {
             | 18u ->
                 me.Package <- ValueSome(input.ReadString())
             | 26u ->
-                me.Dependency.AddEntriesFrom(&input,FileDescriptorProto.RepeatedDependencyCodec)
+                me.Dependency.AddEntriesFrom(&input, FileDescriptorProto.RepeatedDependencyCodec)
             | 34u ->
-                me.MessageType.AddEntriesFrom(&input,FileDescriptorProto.RepeatedMessageTypeCodec)
+                me.MessageType.AddEntriesFrom(&input, FileDescriptorProto.RepeatedMessageTypeCodec)
             | 42u ->
-                me.EnumType.AddEntriesFrom(&input,FileDescriptorProto.RepeatedEnumTypeCodec)
+                me.EnumType.AddEntriesFrom(&input, FileDescriptorProto.RepeatedEnumTypeCodec)
             | 50u ->
-                me.Service.AddEntriesFrom(&input,FileDescriptorProto.RepeatedServiceCodec)
+                me.Service.AddEntriesFrom(&input, FileDescriptorProto.RepeatedServiceCodec)
             | 58u ->
-                me.Extension.AddEntriesFrom(&input,FileDescriptorProto.RepeatedExtensionCodec)
+                me.Extension.AddEntriesFrom(&input, FileDescriptorProto.RepeatedExtensionCodec)
             | 66u ->
                 if me.Options.IsNone
                 then me.Options <- ValueSome(global.Google.Protobuf.FSharp.Reflection.FileOptions.empty())
@@ -425,9 +425,9 @@ type FileDescriptorProto = {
                 then me.SourceCodeInfo <- ValueSome(global.Google.Protobuf.FSharp.Reflection.SourceCodeInfo.empty())
                 input.ReadMessage(me.SourceCodeInfo.Value)
             | 82u | 80u ->
-                me.PublicDependency.AddEntriesFrom(&input,FileDescriptorProto.RepeatedPublicDependencyCodec)
+                me.PublicDependency.AddEntriesFrom(&input, FileDescriptorProto.RepeatedPublicDependencyCodec)
             | 90u | 88u ->
-                me.WeakDependency.AddEntriesFrom(&input,FileDescriptorProto.RepeatedWeakDependencyCodec)
+                me.WeakDependency.AddEntriesFrom(&input, FileDescriptorProto.RepeatedWeakDependencyCodec)
             | 98u ->
                 me.Syntax <- ValueSome(input.ReadString())
             | _ ->
@@ -593,25 +593,25 @@ type DescriptorProto = {
             | 10u ->
                 me.Name <- ValueSome(input.ReadString())
             | 18u ->
-                me.Field.AddEntriesFrom(&input,DescriptorProto.RepeatedFieldCodec)
+                me.Field.AddEntriesFrom(&input, DescriptorProto.RepeatedFieldCodec)
             | 26u ->
-                me.NestedType.AddEntriesFrom(&input,DescriptorProto.RepeatedNestedTypeCodec)
+                me.NestedType.AddEntriesFrom(&input, DescriptorProto.RepeatedNestedTypeCodec)
             | 34u ->
-                me.EnumType.AddEntriesFrom(&input,DescriptorProto.RepeatedEnumTypeCodec)
+                me.EnumType.AddEntriesFrom(&input, DescriptorProto.RepeatedEnumTypeCodec)
             | 42u ->
-                me.ExtensionRange.AddEntriesFrom(&input,DescriptorProto.RepeatedExtensionRangeCodec)
+                me.ExtensionRange.AddEntriesFrom(&input, DescriptorProto.RepeatedExtensionRangeCodec)
             | 50u ->
-                me.Extension.AddEntriesFrom(&input,DescriptorProto.RepeatedExtensionCodec)
+                me.Extension.AddEntriesFrom(&input, DescriptorProto.RepeatedExtensionCodec)
             | 58u ->
                 if me.Options.IsNone
                 then me.Options <- ValueSome(global.Google.Protobuf.FSharp.Reflection.MessageOptions.empty())
                 input.ReadMessage(me.Options.Value)
             | 66u ->
-                me.OneofDecl.AddEntriesFrom(&input,DescriptorProto.RepeatedOneofDeclCodec)
+                me.OneofDecl.AddEntriesFrom(&input, DescriptorProto.RepeatedOneofDeclCodec)
             | 74u ->
-                me.ReservedRange.AddEntriesFrom(&input,DescriptorProto.RepeatedReservedRangeCodec)
+                me.ReservedRange.AddEntriesFrom(&input, DescriptorProto.RepeatedReservedRangeCodec)
             | 82u ->
-                me.ReservedName.AddEntriesFrom(&input,DescriptorProto.RepeatedReservedNameCodec)
+                me.ReservedName.AddEntriesFrom(&input, DescriptorProto.RepeatedReservedNameCodec)
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -905,7 +905,7 @@ type ExtensionRangeOptions = {
         while tag <> 0u do
             match tag with
             | 7994u ->
-                me.UninterpretedOption.AddEntriesFrom(&input,ExtensionRangeOptions.RepeatedUninterpretedOptionCodec)
+                me.UninterpretedOption.AddEntriesFrom(&input, ExtensionRangeOptions.RepeatedUninterpretedOptionCodec)
             | _ ->
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
@@ -1350,15 +1350,15 @@ type EnumDescriptorProto = {
             | 10u ->
                 me.Name <- ValueSome(input.ReadString())
             | 18u ->
-                me.Value.AddEntriesFrom(&input,EnumDescriptorProto.RepeatedValueCodec)
+                me.Value.AddEntriesFrom(&input, EnumDescriptorProto.RepeatedValueCodec)
             | 26u ->
                 if me.Options.IsNone
                 then me.Options <- ValueSome(global.Google.Protobuf.FSharp.Reflection.EnumOptions.empty())
                 input.ReadMessage(me.Options.Value)
             | 34u ->
-                me.ReservedRange.AddEntriesFrom(&input,EnumDescriptorProto.RepeatedReservedRangeCodec)
+                me.ReservedRange.AddEntriesFrom(&input, EnumDescriptorProto.RepeatedReservedRangeCodec)
             | 42u ->
-                me.ReservedName.AddEntriesFrom(&input,EnumDescriptorProto.RepeatedReservedNameCodec)
+                me.ReservedName.AddEntriesFrom(&input, EnumDescriptorProto.RepeatedReservedNameCodec)
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -1650,7 +1650,7 @@ type ServiceDescriptorProto = {
             | 10u ->
                 me.Name <- ValueSome(input.ReadString())
             | 18u ->
-                me.Method.AddEntriesFrom(&input,ServiceDescriptorProto.RepeatedMethodCodec)
+                me.Method.AddEntriesFrom(&input, ServiceDescriptorProto.RepeatedMethodCodec)
             | 26u ->
                 if me.Options.IsNone
                 then me.Options <- ValueSome(global.Google.Protobuf.FSharp.Reflection.ServiceOptions.empty())
@@ -2097,7 +2097,7 @@ type FileOptions = {
             | 362u ->
                 me.RubyPackage <- ValueSome(input.ReadString())
             | 7994u ->
-                me.UninterpretedOption.AddEntriesFrom(&input,FileOptions.RepeatedUninterpretedOptionCodec)
+                me.UninterpretedOption.AddEntriesFrom(&input, FileOptions.RepeatedUninterpretedOptionCodec)
             | _ ->
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
@@ -2295,7 +2295,7 @@ type MessageOptions = {
             | 56u ->
                 me.MapEntry <- ValueSome(input.ReadBool())
             | 7994u ->
-                me.UninterpretedOption.AddEntriesFrom(&input,MessageOptions.RepeatedUninterpretedOptionCodec)
+                me.UninterpretedOption.AddEntriesFrom(&input, MessageOptions.RepeatedUninterpretedOptionCodec)
             | _ ->
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
@@ -2462,7 +2462,7 @@ type FieldOptions = {
             | 80u ->
                 me.Weak <- ValueSome(input.ReadBool())
             | 7994u ->
-                me.UninterpretedOption.AddEntriesFrom(&input,FieldOptions.RepeatedUninterpretedOptionCodec)
+                me.UninterpretedOption.AddEntriesFrom(&input, FieldOptions.RepeatedUninterpretedOptionCodec)
             | _ ->
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
@@ -2578,7 +2578,7 @@ type OneofOptions = {
         while tag <> 0u do
             match tag with
             | 7994u ->
-                me.UninterpretedOption.AddEntriesFrom(&input,OneofOptions.RepeatedUninterpretedOptionCodec)
+                me.UninterpretedOption.AddEntriesFrom(&input, OneofOptions.RepeatedUninterpretedOptionCodec)
             | _ ->
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
@@ -2689,7 +2689,7 @@ type EnumOptions = {
             | 24u ->
                 me.Deprecated <- ValueSome(input.ReadBool())
             | 7994u ->
-                me.UninterpretedOption.AddEntriesFrom(&input,EnumOptions.RepeatedUninterpretedOptionCodec)
+                me.UninterpretedOption.AddEntriesFrom(&input, EnumOptions.RepeatedUninterpretedOptionCodec)
             | _ ->
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
@@ -2795,7 +2795,7 @@ type EnumValueOptions = {
             | 8u ->
                 me.Deprecated <- ValueSome(input.ReadBool())
             | 7994u ->
-                me.UninterpretedOption.AddEntriesFrom(&input,EnumValueOptions.RepeatedUninterpretedOptionCodec)
+                me.UninterpretedOption.AddEntriesFrom(&input, EnumValueOptions.RepeatedUninterpretedOptionCodec)
             | _ ->
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
@@ -2898,7 +2898,7 @@ type ServiceOptions = {
             | 264u ->
                 me.Deprecated <- ValueSome(input.ReadBool())
             | 7994u ->
-                me.UninterpretedOption.AddEntriesFrom(&input,ServiceOptions.RepeatedUninterpretedOptionCodec)
+                me.UninterpretedOption.AddEntriesFrom(&input, ServiceOptions.RepeatedUninterpretedOptionCodec)
             | _ ->
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
@@ -3012,7 +3012,7 @@ type MethodOptions = {
             | 272u ->
                 me.IdempotencyLevel <- ValueSome(enum(input.ReadEnum()))
             | 7994u ->
-                me.UninterpretedOption.AddEntriesFrom(&input,MethodOptions.RepeatedUninterpretedOptionCodec)
+                me.UninterpretedOption.AddEntriesFrom(&input, MethodOptions.RepeatedUninterpretedOptionCodec)
             | _ ->
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
@@ -3161,7 +3161,7 @@ type UninterpretedOption = {
         while tag <> 0u do
             match tag with
             | 18u ->
-                me.Name.AddEntriesFrom(&input,UninterpretedOption.RepeatedNameCodec)
+                me.Name.AddEntriesFrom(&input, UninterpretedOption.RepeatedNameCodec)
             | 26u ->
                 me.IdentifierValue <- ValueSome(input.ReadString())
             | 32u ->
@@ -3343,7 +3343,7 @@ type SourceCodeInfo = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Location.AddEntriesFrom(&input,SourceCodeInfo.RepeatedLocationCodec)
+                me.Location.AddEntriesFrom(&input, SourceCodeInfo.RepeatedLocationCodec)
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -3439,15 +3439,15 @@ module SourceCodeInfo =
                 while tag <> 0u do
                     match tag with
                     | 10u | 8u ->
-                        me.Path.AddEntriesFrom(&input,Location.RepeatedPathCodec)
+                        me.Path.AddEntriesFrom(&input, Location.RepeatedPathCodec)
                     | 18u | 16u ->
-                        me.Span.AddEntriesFrom(&input,Location.RepeatedSpanCodec)
+                        me.Span.AddEntriesFrom(&input, Location.RepeatedSpanCodec)
                     | 26u ->
                         me.LeadingComments <- ValueSome(input.ReadString())
                     | 34u ->
                         me.TrailingComments <- ValueSome(input.ReadString())
                     | 50u ->
-                        me.LeadingDetachedComments.AddEntriesFrom(&input,Location.RepeatedLeadingDetachedCommentsCodec)
+                        me.LeadingDetachedComments.AddEntriesFrom(&input, Location.RepeatedLeadingDetachedCommentsCodec)
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
@@ -3528,7 +3528,7 @@ type GeneratedCodeInfo = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Annotation.AddEntriesFrom(&input,GeneratedCodeInfo.RepeatedAnnotationCodec)
+                me.Annotation.AddEntriesFrom(&input, GeneratedCodeInfo.RepeatedAnnotationCodec)
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -3623,7 +3623,7 @@ module GeneratedCodeInfo =
                 while tag <> 0u do
                     match tag with
                     | 10u | 8u ->
-                        me.Path.AddEntriesFrom(&input,Annotation.RepeatedPathCodec)
+                        me.Path.AddEntriesFrom(&input, Annotation.RepeatedPathCodec)
                     | 18u ->
                         me.SourceFile <- ValueSome(input.ReadString())
                     | 24u ->

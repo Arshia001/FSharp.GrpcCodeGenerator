@@ -131,9 +131,9 @@ type Api = {
             | 10u ->
                 me.Name <- ValueSome(input.ReadString())
             | 18u ->
-                me.Methods.AddEntriesFrom(&input,Api.RepeatedMethodsCodec)
+                me.Methods.AddEntriesFrom(&input, Api.RepeatedMethodsCodec)
             | 26u ->
-                me.Options.AddEntriesFrom(&input,Api.RepeatedOptionsCodec)
+                me.Options.AddEntriesFrom(&input, Api.RepeatedOptionsCodec)
             | 34u ->
                 me.Version <- ValueSome(input.ReadString())
             | 42u ->
@@ -141,7 +141,7 @@ type Api = {
                 then me.SourceContext <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext.empty())
                 input.ReadMessage(me.SourceContext.Value)
             | 50u ->
-                me.Mixins.AddEntriesFrom(&input,Api.RepeatedMixinsCodec)
+                me.Mixins.AddEntriesFrom(&input, Api.RepeatedMixinsCodec)
             | 56u ->
                 me.Syntax <- ValueSome(enum(input.ReadEnum()))
             | _ ->
@@ -294,7 +294,7 @@ type Method = {
             | 40u ->
                 me.ResponseStreaming <- ValueSome(input.ReadBool())
             | 50u ->
-                me.Options.AddEntriesFrom(&input,Method.RepeatedOptionsCodec)
+                me.Options.AddEntriesFrom(&input, Method.RepeatedOptionsCodec)
             | 56u ->
                 me.Syntax <- ValueSome(enum(input.ReadEnum()))
             | _ ->
