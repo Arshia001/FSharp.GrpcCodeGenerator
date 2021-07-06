@@ -1,4 +1,4 @@
-﻿[<AutoOpen>]
+[<AutoOpen>]
 module rec FieldConverter
 
 type FSField =
@@ -134,8 +134,8 @@ let defaultValue (ctx: FileContext, field: Field) =
         | FieldType.Uint64 -> field.DefaultValue.Value + "UL"
         | FieldType.Int32 -> field.DefaultValue.Value
         | FieldType.Fixed64 -> field.DefaultValue.Value + "UL"
-        | FieldType.Fixed32 -> field.DefaultValue.Value + "U"
-        | FieldType.Uint32 -> field.DefaultValue.Value + "U"
+        | FieldType.Fixed32 -> field.DefaultValue.Value + "u"
+        | FieldType.Uint32 -> field.DefaultValue.Value + "u"
         | FieldType.Sfixed32 -> field.DefaultValue.Value
         | FieldType.Sfixed64 -> field.DefaultValue.Value + "L"
         | FieldType.Sint32 -> field.DefaultValue.Value
@@ -190,8 +190,8 @@ let defaultValueAccessIgnoreOption (ctx: FileContext, field: Field) =
     | FieldType.Uint64 -> maybeZero + "UL"
     | FieldType.Int32 -> maybeZero
     | FieldType.Fixed64 -> maybeZero + "UL"
-    | FieldType.Fixed32 -> maybeZero + "U"
-    | FieldType.Uint32 -> maybeZero + "U"
+    | FieldType.Fixed32 -> maybeZero + "u"
+    | FieldType.Uint32 -> maybeZero + "u"
     | FieldType.Sfixed32 -> maybeZero
     | FieldType.Sfixed64 -> maybeZero + "L"
     | FieldType.Sint32 -> maybeZero
