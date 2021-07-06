@@ -341,3 +341,6 @@ healthchecksdb
 
 # Ionide for VS Code cache folder
 .ionide
+
+# VS Code settings
+.vscode
