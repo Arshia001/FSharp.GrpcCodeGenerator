@@ -23,7 +23,10 @@ chmod +x ./Protoc/linux_x64/protoc && \
 ./test-protos/unittest_import_proto3.proto \
 ./test-protos/unittest_import_public_proto3.proto \
 ./test-protos/unittest_proto3_optional.proto \
-./test-protos/unittest_proto3.proto
+./test-protos/unittest_proto3.proto \
+./test-protos/well_known_protos.proto \
+./test-protos/google/api/annotations.proto \
+./test-protos/google/api/http.proto \
 
 find ./test-protos -type f -name "*.proto" -print0 | xargs -0 sed -i 's/.*csharp_namespace.*/option csharp_namespace = "FSharp.GrpcCodeGenerator.TestProtos.CSharp";/' 
 
@@ -37,7 +40,13 @@ chmod +x ./Protoc/linux_x64/protoc && \
 ./test-protos/unittest_import_proto3.proto \
 ./test-protos/unittest_import_public_proto3.proto \
 ./test-protos/unittest_proto3_optional.proto \
-./test-protos/unittest_proto3.proto
+./test-protos/unittest_proto3.proto \
+./test-protos/well_known_protos.proto
+
+# We skip these protos for C# since we use the Google.Api.CommonProtos NuGet package instead
+#./test-protos/google/api/annotations.proto \
+#./test-protos/google/api/http.proto
 
 dotnet build ./FSharp.GrpcCodeGenerator.TestProtos.FSharp/FSharp.GrpcCodeGenerator.TestProtos.FSharp.fsproj
 dotnet build ./FSharp.GrpcCodeGenerator.TestProtos.CSharp/FSharp.GrpcCodeGenerator.TestProtos.CSharp.csproj
+dotnet test ./FSharp.GrpcCodeGenerator.Tests/FSharp.GrpcCodeGenerator.Tests.fsproj
