@@ -52,7 +52,9 @@ import "google/protobuf/descriptor.proto";
 // We don't put this in a package within proto2 because we need to make sure
 // that the generated code doesn't depend on being in the proto2 namespace.
 package protobuf_unittest;
-option csharp_namespace = "FSharp.GrpcCodeGenerator.TestProtos";
+// We replace the namespace in our test script so that we can have
+// separate namespaces for the F# code and the C# code 
+option csharp_namespace = "REPLACE_ME";
 
 // Some simple test custom options of various types.
 

@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace FSharp.GrpcCodeGenerator.TestProtos {
+namespace FSharp.GrpcCodeGenerator.TestProtos.CSharp {
 
   /// <summary>Holder for reflection information generated from unittest_import_public_proto3.proto</summary>
   public static partial class UnittestImportPublicProto3Reflection {
@@ -26,12 +26,12 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
           string.Concat(
             "CiN1bml0dGVzdF9pbXBvcnRfcHVibGljX3Byb3RvMy5wcm90bxIYcHJvdG9i",
             "dWZfdW5pdHRlc3RfaW1wb3J0IiAKE1B1YmxpY0ltcG9ydE1lc3NhZ2USCQoB",
-            "ZRgBIAEoBUImqgIjRlNoYXJwLkdycGNDb2RlR2VuZXJhdG9yLlRlc3RQcm90",
-            "b3NiBnByb3RvMw=="));
+            "ZRgBIAEoBUItqgIqRlNoYXJwLkdycGNDb2RlR2VuZXJhdG9yLlRlc3RQcm90",
+            "b3MuQ1NoYXJwYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.PublicImportMessage), global::FSharp.GrpcCodeGenerator.TestProtos.PublicImportMessage.Parser, new[]{ "E" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.PublicImportMessage), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.PublicImportMessage.Parser, new[]{ "E" }, null, null, null, null)
           }));
     }
     #endregion
@@ -50,7 +50,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestImportPublicProto3Reflection.Descriptor.MessageTypes[0]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestImportPublicProto3Reflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

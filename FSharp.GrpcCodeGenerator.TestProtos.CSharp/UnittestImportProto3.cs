@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace FSharp.GrpcCodeGenerator.TestProtos {
+namespace FSharp.GrpcCodeGenerator.TestProtos.CSharp {
 
   /// <summary>Holder for reflection information generated from unittest_import_proto3.proto</summary>
   public static partial class UnittestImportProto3Reflection {
@@ -28,12 +28,12 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
             "dGVzdF9pbXBvcnQaI3VuaXR0ZXN0X2ltcG9ydF9wdWJsaWNfcHJvdG8zLnBy",
             "b3RvIhoKDUltcG9ydE1lc3NhZ2USCQoBZBgBIAEoBSpZCgpJbXBvcnRFbnVt",
             "EhsKF0lNUE9SVF9FTlVNX1VOU1BFQ0lGSUVEEAASDgoKSU1QT1JUX0ZPTxAH",
-            "Eg4KCklNUE9SVF9CQVIQCBIOCgpJTVBPUlRfQkFaEAlCJqoCI0ZTaGFycC5H",
-            "cnBjQ29kZUdlbmVyYXRvci5UZXN0UHJvdG9zUABiBnByb3RvMw=="));
+            "Eg4KCklNUE9SVF9CQVIQCBIOCgpJTVBPUlRfQkFaEAlCLaoCKkZTaGFycC5H",
+            "cnBjQ29kZUdlbmVyYXRvci5UZXN0UHJvdG9zLkNTaGFycFAAYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::FSharp.GrpcCodeGenerator.TestProtos.UnittestImportPublicProto3Reflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::FSharp.GrpcCodeGenerator.TestProtos.ImportEnum), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.ImportMessage), global::FSharp.GrpcCodeGenerator.TestProtos.ImportMessage.Parser, new[]{ "D" }, null, null, null, null)
+          new pbr::FileDescriptor[] { global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestImportPublicProto3Reflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ImportEnum), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ImportMessage), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ImportMessage.Parser, new[]{ "D" }, null, null, null, null)
           }));
     }
     #endregion
@@ -62,7 +62,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestImportProto3Reflection.Descriptor.MessageTypes[0]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestImportProto3Reflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
