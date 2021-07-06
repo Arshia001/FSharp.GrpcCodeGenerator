@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace FSharp.GrpcCodeGenerator.TestProtos {
+namespace FSharp.GrpcCodeGenerator.TestProtos.CSharp {
 
   /// <summary>Holder for reflection information generated from map_unittest_proto3.proto</summary>
   public static partial class MapUnittestProto3Reflection {
@@ -147,18 +147,18 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
             "bmdNYXBDYWxsZWRFbnRyeS5FbnRyeUVudHJ5GiwKCkVudHJ5RW50cnkSCwoD",
             "a2V5GAEgASgFEg0KBXZhbHVlGAIgASgFOgI4ASo/CgdNYXBFbnVtEhAKDE1B",
             "UF9FTlVNX0ZPTxAAEhAKDE1BUF9FTlVNX0JBUhABEhAKDE1BUF9FTlVNX0JB",
-            "WhACQiaqAiNGU2hhcnAuR3JwY0NvZGVHZW5lcmF0b3IuVGVzdFByb3Rvc2IG",
-            "cHJvdG8z"));
+            "WhACQi2qAipGU2hhcnAuR3JwY0NvZGVHZW5lcmF0b3IuVGVzdFByb3Rvcy5D",
+            "U2hhcnBiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::FSharp.GrpcCodeGenerator.TestProtos.UnittestProto3Reflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestMap), global::FSharp.GrpcCodeGenerator.TestProtos.TestMap.Parser, new[]{ "MapInt32Int32", "MapInt64Int64", "MapUint32Uint32", "MapUint64Uint64", "MapSint32Sint32", "MapSint64Sint64", "MapFixed32Fixed32", "MapFixed64Fixed64", "MapSfixed32Sfixed32", "MapSfixed64Sfixed64", "MapInt32Float", "MapInt32Double", "MapBoolBool", "MapStringString", "MapInt32Bytes", "MapInt32Enum", "MapInt32ForeignMessage" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestMapSubmessage), global::FSharp.GrpcCodeGenerator.TestProtos.TestMapSubmessage.Parser, new[]{ "TestMap" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestMessageMap), global::FSharp.GrpcCodeGenerator.TestProtos.TestMessageMap.Parser, new[]{ "MapInt32Message" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestSameTypeMap), global::FSharp.GrpcCodeGenerator.TestProtos.TestSameTypeMap.Parser, new[]{ "Map1", "Map2" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestArenaMap), global::FSharp.GrpcCodeGenerator.TestProtos.TestArenaMap.Parser, new[]{ "MapInt32Int32", "MapInt64Int64", "MapUint32Uint32", "MapUint64Uint64", "MapSint32Sint32", "MapSint64Sint64", "MapFixed32Fixed32", "MapFixed64Fixed64", "MapSfixed32Sfixed32", "MapSfixed64Sfixed64", "MapInt32Float", "MapInt32Double", "MapBoolBool", "MapInt32Enum", "MapInt32ForeignMessage" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.MessageContainingEnumCalledType), global::FSharp.GrpcCodeGenerator.TestProtos.MessageContainingEnumCalledType.Parser, new[]{ "Type" }, null, new[]{ typeof(global::FSharp.GrpcCodeGenerator.TestProtos.MessageContainingEnumCalledType.Types.Type) }, null, new pbr::GeneratedClrTypeInfo[] { null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.MessageContainingMapCalledEntry), global::FSharp.GrpcCodeGenerator.TestProtos.MessageContainingMapCalledEntry.Parser, new[]{ "Entry" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
+          new pbr::FileDescriptor[] { global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestProto3Reflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMap), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMap.Parser, new[]{ "MapInt32Int32", "MapInt64Int64", "MapUint32Uint32", "MapUint64Uint64", "MapSint32Sint32", "MapSint64Sint64", "MapFixed32Fixed32", "MapFixed64Fixed64", "MapSfixed32Sfixed32", "MapSfixed64Sfixed64", "MapInt32Float", "MapInt32Double", "MapBoolBool", "MapStringString", "MapInt32Bytes", "MapInt32Enum", "MapInt32ForeignMessage" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMapSubmessage), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMapSubmessage.Parser, new[]{ "TestMap" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMessageMap), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMessageMap.Parser, new[]{ "MapInt32Message" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestSameTypeMap), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestSameTypeMap.Parser, new[]{ "Map1", "Map2" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestArenaMap), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestArenaMap.Parser, new[]{ "MapInt32Int32", "MapInt64Int64", "MapUint32Uint32", "MapUint64Uint64", "MapSint32Sint32", "MapSint64Sint64", "MapFixed32Fixed32", "MapFixed64Fixed64", "MapSfixed32Sfixed32", "MapSfixed64Sfixed64", "MapInt32Float", "MapInt32Double", "MapBoolBool", "MapInt32Enum", "MapInt32ForeignMessage" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MessageContainingEnumCalledType), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MessageContainingEnumCalledType.Parser, new[]{ "Type" }, null, new[]{ typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MessageContainingEnumCalledType.Types.Type) }, null, new pbr::GeneratedClrTypeInfo[] { null, }),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MessageContainingMapCalledEntry), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MessageContainingMapCalledEntry.Parser, new[]{ "Entry" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
     }
     #endregion
@@ -189,7 +189,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.MapUnittestProto3Reflection.Descriptor.MessageTypes[0]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapUnittestProto3Reflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -383,21 +383,21 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "map_int32_enum" field.</summary>
     public const int MapInt32EnumFieldNumber = 16;
-    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum>.Codec _map_mapInt32Enum_codec
-        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForEnum(16, x => (int) x, x => (global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum) x, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum.Foo), 130);
-    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum> mapInt32Enum_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum>();
+    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum>.Codec _map_mapInt32Enum_codec
+        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForEnum(16, x => (int) x, x => (global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum) x, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum.Foo), 130);
+    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum> mapInt32Enum_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum> MapInt32Enum {
+    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum> MapInt32Enum {
       get { return mapInt32Enum_; }
     }
 
     /// <summary>Field number for the "map_int32_foreign_message" field.</summary>
     public const int MapInt32ForeignMessageFieldNumber = 17;
-    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage>.Codec _map_mapInt32ForeignMessage_codec
-        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForMessage(18, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage.Parser), 138);
-    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage> mapInt32ForeignMessage_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage>();
+    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage>.Codec _map_mapInt32ForeignMessage_codec
+        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForMessage(18, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage.Parser), 138);
+    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage> mapInt32ForeignMessage_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage> MapInt32ForeignMessage {
+    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage> MapInt32ForeignMessage {
       get { return mapInt32ForeignMessage_; }
     }
 
@@ -750,7 +750,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.MapUnittestProto3Reflection.Descriptor.MessageTypes[1]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapUnittestProto3Reflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -778,9 +778,9 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "test_map" field.</summary>
     public const int TestMapFieldNumber = 1;
-    private global::FSharp.GrpcCodeGenerator.TestProtos.TestMap testMap_;
+    private global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMap testMap_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::FSharp.GrpcCodeGenerator.TestProtos.TestMap TestMap {
+    public global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMap TestMap {
       get { return testMap_; }
       set {
         testMap_ = value;
@@ -866,7 +866,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
       }
       if (other.testMap_ != null) {
         if (testMap_ == null) {
-          TestMap = new global::FSharp.GrpcCodeGenerator.TestProtos.TestMap();
+          TestMap = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMap();
         }
         TestMap.MergeFrom(other.TestMap);
       }
@@ -886,7 +886,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
             break;
           case 10: {
             if (testMap_ == null) {
-              TestMap = new global::FSharp.GrpcCodeGenerator.TestProtos.TestMap();
+              TestMap = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMap();
             }
             input.ReadMessage(TestMap);
             break;
@@ -907,7 +907,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
             break;
           case 10: {
             if (testMap_ == null) {
-              TestMap = new global::FSharp.GrpcCodeGenerator.TestProtos.TestMap();
+              TestMap = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMap();
             }
             input.ReadMessage(TestMap);
             break;
@@ -931,7 +931,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.MapUnittestProto3Reflection.Descriptor.MessageTypes[2]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapUnittestProto3Reflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -959,11 +959,11 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "map_int32_message" field.</summary>
     public const int MapInt32MessageFieldNumber = 1;
-    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.TestAllTypes>.Codec _map_mapInt32Message_codec
-        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.TestAllTypes>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForMessage(18, global::FSharp.GrpcCodeGenerator.TestProtos.TestAllTypes.Parser), 10);
-    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.TestAllTypes> mapInt32Message_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.TestAllTypes>();
+    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestAllTypes>.Codec _map_mapInt32Message_codec
+        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestAllTypes>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForMessage(18, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestAllTypes.Parser), 10);
+    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestAllTypes> mapInt32Message_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestAllTypes>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.TestAllTypes> MapInt32Message {
+    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestAllTypes> MapInt32Message {
       get { return mapInt32Message_; }
     }
 
@@ -1095,7 +1095,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.MapUnittestProto3Reflection.Descriptor.MessageTypes[3]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapUnittestProto3Reflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1281,7 +1281,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.MapUnittestProto3Reflection.Descriptor.MessageTypes[4]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapUnittestProto3Reflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1453,21 +1453,21 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "map_int32_enum" field.</summary>
     public const int MapInt32EnumFieldNumber = 14;
-    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum>.Codec _map_mapInt32Enum_codec
-        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForEnum(16, x => (int) x, x => (global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum) x, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum.Foo), 114);
-    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum> mapInt32Enum_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum>();
+    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum>.Codec _map_mapInt32Enum_codec
+        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForEnum(16, x => (int) x, x => (global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum) x, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum.Foo), 114);
+    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum> mapInt32Enum_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MapEnum> MapInt32Enum {
+    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapEnum> MapInt32Enum {
       get { return mapInt32Enum_; }
     }
 
     /// <summary>Field number for the "map_int32_foreign_message" field.</summary>
     public const int MapInt32ForeignMessageFieldNumber = 15;
-    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage>.Codec _map_mapInt32ForeignMessage_codec
-        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForMessage(18, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage.Parser), 122);
-    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage> mapInt32ForeignMessage_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage>();
+    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage>.Codec _map_mapInt32ForeignMessage_codec
+        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForMessage(18, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage.Parser), 122);
+    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage> mapInt32ForeignMessage_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.ForeignMessage> MapInt32ForeignMessage {
+    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ForeignMessage> MapInt32ForeignMessage {
       get { return mapInt32ForeignMessage_; }
     }
 
@@ -1796,7 +1796,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.MapUnittestProto3Reflection.Descriptor.MessageTypes[5]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapUnittestProto3Reflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1824,11 +1824,11 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "type" field.</summary>
     public const int TypeFieldNumber = 1;
-    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MessageContainingEnumCalledType>.Codec _map_type_codec
-        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MessageContainingEnumCalledType>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForMessage(18, global::FSharp.GrpcCodeGenerator.TestProtos.MessageContainingEnumCalledType.Parser), 10);
-    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MessageContainingEnumCalledType> type_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MessageContainingEnumCalledType>();
+    private static readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MessageContainingEnumCalledType>.Codec _map_type_codec
+        = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MessageContainingEnumCalledType>.Codec(pb::FieldCodec.ForInt32(8, 0), pb::FieldCodec.ForMessage(18, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MessageContainingEnumCalledType.Parser), 10);
+    private readonly pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MessageContainingEnumCalledType> type_ = new pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MessageContainingEnumCalledType>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.MessageContainingEnumCalledType> Type {
+    public pbc::MapField<int, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MessageContainingEnumCalledType> Type {
       get { return type_; }
     }
 
@@ -1971,7 +1971,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.MapUnittestProto3Reflection.Descriptor.MessageTypes[6]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MapUnittestProto3Reflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

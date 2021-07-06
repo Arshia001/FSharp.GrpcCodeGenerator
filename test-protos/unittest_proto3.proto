@@ -36,7 +36,9 @@
 
 syntax = "proto3";
 
-option csharp_namespace = "FSharp.GrpcCodeGenerator.TestProtos";
+// We replace the namespace in our test script so that we can have
+// separate namespaces for the F# code and the C# code 
+option csharp_namespace = "REPLACE_ME";
 
 // Only present so we can test that we can read it (as an example
 // of a non-C# option)

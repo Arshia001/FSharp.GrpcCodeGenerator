@@ -2,7 +2,15 @@
 
 set -eoux pipefail
 
+function cleanup {
+    chmod -x ./Protoc/linux_x64/protoc
+    find ./test-protos -type f -name "*.proto" -print0 | xargs -0 sed -i 's/.*csharp_namespace.*/option csharp_namespace = "REPLACE_ME";/' 
+}
+trap cleanup EXIT
+
 dotnet build ./FSharp.GrpcCodeGenerator/FSharp.GrpcCodeGenerator.fsproj
+
+find ./test-protos -type f -name "*.proto" -print0 | xargs -0 sed -i 's/.*csharp_namespace.*/option csharp_namespace = "FSharp.GrpcCodeGenerator.TestProtos.FSharp";/' 
 
 chmod +x ./Protoc/linux_x64/protoc && \
 ./Protoc/linux_x64/protoc \
@@ -16,6 +24,8 @@ chmod +x ./Protoc/linux_x64/protoc && \
 ./test-protos/unittest_import_public_proto3.proto \
 ./test-protos/unittest_proto3_optional.proto \
 ./test-protos/unittest_proto3.proto
+
+find ./test-protos -type f -name "*.proto" -print0 | xargs -0 sed -i 's/.*csharp_namespace.*/option csharp_namespace = "FSharp.GrpcCodeGenerator.TestProtos.CSharp";/' 
 
 chmod +x ./Protoc/linux_x64/protoc && \
 ./Protoc/linux_x64/protoc \

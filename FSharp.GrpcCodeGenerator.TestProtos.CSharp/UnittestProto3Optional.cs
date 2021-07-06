@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace FSharp.GrpcCodeGenerator.TestProtos {
+namespace FSharp.GrpcCodeGenerator.TestProtos.CSharp {
 
   /// <summary>Holder for reflection information generated from unittest_proto3_optional.proto</summary>
   public static partial class UnittestProto3OptionalReflection {
@@ -65,15 +65,15 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
             "aW9uczI8Cg9leHRfbm9fb3B0aW9uYWwSHy5nb29nbGUucHJvdG9idWYuTWVz",
             "c2FnZU9wdGlvbnMYiM3ZqQEgASgFMkEKEWV4dF93aXRoX29wdGlvbmFsEh8u",
             "Z29vZ2xlLnByb3RvYnVmLk1lc3NhZ2VPcHRpb25zGInN2akBIAEoBYgBAToM",
-            "wOjMzQoIyOjMzQoQQksKIWNvbS5nb29nbGUucHJvdG9idWYudGVzdGluZy5w",
-            "cm90b1ABqgIjRlNoYXJwLkdycGNDb2RlR2VuZXJhdG9yLlRlc3RQcm90b3Ni",
-            "BnByb3RvMw=="));
+            "wOjMzQoIyOjMzQoQQlIKIWNvbS5nb29nbGUucHJvdG9idWYudGVzdGluZy5w",
+            "cm90b1ABqgIqRlNoYXJwLkdycGNDb2RlR2VuZXJhdG9yLlRlc3RQcm90b3Mu",
+            "Q1NoYXJwYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.Reflection.DescriptorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional), global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Parser, new[]{ "OptionalInt32", "OptionalInt64", "OptionalUint32", "OptionalUint64", "OptionalSint32", "OptionalSint64", "OptionalFixed32", "OptionalFixed64", "OptionalSfixed32", "OptionalSfixed64", "OptionalFloat", "OptionalDouble", "OptionalBool", "OptionalString", "OptionalBytes", "OptionalCord", "OptionalNestedMessage", "LazyNestedMessage", "OptionalNestedEnum", "SingularInt32", "SingularInt64" }, new[]{ "OptionalInt32", "OptionalInt64", "OptionalUint32", "OptionalUint64", "OptionalSint32", "OptionalSint64", "OptionalFixed32", "OptionalFixed64", "OptionalSfixed32", "OptionalSfixed64", "OptionalFloat", "OptionalDouble", "OptionalBool", "OptionalString", "OptionalBytes", "OptionalCord", "OptionalNestedMessage", "LazyNestedMessage", "OptionalNestedEnum" }, new[]{ typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedEnum) }, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage), global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage.Parser, new[]{ "Bb" }, new[]{ "Bb" }, null, null, null)}),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage), global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Parser, new[]{ "NestedMessage", "OptionalNestedMessage" }, new[]{ "OptionalNestedMessage" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage), global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage.Parser, new[]{ "S" }, null, null, null, null)}),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.Proto3OptionalExtensions), global::FSharp.GrpcCodeGenerator.TestProtos.Proto3OptionalExtensions.Parser, null, null, null, new pb::Extension[] { global::FSharp.GrpcCodeGenerator.TestProtos.Proto3OptionalExtensions.Extensions.ExtNoOptional, global::FSharp.GrpcCodeGenerator.TestProtos.Proto3OptionalExtensions.Extensions.ExtWithOptional }, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Parser, new[]{ "OptionalInt32", "OptionalInt64", "OptionalUint32", "OptionalUint64", "OptionalSint32", "OptionalSint64", "OptionalFixed32", "OptionalFixed64", "OptionalSfixed32", "OptionalSfixed64", "OptionalFloat", "OptionalDouble", "OptionalBool", "OptionalString", "OptionalBytes", "OptionalCord", "OptionalNestedMessage", "LazyNestedMessage", "OptionalNestedEnum", "SingularInt32", "SingularInt64" }, new[]{ "OptionalInt32", "OptionalInt64", "OptionalUint32", "OptionalUint64", "OptionalSint32", "OptionalSint64", "OptionalFixed32", "OptionalFixed64", "OptionalSfixed32", "OptionalSfixed64", "OptionalFloat", "OptionalDouble", "OptionalBool", "OptionalString", "OptionalBytes", "OptionalCord", "OptionalNestedMessage", "LazyNestedMessage", "OptionalNestedEnum" }, new[]{ typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedEnum) }, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage.Parser, new[]{ "Bb" }, new[]{ "Bb" }, null, null, null)}),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Parser, new[]{ "NestedMessage", "OptionalNestedMessage" }, new[]{ "OptionalNestedMessage" }, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage.Parser, new[]{ "S" }, null, null, null, null)}),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Proto3OptionalExtensions), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Proto3OptionalExtensions.Parser, null, null, null, new pb::Extension[] { global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Proto3OptionalExtensions.Extensions.ExtNoOptional, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Proto3OptionalExtensions.Extensions.ExtWithOptional }, null)
           }));
     }
     #endregion
@@ -93,7 +93,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestProto3OptionalReflection.Descriptor.MessageTypes[0]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestProto3OptionalReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -494,9 +494,9 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "optional_nested_message" field.</summary>
     public const int OptionalNestedMessageFieldNumber = 18;
-    private global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage optionalNestedMessage_;
+    private global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage optionalNestedMessage_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage OptionalNestedMessage {
+    public global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage OptionalNestedMessage {
       get { return optionalNestedMessage_; }
       set {
         optionalNestedMessage_ = value;
@@ -505,9 +505,9 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "lazy_nested_message" field.</summary>
     public const int LazyNestedMessageFieldNumber = 19;
-    private global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage lazyNestedMessage_;
+    private global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage lazyNestedMessage_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage LazyNestedMessage {
+    public global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage LazyNestedMessage {
       get { return lazyNestedMessage_; }
       set {
         lazyNestedMessage_ = value;
@@ -516,10 +516,10 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "optional_nested_enum" field.</summary>
     public const int OptionalNestedEnumFieldNumber = 21;
-    private global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedEnum optionalNestedEnum_;
+    private global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedEnum optionalNestedEnum_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedEnum OptionalNestedEnum {
-      get { if ((_hasBits0 & 8192) != 0) { return optionalNestedEnum_; } else { return global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedEnum.Unspecified; } }
+    public global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedEnum OptionalNestedEnum {
+      get { if ((_hasBits0 & 8192) != 0) { return optionalNestedEnum_; } else { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedEnum.Unspecified; } }
       set {
         _hasBits0 |= 8192;
         optionalNestedEnum_ = value;
@@ -948,13 +948,13 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
       }
       if (other.optionalNestedMessage_ != null) {
         if (optionalNestedMessage_ == null) {
-          OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage();
+          OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage();
         }
         OptionalNestedMessage.MergeFrom(other.OptionalNestedMessage);
       }
       if (other.lazyNestedMessage_ != null) {
         if (lazyNestedMessage_ == null) {
-          LazyNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage();
+          LazyNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage();
         }
         LazyNestedMessage.MergeFrom(other.LazyNestedMessage);
       }
@@ -1047,20 +1047,20 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
           }
           case 146: {
             if (optionalNestedMessage_ == null) {
-              OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage();
+              OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage();
             }
             input.ReadMessage(OptionalNestedMessage);
             break;
           }
           case 154: {
             if (lazyNestedMessage_ == null) {
-              LazyNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage();
+              LazyNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage();
             }
             input.ReadMessage(LazyNestedMessage);
             break;
           }
           case 168: {
-            OptionalNestedEnum = (global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedEnum) input.ReadEnum();
+            OptionalNestedEnum = (global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedEnum) input.ReadEnum();
             break;
           }
           case 176: {
@@ -1151,20 +1151,20 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
           }
           case 146: {
             if (optionalNestedMessage_ == null) {
-              OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage();
+              OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage();
             }
             input.ReadMessage(OptionalNestedMessage);
             break;
           }
           case 154: {
             if (lazyNestedMessage_ == null) {
-              LazyNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedMessage();
+              LazyNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedMessage();
             }
             input.ReadMessage(LazyNestedMessage);
             break;
           }
           case 168: {
-            OptionalNestedEnum = (global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Types.NestedEnum) input.ReadEnum();
+            OptionalNestedEnum = (global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Types.NestedEnum) input.ReadEnum();
             break;
           }
           case 176: {
@@ -1208,7 +1208,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public static pbr::MessageDescriptor Descriptor {
-          get { return global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3Optional.Descriptor.NestedTypes[0]; }
+          get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3Optional.Descriptor.NestedTypes[0]; }
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1402,7 +1402,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestProto3OptionalReflection.Descriptor.MessageTypes[1]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestProto3OptionalReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1431,9 +1431,9 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "nested_message" field.</summary>
     public const int NestedMessageFieldNumber = 1;
-    private global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage nestedMessage_;
+    private global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage nestedMessage_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage NestedMessage {
+    public global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage NestedMessage {
       get { return nestedMessage_; }
       set {
         nestedMessage_ = value;
@@ -1442,9 +1442,9 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "optional_nested_message" field.</summary>
     public const int OptionalNestedMessageFieldNumber = 2;
-    private global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage optionalNestedMessage_;
+    private global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage optionalNestedMessage_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage OptionalNestedMessage {
+    public global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage OptionalNestedMessage {
       get { return optionalNestedMessage_; }
       set {
         optionalNestedMessage_ = value;
@@ -1543,13 +1543,13 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
       }
       if (other.nestedMessage_ != null) {
         if (nestedMessage_ == null) {
-          NestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage();
+          NestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage();
         }
         NestedMessage.MergeFrom(other.NestedMessage);
       }
       if (other.optionalNestedMessage_ != null) {
         if (optionalNestedMessage_ == null) {
-          OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage();
+          OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage();
         }
         OptionalNestedMessage.MergeFrom(other.OptionalNestedMessage);
       }
@@ -1569,14 +1569,14 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
             break;
           case 10: {
             if (nestedMessage_ == null) {
-              NestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage();
+              NestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage();
             }
             input.ReadMessage(NestedMessage);
             break;
           }
           case 18: {
             if (optionalNestedMessage_ == null) {
-              OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage();
+              OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage();
             }
             input.ReadMessage(OptionalNestedMessage);
             break;
@@ -1597,14 +1597,14 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
             break;
           case 10: {
             if (nestedMessage_ == null) {
-              NestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage();
+              NestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage();
             }
             input.ReadMessage(NestedMessage);
             break;
           }
           case 18: {
             if (optionalNestedMessage_ == null) {
-              OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Types.NestedMessage();
+              OptionalNestedMessage = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Types.NestedMessage();
             }
             input.ReadMessage(OptionalNestedMessage);
             break;
@@ -1630,7 +1630,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public static pbr::MessageDescriptor Descriptor {
-          get { return global::FSharp.GrpcCodeGenerator.TestProtos.TestProto3OptionalMessage.Descriptor.NestedTypes[0]; }
+          get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestProto3OptionalMessage.Descriptor.NestedTypes[0]; }
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1807,7 +1807,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestProto3OptionalReflection.Descriptor.MessageTypes[2]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestProto3OptionalReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

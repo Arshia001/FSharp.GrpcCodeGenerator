@@ -38,7 +38,9 @@ syntax = "proto3";
 
 package protobuf_unittest_import;
 
-option csharp_namespace = "FSharp.GrpcCodeGenerator.TestProtos";
+// We replace the namespace in our test script so that we can have
+// separate namespaces for the F# code and the C# code 
+option csharp_namespace = "REPLACE_ME";
 
 // Test public import
 import public "unittest_import_public_proto3.proto";

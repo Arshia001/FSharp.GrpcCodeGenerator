@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace FSharp.GrpcCodeGenerator.TestProtos {
+namespace FSharp.GrpcCodeGenerator.TestProtos.CSharp {
 
   /// <summary>Holder for reflection information generated from unittest_custom_options_proto3.proto</summary>
   public static partial class UnittestCustomOptionsProto3Reflection {
@@ -133,32 +133,32 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
             "Z2dyZWdhdGU6VAoKc2VydmljZW9wdBIfLmdvb2dsZS5wcm90b2J1Zi5TZXJ2",
             "aWNlT3B0aW9ucxi577EHIAEoCzIcLnByb3RvYnVmX3VuaXR0ZXN0LkFnZ3Jl",
             "Z2F0ZTpSCgltZXRob2RvcHQSHi5nb29nbGUucHJvdG9idWYuTWV0aG9kT3B0",
-            "aW9ucxiJ6bIHIAEoCzIcLnByb3RvYnVmX3VuaXR0ZXN0LkFnZ3JlZ2F0ZUJe",
-            "qgIjRlNoYXJwLkdycGNDb2RlR2VuZXJhdG9yLlRlc3RQcm90b3Pw6MEd6q3A",
-            "5ST67IU7KghkEg5GaWxlQW5ub3RhdGlvbhoWEhROZXN0ZWRGaWxlQW5ub3Rh",
-            "dGlvbmIGcHJvdG8z"));
+            "aW9ucxiJ6bIHIAEoCzIcLnByb3RvYnVmX3VuaXR0ZXN0LkFnZ3JlZ2F0ZUJl",
+            "qgIqRlNoYXJwLkdycGNDb2RlR2VuZXJhdG9yLlRlc3RQcm90b3MuQ1NoYXJw",
+            "8OjBHeqtwOUk+uyFOyoIZBIORmlsZUFubm90YXRpb24aFhIUTmVzdGVkRmls",
+            "ZUFubm90YXRpb25iBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.Reflection.DescriptorReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::FSharp.GrpcCodeGenerator.TestProtos.MethodOpt1), typeof(global::FSharp.GrpcCodeGenerator.TestProtos.AggregateEnum), }, new pb::Extension[] { UnittestCustomOptionsProto3Extensions.FileOpt1, UnittestCustomOptionsProto3Extensions.MessageOpt1, UnittestCustomOptionsProto3Extensions.FieldOpt1, UnittestCustomOptionsProto3Extensions.OneofOpt1, UnittestCustomOptionsProto3Extensions.EnumOpt1, UnittestCustomOptionsProto3Extensions.EnumValueOpt1, UnittestCustomOptionsProto3Extensions.ServiceOpt1, UnittestCustomOptionsProto3Extensions.MethodOpt1, UnittestCustomOptionsProto3Extensions.BoolOpt, UnittestCustomOptionsProto3Extensions.Int32Opt, UnittestCustomOptionsProto3Extensions.Int64Opt, UnittestCustomOptionsProto3Extensions.Uint32Opt, UnittestCustomOptionsProto3Extensions.Uint64Opt, UnittestCustomOptionsProto3Extensions.Sint32Opt, UnittestCustomOptionsProto3Extensions.Sint64Opt, UnittestCustomOptionsProto3Extensions.Fixed32Opt, UnittestCustomOptionsProto3Extensions.Fixed64Opt, UnittestCustomOptionsProto3Extensions.Sfixed32Opt, UnittestCustomOptionsProto3Extensions.Sfixed64Opt, UnittestCustomOptionsProto3Extensions.FloatOpt, UnittestCustomOptionsProto3Extensions.DoubleOpt, UnittestCustomOptionsProto3Extensions.StringOpt, UnittestCustomOptionsProto3Extensions.BytesOpt, UnittestCustomOptionsProto3Extensions.EnumOpt, UnittestCustomOptionsProto3Extensions.MessageTypeOpt, UnittestCustomOptionsProto3Extensions.ComplexOpt1, UnittestCustomOptionsProto3Extensions.ComplexOpt2, UnittestCustomOptionsProto3Extensions.ComplexOpt3, UnittestCustomOptionsProto3Extensions.Fileopt, UnittestCustomOptionsProto3Extensions.Msgopt, UnittestCustomOptionsProto3Extensions.Fieldopt, UnittestCustomOptionsProto3Extensions.Enumopt, UnittestCustomOptionsProto3Extensions.Enumvalopt, UnittestCustomOptionsProto3Extensions.Serviceopt, UnittestCustomOptionsProto3Extensions.Methodopt }, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestMessageWithCustomOptions), global::FSharp.GrpcCodeGenerator.TestProtos.TestMessageWithCustomOptions.Parser, new[]{ "Field1", "OneofField" }, new[]{ "AnOneof" }, new[]{ typeof(global::FSharp.GrpcCodeGenerator.TestProtos.TestMessageWithCustomOptions.Types.AnEnum) }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionFooRequest), global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionFooRequest.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionFooResponse), global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionFooResponse.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionFooClientMessage), global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionFooClientMessage.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionFooServerMessage), global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionFooServerMessage.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageContainingEnum), global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageContainingEnum.Parser, null, null, new[]{ typeof(global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageContainingEnum.Types.TestEnumType) }, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageInvalidAsOptionType), global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageInvalidAsOptionType.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionMinIntegerValues), global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionMinIntegerValues.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionMaxIntegerValues), global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionMaxIntegerValues.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionOtherValues), global::FSharp.GrpcCodeGenerator.TestProtos.CustomOptionOtherValues.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.SettingRealsFromPositiveInts), global::FSharp.GrpcCodeGenerator.TestProtos.SettingRealsFromPositiveInts.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.SettingRealsFromNegativeInts), global::FSharp.GrpcCodeGenerator.TestProtos.SettingRealsFromNegativeInts.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType1), global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType1.Parser, new[]{ "Foo", "Foo2", "Foo3", "Foo4" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2), global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Parser, new[]{ "Bar", "Baz", "Fred", "Barney" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4), global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4.Parser, new[]{ "Waldo" }, null, null, new pb::Extension[] { global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4.Extensions.ComplexOpt4 }, null)}),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType3), global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType3.Parser, new[]{ "Qux" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.VariousComplexOptions), global::FSharp.GrpcCodeGenerator.TestProtos.VariousComplexOptions.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate), global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate.Parser, new[]{ "I", "S", "Sub" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.AggregateMessage), global::FSharp.GrpcCodeGenerator.TestProtos.AggregateMessage.Parser, new[]{ "Fieldname" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.NestedOptionType), global::FSharp.GrpcCodeGenerator.TestProtos.NestedOptionType.Parser, null, null, new[]{ typeof(global::FSharp.GrpcCodeGenerator.TestProtos.NestedOptionType.Types.NestedEnum) }, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.NestedOptionType.Types.NestedMessage), global::FSharp.GrpcCodeGenerator.TestProtos.NestedOptionType.Types.NestedMessage.Parser, new[]{ "NestedField" }, null, null, null, null)})
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MethodOpt1), typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.AggregateEnum), }, new pb::Extension[] { UnittestCustomOptionsProto3Extensions.FileOpt1, UnittestCustomOptionsProto3Extensions.MessageOpt1, UnittestCustomOptionsProto3Extensions.FieldOpt1, UnittestCustomOptionsProto3Extensions.OneofOpt1, UnittestCustomOptionsProto3Extensions.EnumOpt1, UnittestCustomOptionsProto3Extensions.EnumValueOpt1, UnittestCustomOptionsProto3Extensions.ServiceOpt1, UnittestCustomOptionsProto3Extensions.MethodOpt1, UnittestCustomOptionsProto3Extensions.BoolOpt, UnittestCustomOptionsProto3Extensions.Int32Opt, UnittestCustomOptionsProto3Extensions.Int64Opt, UnittestCustomOptionsProto3Extensions.Uint32Opt, UnittestCustomOptionsProto3Extensions.Uint64Opt, UnittestCustomOptionsProto3Extensions.Sint32Opt, UnittestCustomOptionsProto3Extensions.Sint64Opt, UnittestCustomOptionsProto3Extensions.Fixed32Opt, UnittestCustomOptionsProto3Extensions.Fixed64Opt, UnittestCustomOptionsProto3Extensions.Sfixed32Opt, UnittestCustomOptionsProto3Extensions.Sfixed64Opt, UnittestCustomOptionsProto3Extensions.FloatOpt, UnittestCustomOptionsProto3Extensions.DoubleOpt, UnittestCustomOptionsProto3Extensions.StringOpt, UnittestCustomOptionsProto3Extensions.BytesOpt, UnittestCustomOptionsProto3Extensions.EnumOpt, UnittestCustomOptionsProto3Extensions.MessageTypeOpt, UnittestCustomOptionsProto3Extensions.ComplexOpt1, UnittestCustomOptionsProto3Extensions.ComplexOpt2, UnittestCustomOptionsProto3Extensions.ComplexOpt3, UnittestCustomOptionsProto3Extensions.Fileopt, UnittestCustomOptionsProto3Extensions.Msgopt, UnittestCustomOptionsProto3Extensions.Fieldopt, UnittestCustomOptionsProto3Extensions.Enumopt, UnittestCustomOptionsProto3Extensions.Enumvalopt, UnittestCustomOptionsProto3Extensions.Serviceopt, UnittestCustomOptionsProto3Extensions.Methodopt }, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMessageWithCustomOptions), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMessageWithCustomOptions.Parser, new[]{ "Field1", "OneofField" }, new[]{ "AnOneof" }, new[]{ typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.TestMessageWithCustomOptions.Types.AnEnum) }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionFooRequest), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionFooRequest.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionFooResponse), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionFooResponse.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionFooClientMessage), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionFooClientMessage.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionFooServerMessage), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionFooServerMessage.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageContainingEnum), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageContainingEnum.Parser, null, null, new[]{ typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageContainingEnum.Types.TestEnumType) }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageInvalidAsOptionType), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageInvalidAsOptionType.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionMinIntegerValues), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionMinIntegerValues.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionMaxIntegerValues), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionMaxIntegerValues.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionOtherValues), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.CustomOptionOtherValues.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.SettingRealsFromPositiveInts), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.SettingRealsFromPositiveInts.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.SettingRealsFromNegativeInts), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.SettingRealsFromNegativeInts.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType1), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType1.Parser, new[]{ "Foo", "Foo2", "Foo3", "Foo4" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Parser, new[]{ "Bar", "Baz", "Fred", "Barney" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4.Parser, new[]{ "Waldo" }, null, null, new pb::Extension[] { global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4.Extensions.ComplexOpt4 }, null)}),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType3), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType3.Parser, new[]{ "Qux" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.VariousComplexOptions), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.VariousComplexOptions.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate.Parser, new[]{ "I", "S", "Sub" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.AggregateMessage), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.AggregateMessage.Parser, new[]{ "Fieldname" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.NestedOptionType), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.NestedOptionType.Parser, null, null, new[]{ typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.NestedOptionType.Types.NestedEnum) }, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.NestedOptionType.Types.NestedMessage), global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.NestedOptionType.Types.NestedMessage.Parser, new[]{ "NestedField" }, null, null, null, null)})
           }));
     }
     #endregion
@@ -180,8 +180,8 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
       new pb::Extension<global::Google.Protobuf.Reflection.EnumValueOptions, int>(1560678, pb::FieldCodec.ForInt32(12485424, 0));
     public static readonly pb::Extension<global::Google.Protobuf.Reflection.ServiceOptions, long> ServiceOpt1 =
       new pb::Extension<global::Google.Protobuf.Reflection.ServiceOptions, long>(7887650, pb::FieldCodec.ForSInt64(63101200, 0L));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MethodOptions, global::FSharp.GrpcCodeGenerator.TestProtos.MethodOpt1> MethodOpt1 =
-      new pb::Extension<global::Google.Protobuf.Reflection.MethodOptions, global::FSharp.GrpcCodeGenerator.TestProtos.MethodOpt1>(7890860, pb::FieldCodec.ForEnum(63126880, x => (int) x, x => (global::FSharp.GrpcCodeGenerator.TestProtos.MethodOpt1) x, global::FSharp.GrpcCodeGenerator.TestProtos.MethodOpt1.Unspecified));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MethodOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MethodOpt1> MethodOpt1 =
+      new pb::Extension<global::Google.Protobuf.Reflection.MethodOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MethodOpt1>(7890860, pb::FieldCodec.ForEnum(63126880, x => (int) x, x => (global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MethodOpt1) x, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.MethodOpt1.Unspecified));
     public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, bool> BoolOpt =
       new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, bool>(7706090, pb::FieldCodec.ForBool(61648720, false));
     public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, int> Int32Opt =
@@ -212,30 +212,30 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
       new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, string>(7673285, pb::FieldCodec.ForString(61386282, ""));
     public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, pb::ByteString> BytesOpt =
       new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, pb::ByteString>(7673238, pb::FieldCodec.ForBytes(61385906, pb::ByteString.Empty));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageContainingEnum.Types.TestEnumType> EnumOpt =
-      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageContainingEnum.Types.TestEnumType>(7673233, pb::FieldCodec.ForEnum(61385864, x => (int) x, x => (global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageContainingEnum.Types.TestEnumType) x, global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageContainingEnum.Types.TestEnumType.TestOptionEnumUnspecified));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageInvalidAsOptionType> MessageTypeOpt =
-      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageInvalidAsOptionType>(7665967, pb::FieldCodec.ForMessage(61327738, global::FSharp.GrpcCodeGenerator.TestProtos.DummyMessageInvalidAsOptionType.Parser));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType1> ComplexOpt1 =
-      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType1>(7646756, pb::FieldCodec.ForMessage(61174050, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType1.Parser));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2> ComplexOpt2 =
-      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2>(7636949, pb::FieldCodec.ForMessage(61095594, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Parser));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType3> ComplexOpt3 =
-      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType3>(7636463, pb::FieldCodec.ForMessage(61091706, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType3.Parser));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FileOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate> Fileopt =
-      new pb::Extension<global::Google.Protobuf.Reflection.FileOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate>(15478479, pb::FieldCodec.ForMessage(123827834, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate.Parser));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate> Msgopt =
-      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate>(15480088, pb::FieldCodec.ForMessage(123840706, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate.Parser));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate> Fieldopt =
-      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate>(15481374, pb::FieldCodec.ForMessage(123850994, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate.Parser));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.EnumOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate> Enumopt =
-      new pb::Extension<global::Google.Protobuf.Reflection.EnumOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate>(15483218, pb::FieldCodec.ForMessage(123865746, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate.Parser));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.EnumValueOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate> Enumvalopt =
-      new pb::Extension<global::Google.Protobuf.Reflection.EnumValueOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate>(15486921, pb::FieldCodec.ForMessage(123895370, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate.Parser));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.ServiceOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate> Serviceopt =
-      new pb::Extension<global::Google.Protobuf.Reflection.ServiceOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate>(15497145, pb::FieldCodec.ForMessage(123977162, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate.Parser));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MethodOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate> Methodopt =
-      new pb::Extension<global::Google.Protobuf.Reflection.MethodOptions, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate>(15512713, pb::FieldCodec.ForMessage(124101706, global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageContainingEnum.Types.TestEnumType> EnumOpt =
+      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageContainingEnum.Types.TestEnumType>(7673233, pb::FieldCodec.ForEnum(61385864, x => (int) x, x => (global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageContainingEnum.Types.TestEnumType) x, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageContainingEnum.Types.TestEnumType.TestOptionEnumUnspecified));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageInvalidAsOptionType> MessageTypeOpt =
+      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageInvalidAsOptionType>(7665967, pb::FieldCodec.ForMessage(61327738, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.DummyMessageInvalidAsOptionType.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType1> ComplexOpt1 =
+      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType1>(7646756, pb::FieldCodec.ForMessage(61174050, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType1.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2> ComplexOpt2 =
+      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2>(7636949, pb::FieldCodec.ForMessage(61095594, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType3> ComplexOpt3 =
+      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType3>(7636463, pb::FieldCodec.ForMessage(61091706, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType3.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FileOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate> Fileopt =
+      new pb::Extension<global::Google.Protobuf.Reflection.FileOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate>(15478479, pb::FieldCodec.ForMessage(123827834, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate> Msgopt =
+      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate>(15480088, pb::FieldCodec.ForMessage(123840706, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate> Fieldopt =
+      new pb::Extension<global::Google.Protobuf.Reflection.FieldOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate>(15481374, pb::FieldCodec.ForMessage(123850994, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.EnumOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate> Enumopt =
+      new pb::Extension<global::Google.Protobuf.Reflection.EnumOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate>(15483218, pb::FieldCodec.ForMessage(123865746, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.EnumValueOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate> Enumvalopt =
+      new pb::Extension<global::Google.Protobuf.Reflection.EnumValueOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate>(15486921, pb::FieldCodec.ForMessage(123895370, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.ServiceOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate> Serviceopt =
+      new pb::Extension<global::Google.Protobuf.Reflection.ServiceOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate>(15497145, pb::FieldCodec.ForMessage(123977162, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate.Parser));
+    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MethodOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate> Methodopt =
+      new pb::Extension<global::Google.Protobuf.Reflection.MethodOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate>(15512713, pb::FieldCodec.ForMessage(124101706, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate.Parser));
   }
 
   #region Enums
@@ -269,7 +269,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[0]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -522,7 +522,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[1]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -658,7 +658,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[2]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -794,7 +794,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[3]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -930,7 +930,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[4]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1066,7 +1066,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[5]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1215,7 +1215,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[6]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1351,7 +1351,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[7]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1487,7 +1487,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[8]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1623,7 +1623,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[9]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1759,7 +1759,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[10]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1895,7 +1895,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[11]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2031,7 +2031,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[12]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2302,7 +2302,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[13]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2333,9 +2333,9 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "bar" field.</summary>
     public const int BarFieldNumber = 1;
-    private global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType1 bar_;
+    private global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType1 bar_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType1 Bar {
+    public global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType1 Bar {
       get { return bar_; }
       set {
         bar_ = value;
@@ -2355,9 +2355,9 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "fred" field.</summary>
     public const int FredFieldNumber = 3;
-    private global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4 fred_;
+    private global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4 fred_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4 Fred {
+    public global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4 Fred {
       get { return fred_; }
       set {
         fred_ = value;
@@ -2366,11 +2366,11 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "barney" field.</summary>
     public const int BarneyFieldNumber = 4;
-    private static readonly pb::FieldCodec<global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4> _repeated_barney_codec
-        = pb::FieldCodec.ForMessage(34, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4.Parser);
-    private readonly pbc::RepeatedField<global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4> barney_ = new pbc::RepeatedField<global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4>();
+    private static readonly pb::FieldCodec<global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4> _repeated_barney_codec
+        = pb::FieldCodec.ForMessage(34, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4.Parser);
+    private readonly pbc::RepeatedField<global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4> barney_ = new pbc::RepeatedField<global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4> Barney {
+    public pbc::RepeatedField<global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4> Barney {
       get { return barney_; }
     }
 
@@ -2484,7 +2484,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
       }
       if (other.bar_ != null) {
         if (bar_ == null) {
-          Bar = new global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType1();
+          Bar = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType1();
         }
         Bar.MergeFrom(other.Bar);
       }
@@ -2493,7 +2493,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
       }
       if (other.fred_ != null) {
         if (fred_ == null) {
-          Fred = new global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4();
+          Fred = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4();
         }
         Fred.MergeFrom(other.Fred);
       }
@@ -2514,7 +2514,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
             break;
           case 10: {
             if (bar_ == null) {
-              Bar = new global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType1();
+              Bar = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType1();
             }
             input.ReadMessage(Bar);
             break;
@@ -2525,7 +2525,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
           }
           case 26: {
             if (fred_ == null) {
-              Fred = new global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4();
+              Fred = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4();
             }
             input.ReadMessage(Fred);
             break;
@@ -2550,7 +2550,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
             break;
           case 10: {
             if (bar_ == null) {
-              Bar = new global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType1();
+              Bar = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType1();
             }
             input.ReadMessage(Bar);
             break;
@@ -2561,7 +2561,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
           }
           case 26: {
             if (fred_ == null) {
-              Fred = new global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4();
+              Fred = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4();
             }
             input.ReadMessage(Fred);
             break;
@@ -2591,7 +2591,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public static pbr::MessageDescriptor Descriptor {
-          get { return global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Descriptor.NestedTypes[0]; }
+          get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Descriptor.NestedTypes[0]; }
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2753,8 +2753,8 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
         /// <summary>Container for extensions for other messages declared in the ComplexOptionType4 message type.</summary>
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public static partial class Extensions {
-          public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4> ComplexOpt4 =
-            new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4>(7633546, pb::FieldCodec.ForMessage(61068370, global::FSharp.GrpcCodeGenerator.TestProtos.ComplexOptionType2.Types.ComplexOptionType4.Parser));
+          public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4> ComplexOpt4 =
+            new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4>(7633546, pb::FieldCodec.ForMessage(61068370, global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.ComplexOptionType2.Types.ComplexOptionType4.Parser));
         }
         #endregion
 
@@ -2777,7 +2777,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[14]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2952,7 +2952,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[15]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3091,7 +3091,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[16]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3143,12 +3143,12 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     /// <summary>Field number for the "sub" field.</summary>
     public const int SubFieldNumber = 3;
-    private global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate sub_;
+    private global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate sub_;
     /// <summary>
     /// A nested object
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate Sub {
+    public global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate Sub {
       get { return sub_; }
       set {
         sub_ = value;
@@ -3266,7 +3266,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
       }
       if (other.sub_ != null) {
         if (sub_ == null) {
-          Sub = new global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate();
+          Sub = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate();
         }
         Sub.MergeFrom(other.Sub);
       }
@@ -3294,7 +3294,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
           }
           case 26: {
             if (sub_ == null) {
-              Sub = new global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate();
+              Sub = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate();
             }
             input.ReadMessage(Sub);
             break;
@@ -3323,7 +3323,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
           }
           case 26: {
             if (sub_ == null) {
-              Sub = new global::FSharp.GrpcCodeGenerator.TestProtos.Aggregate();
+              Sub = new global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.Aggregate();
             }
             input.ReadMessage(Sub);
             break;
@@ -3347,7 +3347,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[17]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3522,7 +3522,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::FSharp.GrpcCodeGenerator.TestProtos.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[18]; }
+      get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.UnittestCustomOptionsProto3Reflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3665,7 +3665,7 @@ namespace FSharp.GrpcCodeGenerator.TestProtos {
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         public static pbr::MessageDescriptor Descriptor {
-          get { return global::FSharp.GrpcCodeGenerator.TestProtos.NestedOptionType.Descriptor.NestedTypes[0]; }
+          get { return global::FSharp.GrpcCodeGenerator.TestProtos.CSharp.NestedOptionType.Descriptor.NestedTypes[0]; }
         }
 
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
