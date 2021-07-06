@@ -433,6 +433,27 @@ type FileDescriptorProto = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasName =
+        match me.Name with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearName () = me.Name <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasPackage =
+        match me.Package with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearPackage () = me.Package <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasSyntax =
+        match me.Syntax with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearSyntax () = me.Syntax <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -615,6 +636,13 @@ type DescriptorProto = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasName =
+        match me.Name with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearName () = me.Name <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -748,6 +776,20 @@ module DescriptorProto =
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasStart =
+                match me.Start with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearStart () = me.Start <- ValueNone
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasEnd =
+                match me.End with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearEnd () = me.End <- ValueNone
             interface global.Google.Protobuf.IBufferMessage with
                 [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
                 member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -835,6 +877,20 @@ module DescriptorProto =
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasStart =
+                match me.Start with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearStart () = me.Start <- ValueNone
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasEnd =
+                match me.End with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearEnd () = me.End <- ValueNone
             interface global.Google.Protobuf.IBufferMessage with
                 [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
                 member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -1112,6 +1168,76 @@ type FieldDescriptorProto = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasName =
+        match me.Name with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearName () = me.Name <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasExtendee =
+        match me.Extendee with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearExtendee () = me.Extendee <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasNumber =
+        match me.Number with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearNumber () = me.Number <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasLabel =
+        match me.Label with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearLabel () = me.Label <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasType =
+        match me.Type with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearType () = me.Type <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasTypeName =
+        match me.TypeName with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearTypeName () = me.TypeName <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasDefaultValue =
+        match me.DefaultValue with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearDefaultValue () = me.DefaultValue <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOneofIndex =
+        match me.OneofIndex with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOneofIndex () = me.OneofIndex <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasJsonName =
+        match me.JsonName with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearJsonName () = me.JsonName <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasProto3Optional =
+        match me.Proto3Optional with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearProto3Optional () = me.Proto3Optional <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -1252,6 +1378,13 @@ type OneofDescriptorProto = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasName =
+        match me.Name with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearName () = me.Name <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -1362,6 +1495,13 @@ type EnumDescriptorProto = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasName =
+        match me.Name with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearName () = me.Name <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -1459,6 +1599,20 @@ module EnumDescriptorProto =
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasStart =
+                match me.Start with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearStart () = me.Start <- ValueNone
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasEnd =
+                match me.End with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearEnd () = me.End <- ValueNone
             interface global.Google.Protobuf.IBufferMessage with
                 [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
                 member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -1559,6 +1713,20 @@ type EnumValueDescriptorProto = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasName =
+        match me.Name with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearName () = me.Name <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasNumber =
+        match me.Number with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearNumber () = me.Number <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -1658,6 +1826,13 @@ type ServiceDescriptorProto = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasName =
+        match me.Name with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearName () = me.Name <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -1795,6 +1970,41 @@ type MethodDescriptorProto = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasName =
+        match me.Name with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearName () = me.Name <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasInputType =
+        match me.InputType with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearInputType () = me.InputType <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOutputType =
+        match me.OutputType with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOutputType () = me.OutputType <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasClientStreaming =
+        match me.ClientStreaming with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearClientStreaming () = me.ClientStreaming <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasServerStreaming =
+        match me.ServerStreaming with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearServerStreaming () = me.ServerStreaming <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -2102,6 +2312,146 @@ type FileOptions = {
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasJavaPackage =
+        match me.JavaPackage with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearJavaPackage () = me.JavaPackage <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasJavaOuterClassname =
+        match me.JavaOuterClassname with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearJavaOuterClassname () = me.JavaOuterClassname <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptimizeFor =
+        match me.OptimizeFor with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptimizeFor () = me.OptimizeFor <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasJavaMultipleFiles =
+        match me.JavaMultipleFiles with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearJavaMultipleFiles () = me.JavaMultipleFiles <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasGoPackage =
+        match me.GoPackage with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearGoPackage () = me.GoPackage <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasCcGenericServices =
+        match me.CcGenericServices with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearCcGenericServices () = me.CcGenericServices <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasJavaGenericServices =
+        match me.JavaGenericServices with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearJavaGenericServices () = me.JavaGenericServices <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasPyGenericServices =
+        match me.PyGenericServices with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearPyGenericServices () = me.PyGenericServices <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasJavaGenerateEqualsAndHash =
+        match me.JavaGenerateEqualsAndHash with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearJavaGenerateEqualsAndHash () = me.JavaGenerateEqualsAndHash <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasDeprecated =
+        match me.Deprecated with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearDeprecated () = me.Deprecated <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasJavaStringCheckUtf8 =
+        match me.JavaStringCheckUtf8 with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearJavaStringCheckUtf8 () = me.JavaStringCheckUtf8 <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasCcEnableArenas =
+        match me.CcEnableArenas with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearCcEnableArenas () = me.CcEnableArenas <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasObjcClassPrefix =
+        match me.ObjcClassPrefix with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearObjcClassPrefix () = me.ObjcClassPrefix <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasCsharpNamespace =
+        match me.CsharpNamespace with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearCsharpNamespace () = me.CsharpNamespace <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasSwiftPrefix =
+        match me.SwiftPrefix with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearSwiftPrefix () = me.SwiftPrefix <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasPhpClassPrefix =
+        match me.PhpClassPrefix with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearPhpClassPrefix () = me.PhpClassPrefix <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasPhpNamespace =
+        match me.PhpNamespace with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearPhpNamespace () = me.PhpNamespace <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasPhpGenericServices =
+        match me.PhpGenericServices with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearPhpGenericServices () = me.PhpGenericServices <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasPhpMetadataNamespace =
+        match me.PhpMetadataNamespace with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearPhpMetadataNamespace () = me.PhpMetadataNamespace <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasRubyPackage =
+        match me.RubyPackage with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearRubyPackage () = me.RubyPackage <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -2300,6 +2650,34 @@ type MessageOptions = {
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasMessageSetWireFormat =
+        match me.MessageSetWireFormat with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearMessageSetWireFormat () = me.MessageSetWireFormat <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasNoStandardDescriptorAccessor =
+        match me.NoStandardDescriptorAccessor with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearNoStandardDescriptorAccessor () = me.NoStandardDescriptorAccessor <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasDeprecated =
+        match me.Deprecated with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearDeprecated () = me.Deprecated <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasMapEntry =
+        match me.MapEntry with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearMapEntry () = me.MapEntry <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -2467,6 +2845,48 @@ type FieldOptions = {
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasCtype =
+        match me.Ctype with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearCtype () = me.Ctype <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasPacked =
+        match me.Packed with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearPacked () = me.Packed <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasDeprecated =
+        match me.Deprecated with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearDeprecated () = me.Deprecated <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasLazy =
+        match me.Lazy with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearLazy () = me.Lazy <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasJstype =
+        match me.Jstype with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearJstype () = me.Jstype <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasWeak =
+        match me.Weak with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearWeak () = me.Weak <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -2694,6 +3114,20 @@ type EnumOptions = {
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasAllowAlias =
+        match me.AllowAlias with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearAllowAlias () = me.AllowAlias <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasDeprecated =
+        match me.Deprecated with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearDeprecated () = me.Deprecated <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -2800,6 +3234,13 @@ type EnumValueOptions = {
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasDeprecated =
+        match me.Deprecated with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearDeprecated () = me.Deprecated <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -2903,6 +3344,13 @@ type ServiceOptions = {
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasDeprecated =
+        match me.Deprecated with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearDeprecated () = me.Deprecated <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -3017,6 +3465,20 @@ type MethodOptions = {
                 if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)
                 then me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasDeprecated =
+        match me.Deprecated with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearDeprecated () = me.Deprecated <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasIdempotencyLevel =
+        match me.IdempotencyLevel with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearIdempotencyLevel () = me.IdempotencyLevel <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -3177,6 +3639,48 @@ type UninterpretedOption = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasIdentifierValue =
+        match me.IdentifierValue with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearIdentifierValue () = me.IdentifierValue <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasPositiveIntValue =
+        match me.PositiveIntValue with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearPositiveIntValue () = me.PositiveIntValue <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasNegativeIntValue =
+        match me.NegativeIntValue with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearNegativeIntValue () = me.NegativeIntValue <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasDoubleValue =
+        match me.DoubleValue with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearDoubleValue () = me.DoubleValue <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasStringValue =
+        match me.StringValue with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearStringValue () = me.StringValue <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasAggregateValue =
+        match me.AggregateValue with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearAggregateValue () = me.AggregateValue <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -3232,8 +3736,8 @@ module UninterpretedOption =
     module Types =
         type NamePart = {
             mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-            mutable NamePart: string
-            mutable IsExtension: bool
+            mutable NamePart: ValueOption<string>
+            mutable IsExtension: ValueOption<bool>
         } with
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member me.Clone() : NamePart = {
@@ -3243,27 +3747,27 @@ module UninterpretedOption =
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-                if me.NamePart <> NamePart.DefaultValue.NamePart
+                if me.NamePart <> ValueNone
                 then
                     output.WriteRawTag(10uy)
-                    output.WriteString(me.NamePart)
-                if me.IsExtension <> NamePart.DefaultValue.IsExtension
+                    output.WriteString(me.NamePart.Value)
+                if me.IsExtension <> ValueNone
                 then
                     output.WriteRawTag(16uy)
-                    output.WriteBool(me.IsExtension)
+                    output.WriteBool(me.IsExtension.Value)
                 if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.CalculateSize() =
                 let mutable size = 0
-                if me.NamePart <> NamePart.DefaultValue.NamePart then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.NamePart)
-                if me.IsExtension <> NamePart.DefaultValue.IsExtension then size <- size + 2
+                if me.NamePart <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.NamePart.Value)
+                if me.IsExtension <> ValueNone then size <- size + 2
                 if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
                 size
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.MergeFrom(other: NamePart) =
-                if other.NamePart <> NamePart.DefaultValue.NamePart
+                if other.NamePart <> ValueNone
                 then me.NamePart <- other.NamePart
-                if other.IsExtension <> NamePart.DefaultValue.IsExtension
+                if other.IsExtension <> ValueNone
                 then me.IsExtension <- other.IsExtension
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -3272,12 +3776,26 @@ module UninterpretedOption =
                 while tag <> 0u do
                     match tag with
                     | 10u ->
-                        me.NamePart <- input.ReadString()
+                        me.NamePart <- ValueSome(input.ReadString())
                     | 16u ->
-                        me.IsExtension <- input.ReadBool()
+                        me.IsExtension <- ValueSome(input.ReadBool())
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasNamePart =
+                match me.NamePart with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearNamePart () = me.NamePart <- ValueNone
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasIsExtension =
+                match me.IsExtension with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearIsExtension () = me.IsExtension <- ValueNone
             interface global.Google.Protobuf.IBufferMessage with
                 [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
                 member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -3301,14 +3819,14 @@ module UninterpretedOption =
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let internal DefaultValue = {
                 NamePart._UnknownFields = null
-                NamePart.NamePart = ""
-                NamePart.IsExtension = false
+                NamePart.NamePart = ValueNone
+                NamePart.IsExtension = ValueNone
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let empty () = {
                 NamePart._UnknownFields = null
-                NamePart.NamePart = ""
-                NamePart.IsExtension = false
+                NamePart.NamePart = ValueNone
+                NamePart.IsExtension = ValueNone
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let Parser = global.Google.Protobuf.MessageParser<NamePart>(global.System.Func<_>(empty))
@@ -3451,6 +3969,20 @@ module SourceCodeInfo =
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasLeadingComments =
+                match me.LeadingComments with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearLeadingComments () = me.LeadingComments <- ValueNone
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasTrailingComments =
+                match me.TrailingComments with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearTrailingComments () = me.TrailingComments <- ValueNone
             interface global.Google.Protobuf.IBufferMessage with
                 [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
                 member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -3633,6 +4165,27 @@ module GeneratedCodeInfo =
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasSourceFile =
+                match me.SourceFile with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearSourceFile () = me.SourceFile <- ValueNone
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasBegin =
+                match me.Begin with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearBegin () = me.Begin <- ValueNone
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasEnd =
+                match me.End with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearEnd () = me.End <- ValueNone
             interface global.Google.Protobuf.IBufferMessage with
                 [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
                 member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)

@@ -235,6 +235,35 @@ let writeAdditionalOneOfMethods (ctx: MessageContext) =
                 
                 ctx.File.Writer.Outdent()
 
+let private requiresPresenceFields (file: File) (field: Field): bool =
+    (field.Proto3Optional |> ValueOption.defaultWith (fun _ -> false))
+    || (not (field.Type.Value = Google.Protobuf.FSharp.Reflection.FieldDescriptorProto.Types.Type.Message)
+        && not (field.Label.Value = Google.Protobuf.FSharp.Reflection.FieldDescriptorProto.Types.Label.Repeated)
+        && (field.OneofIndex = ValueNone)
+        && (file.Syntax |> ValueOption.defaultWith (fun _ -> "proto2")) = "proto2")
+
+let writeAdditionalOptionalMethods (ctx: MessageContext) =
+    let fields =
+        ctx.OrderedFSFields
+        |> Seq.choose (function Single f -> Some([f]) | OneOf (_, f) -> Some(f))
+        |> Seq.concat
+    for f in fields do
+        if requiresPresenceFields ctx.File.File f then
+            let propertyName = propertyName (ctx.Message, f)
+            
+            Helpers.writeGeneratedCodeAttribute ctx.File
+            ctx.File.Writer.WriteLine $"member me.Has{propertyName} ="
+            ctx.File.Writer.Indent()
+            
+            ctx.File.Writer.WriteLine $"match me.{propertyName} with"
+            ctx.File.Writer.WriteLine $"| ValueNone -> false"
+            ctx.File.Writer.WriteLine $"| ValueSome(_) -> true"
+            
+            ctx.File.Writer.Outdent()
+
+            Helpers.writeGeneratedCodeAttribute ctx.File
+            ctx.File.Writer.WriteLine $"member me.Clear{propertyName} () = me.{propertyName} <- ValueNone"
+
 let rec writeMessageModule (ctx: MessageContext) =
     ctx.File.Writer.WriteLine $"module {Helpers.accessSpecifier ctx.File}{typeName ctx} ="
     ctx.File.Writer.Indent()
@@ -361,6 +390,7 @@ and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Messag
     writeMessageSerializationMethods ctx
     writeMergingMethods ctx
     writeAdditionalOneOfMethods ctx
+    writeAdditionalOptionalMethods ctx
 
     writeMessageInterfaces ctx
 
