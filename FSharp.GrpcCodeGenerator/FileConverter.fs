@@ -71,7 +71,7 @@ let rec writeGeneratedCodeInfo (ctx: FileContext, outerTypeName: string, msg: Me
             "[| "
             (
                 msg.Extension
-                |> Seq.map (fun e -> Helpers.fullExtensionName(ctx.File, e))
+                |> Seq.map (fun e -> $"{typeName}.Extensions.{Helpers.snakeToCamelCase (Helpers.pascalToCamelCase e.Name.Value)}")
                 |> String.concat "; "
             )
             " |], "
