@@ -25,6 +25,9 @@ let private findFile (req: Compiler.CodeGeneratorRequest) name =
     |> Seq.filter (fun f -> f.Name = ValueSome name)
     |> Seq.exactlyOne
 
+let private findPublicDependency (req: Compiler.CodeGeneratorRequest) (index: int32) =
+    req.ProtoFile.[index]
+
 let parseOptions (opts: string voption) =
     let defaultOptions = {
         InternalAccess = false
@@ -57,11 +60,24 @@ let generate (req: Compiler.CodeGeneratorRequest) : Compiler.CodeGeneratorRespon
             req.FileToGenerate
             |> Seq.map (fun name ->
                 let file = findFile req name
+                let publicDeps = file.PublicDependency |> Seq.map (fun i -> findPublicDependency req i)
                 let deps =
                     file.Dependency
                     |> Seq.map (findFile req)
+                let publicDeps =
+                    deps
+                    |> Seq.append [file]
+                    |> Seq.map (fun d -> d.PublicDependency)
+                    |> Seq.collect (fun c -> c)
+                    |> Seq.distinct
+                    |> Seq.map (fun i -> findPublicDependency req i)
+                let uniqueDeps =
+                    deps
+                    |> Seq.append publicDeps
+                    |> Seq.distinct
                     |> Seq.toList
-                generateFile (file, deps, options)
+
+                generateFile (file, uniqueDeps, options)
             )
 
         let r = { Compiler.CodeGeneratorResponse.empty() with SupportedFeatures = ValueSome <| uint64 Compiler.CodeGeneratorResponse.Types.Feature.Proto3Optional }
