@@ -148,11 +148,11 @@ type Type = {
             | 10u ->
                 me.Name <- ValueSome(input.ReadString())
             | 18u ->
-                me.Fields.AddEntriesFrom(&input,Type.RepeatedFieldsCodec)
+                me.Fields.AddEntriesFrom(&input, Type.RepeatedFieldsCodec)
             | 26u ->
-                me.Oneofs.AddEntriesFrom(&input,Type.RepeatedOneofsCodec)
+                me.Oneofs.AddEntriesFrom(&input, Type.RepeatedOneofsCodec)
             | 34u ->
-                me.Options.AddEntriesFrom(&input,Type.RepeatedOptionsCodec)
+                me.Options.AddEntriesFrom(&input, Type.RepeatedOptionsCodec)
             | 42u ->
                 if me.SourceContext.IsNone
                 then me.SourceContext <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext.empty())
@@ -337,7 +337,7 @@ type Field = {
             | 64u ->
                 me.Packed <- ValueSome(input.ReadBool())
             | 74u ->
-                me.Options.AddEntriesFrom(&input,Field.RepeatedOptionsCodec)
+                me.Options.AddEntriesFrom(&input, Field.RepeatedOptionsCodec)
             | 82u ->
                 me.JsonName <- ValueSome(input.ReadString())
             | 90u ->
@@ -498,9 +498,9 @@ type Enum = {
             | 10u ->
                 me.Name <- ValueSome(input.ReadString())
             | 18u ->
-                me.Enumvalue.AddEntriesFrom(&input,Enum.RepeatedEnumvalueCodec)
+                me.Enumvalue.AddEntriesFrom(&input, Enum.RepeatedEnumvalueCodec)
             | 26u ->
-                me.Options.AddEntriesFrom(&input,Enum.RepeatedOptionsCodec)
+                me.Options.AddEntriesFrom(&input, Enum.RepeatedOptionsCodec)
             | 34u ->
                 if me.SourceContext.IsNone
                 then me.SourceContext <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext.empty())
@@ -608,7 +608,7 @@ type EnumValue = {
             | 16u ->
                 me.Number <- ValueSome(input.ReadInt32())
             | 26u ->
-                me.Options.AddEntriesFrom(&input,EnumValue.RepeatedOptionsCodec)
+                me.Options.AddEntriesFrom(&input, EnumValue.RepeatedOptionsCodec)
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()

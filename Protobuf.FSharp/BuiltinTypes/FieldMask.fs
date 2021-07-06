@@ -60,7 +60,7 @@ type FieldMask = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Paths.AddEntriesFrom(&input,FieldMask.RepeatedPathsCodec)
+                me.Paths.AddEntriesFrom(&input, FieldMask.RepeatedPathsCodec)
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
