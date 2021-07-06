@@ -1,4 +1,4 @@
-module Tests
+module Issue6
 
 open System
 open Xunit

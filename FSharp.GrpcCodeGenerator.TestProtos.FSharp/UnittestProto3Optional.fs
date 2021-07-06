@@ -413,6 +413,139 @@ type TestProto3Optional = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalInt32 =
+        match me.OptionalInt32 with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalInt32 () = me.OptionalInt32 <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalInt64 =
+        match me.OptionalInt64 with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalInt64 () = me.OptionalInt64 <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalUint32 =
+        match me.OptionalUint32 with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalUint32 () = me.OptionalUint32 <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalUint64 =
+        match me.OptionalUint64 with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalUint64 () = me.OptionalUint64 <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalSint32 =
+        match me.OptionalSint32 with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalSint32 () = me.OptionalSint32 <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalSint64 =
+        match me.OptionalSint64 with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalSint64 () = me.OptionalSint64 <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalFixed32 =
+        match me.OptionalFixed32 with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalFixed32 () = me.OptionalFixed32 <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalFixed64 =
+        match me.OptionalFixed64 with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalFixed64 () = me.OptionalFixed64 <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalSfixed32 =
+        match me.OptionalSfixed32 with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalSfixed32 () = me.OptionalSfixed32 <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalSfixed64 =
+        match me.OptionalSfixed64 with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalSfixed64 () = me.OptionalSfixed64 <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalFloat =
+        match me.OptionalFloat with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalFloat () = me.OptionalFloat <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalDouble =
+        match me.OptionalDouble with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalDouble () = me.OptionalDouble <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalBool =
+        match me.OptionalBool with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalBool () = me.OptionalBool <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalString =
+        match me.OptionalString with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalString () = me.OptionalString <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalBytes =
+        match me.OptionalBytes with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalBytes () = me.OptionalBytes <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalCord =
+        match me.OptionalCord with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalCord () = me.OptionalCord <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalNestedMessage =
+        match me.OptionalNestedMessage with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalNestedMessage () = me.OptionalNestedMessage <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasLazyNestedMessage =
+        match me.LazyNestedMessage with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearLazyNestedMessage () = me.LazyNestedMessage <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalNestedEnum =
+        match me.OptionalNestedEnum with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalNestedEnum () = me.OptionalNestedEnum <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -592,6 +725,13 @@ module TestProto3Optional =
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.HasBb =
+                match me.Bb with
+                | ValueNone -> false
+                | ValueSome(_) -> true
+            [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+            member me.ClearBb () = me.Bb <- ValueNone
             interface global.Google.Protobuf.IBufferMessage with
                 [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
                 member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -686,6 +826,13 @@ type TestProto3OptionalMessage = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.HasOptionalNestedMessage =
+        match me.OptionalNestedMessage with
+        | ValueNone -> false
+        | ValueSome(_) -> true
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearOptionalNestedMessage () = me.OptionalNestedMessage <- ValueNone
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)

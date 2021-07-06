@@ -1,5 +1,10 @@
 #! /usr/bin/env bash
 
+function cleanup {
+    chmod -x ./Protoc/linux_x64/protoc
+}
+trap cleanup EXIT
+
 dotnet build ./FSharp.GrpcCodeGenerator/FSharp.GrpcCodeGenerator.fsproj
 
 chmod +x ./Protoc/linux_x64/protoc && \
