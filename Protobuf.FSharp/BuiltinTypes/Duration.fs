@@ -38,6 +38,14 @@ type Duration = {
     mutable Nanos: ValueOption<int32>
 } with
     // Start of hand-written code
+    static member FromTimeSpan(ts: System.TimeSpan) : Timestamp =
+        let ticks = ts.Ticks
+        let seconds = ticks / System.TimeSpan.TicksPerSecond
+        let nanos = int ((ticks % System.TimeSpan.TicksPerSecond) * 100L)
+        { TimeSpan.empty() with
+            Seconds = ValueSome seconds
+            Nanos = ValueSome nanos
+        }
     member me.ToTimeSpan() : ValueOption<System.TimeSpan> =
         match me.Seconds with
         | ValueNone -> ValueNone
