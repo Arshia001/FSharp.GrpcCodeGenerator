@@ -38,11 +38,11 @@ type Duration = {
     mutable Nanos: ValueOption<int32>
 } with
     // Start of hand-written code
-    static member FromTimeSpan(ts: System.TimeSpan) : Duration =
-        let ticks = ts.Ticks
+    static member FromTimeSpan(timeSpan: System.TimeSpan) : Duration =
+        let ticks = timeSpan.Ticks
         let seconds = ticks / System.TimeSpan.TicksPerSecond
         let nanos = int ((ticks % System.TimeSpan.TicksPerSecond) * 100L)
-        { Duration .empty() with
+        { Duration.empty() with
             Seconds = ValueSome seconds
             Nanos = ValueSome nanos
         }
