@@ -6,7 +6,7 @@ open Google.Protobuf
 let accessSpecifier (ctx: FileContext) =
     if ctx.Options.InternalAccess then "private " else ""
 
-let private firstCharToUpper (s: string) =
+let firstCharToUpper (s: string) =
     match s.Length with
     | 0 -> s
     | 1 -> s.ToUpper()
@@ -20,6 +20,7 @@ let private firstCharToLower (s: string) =
 
 let pascalToCamelCase s = firstCharToLower s
 
+    
 let snakeToPascalCase includesDots (s: string) =
     let convertOne (s: string) =
         s.Split '_' |> Seq.map firstCharToUpper |> String.concat ""
@@ -27,6 +28,10 @@ let snakeToPascalCase includesDots (s: string) =
     if includesDots
     then s.Split '.' |> Seq.map convertOne |> String.concat "."
     else convertOne s
+
+let snakeToCamelCase (s: string) =
+    snakeToPascalCase false s
+    |> pascalToCamelCase
 
 let shoutyToPascalCase (s: string) =
     s.Split '_'
@@ -97,6 +102,7 @@ let fileNamespace (file: File) =
 let messageTypeName (msg: Message) = msg.Name.Value
 
 let reflectionClassUnqualifiedName file = fileNameBase file + "Reflection"
+let extensionsClassUnqualifiedName file = fileNameBase file + "Extensions"
 
 let extensionClassUnqualifiedName file = fileNameBase file + "Extensions"
 
@@ -155,6 +161,14 @@ let reflectionClassName file =
         else ns + "."
     "global." + ns + reflectionClassUnqualifiedName file
 
+let extensionsClassName file =
+    let ns =
+        let ns = fileNamespace file
+        if ns = ""
+        then ""
+        else ns + "."
+    "global." + ns + extensionsClassUnqualifiedName file
+
 let private fieldName (msg: Message, field: Field) =
     if field.Type = ValueSome FieldType.Group
     then msg.Name.Value
@@ -164,13 +178,15 @@ let propertyName (msg: Message) (desc: Field) = fieldName (msg, desc) |> snakeTo
 
 let fieldConstantName (msg: Message, desc: Field) = propertyName msg desc + "FieldNumber"
 
-let fullExtensionName (file: File, field: Field) = // TODO: correct?
+let fullExtensionName (file: File, field: Field) =
     if field.Type = ValueSome FieldType.Group
     then failwithf "Extension field of type Group not supported: %s" field.Name.Value
 
     match field.Extendee with
-    | ValueSome e when e <> "" -> qualifiedName (e, file) + ".Extensions." + propertyName Unchecked.defaultof<_> field
-    | _ -> extensionClassUnqualifiedName file + "." + propertyName Unchecked.defaultof<_> field
+    | ValueSome e when e <> "" -> 
+        extensionsClassName file + "." + pascalToCamelCase (propertyName Unchecked.defaultof<_> field)
+    | _ -> 
+        extensionClassUnqualifiedName file + "." + propertyName Unchecked.defaultof<_> field
 
 let outputFileName (file: File) = fileNameBase file + ".fs"
 
@@ -245,7 +261,7 @@ let flatMapFileTypes fFile fMessage (file: File) =
         |> Seq.map (subTypes (ns + "." + msg.Name.Value, msg :: containerTypes))
         |> Seq.concat
         |> Seq.append [ fMessage (msg, containerTypes, ns) ]
-
+        
     let fileNs = file.Package |> ValueOption.map ((+) ".") |> ValueOption.defaultValue "" 
     file.MessageType
     |> Seq.map (subTypes (fileNs, []))
@@ -363,3 +379,9 @@ let getStringBytes (s: string) =
             res.WriteByte <| byte s.[i]
             i <- i + 1
     res.ToArray()
+
+let getExtendee (field: Field) =
+    if field.Extendee.Value.StartsWith(".google.protobuf") then
+        field.Extendee.Value.Replace(".google.protobuf", "global.Google.Protobuf.Reflection")
+    else
+        field.Extendee.Value

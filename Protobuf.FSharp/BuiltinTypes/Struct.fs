@@ -81,7 +81,7 @@ type Struct = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Fields.AddEntriesFrom(&input,Struct.MapFieldsCodec)
+                me.Fields.AddEntriesFrom(&input, Struct.MapFieldsCodec)
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -126,7 +126,7 @@ type Value = {
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Value = {
         Value._UnknownFields = global.Google.Protobuf.UnknownFieldSet.Clone(me._UnknownFields)
-        Value.Kind = me.Kind
+        Kind = me.Kind
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
@@ -197,6 +197,66 @@ type Value = {
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.KindCase =
+        match me.Kind with
+        | ValueNone -> 0
+        | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.NullValue _) -> 1
+        | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.NumberValue _) -> 2
+        | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.StringValue _) -> 3
+        | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.BoolValue _) -> 4
+        | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.StructValue _) -> 5
+        | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.ListValue _) -> 6
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ClearKind() = me.Kind <- ValueNone
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.NullValue
+        with get() =
+            match me.Kind with
+            | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.NullValue x) -> x
+            | _ -> Unchecked.defaultof<_>
+        and set(x) =
+            me.Kind <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.NullValue x)
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.NumberValue
+        with get() =
+            match me.Kind with
+            | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.NumberValue x) -> x
+            | _ -> Unchecked.defaultof<_>
+        and set(x) =
+            me.Kind <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.NumberValue x)
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.StringValue
+        with get() =
+            match me.Kind with
+            | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.StringValue x) -> x
+            | _ -> Unchecked.defaultof<_>
+        and set(x) =
+            me.Kind <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.StringValue x)
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.BoolValue
+        with get() =
+            match me.Kind with
+            | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.BoolValue x) -> x
+            | _ -> Unchecked.defaultof<_>
+        and set(x) =
+            me.Kind <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.BoolValue x)
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.StructValue
+        with get() =
+            match me.Kind with
+            | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.StructValue x) -> x
+            | _ -> Unchecked.defaultof<_>
+        and set(x) =
+            me.Kind <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.StructValue x)
+    [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
+    member me.ListValue
+        with get() =
+            match me.Kind with
+            | ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.ListValue x) -> x
+            | _ -> Unchecked.defaultof<_>
+        and set(x) =
+            me.Kind <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Value.Types.Kind.ListValue x)
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -220,12 +280,12 @@ module Value =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Value._UnknownFields = null
-        Value.Kind = ValueNone
+        Kind = ValueNone
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Value._UnknownFields = null
-        Value.Kind = ValueNone
+        Kind = ValueNone
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Value>(global.System.Func<_>(empty))
@@ -272,7 +332,7 @@ type ListValue = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Values.AddEntriesFrom(&input,ListValue.RepeatedValuesCodec)
+                me.Values.AddEntriesFrom(&input, ListValue.RepeatedValuesCodec)
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()

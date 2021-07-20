@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Http.fs" />
+    <Compile Include="Annotations.fs" />
+    <Compile Include="UnittestImportPublicProto3.fs" />
+    <Compile Include="UnittestImportProto3.fs" />
+    <Compile Include="UnittestProto3.fs" />
+    <Compile Include="MapUnittestProto3.fs" />
+    <Compile Include="UnittestCustomOptionsProto3.fs" />
+    <Compile Include="UnittestProto3Optional.fs" />
+    <Compile Include="WellKnownProtos.fs" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Protobuf.FSharp\Protobuf.FSharp.fsproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Grpc.Core" Version="2.38.1" />
+	</ItemGroup>
+
+</Project>

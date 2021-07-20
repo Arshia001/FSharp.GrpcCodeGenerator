@@ -1,9 +1,10 @@
 ﻿[<AutoOpen>]
 module rec FieldConverter
+open System
 
 type FSField =
 | Single of Field
-| OneOf of OneOf * Field list
+| OneOf of OneOf * Field list * bool
 
 type FieldWriter = {
     WriteMember: FileContext -> unit
@@ -42,6 +43,7 @@ let propertyName (msg: Message, field: Field) = Helpers.propertyName msg field
 let needsOptionType (ctx: FileContext, field: Field) =
     if field.Label = ValueSome FieldLabel.Repeated then false
     elif ctx.File.Syntax = ValueSome "proto2" then true
+    elif field.Label = ValueSome FieldLabel.Required then true // We don't support proto2 but we need this to generate Descriptor.fs from descriptor.proto
     elif field.Label = ValueSome FieldLabel.Optional then true
     elif field.Type = ValueSome FieldType.Message || field.Type = ValueSome FieldType.Group then true
     else false
@@ -134,8 +136,8 @@ let defaultValue (ctx: FileContext, field: Field) =
         | FieldType.Uint64 -> field.DefaultValue.Value + "UL"
         | FieldType.Int32 -> field.DefaultValue.Value
         | FieldType.Fixed64 -> field.DefaultValue.Value + "UL"
-        | FieldType.Fixed32 -> field.DefaultValue.Value + "U"
-        | FieldType.Uint32 -> field.DefaultValue.Value + "U"
+        | FieldType.Fixed32 -> field.DefaultValue.Value + "u"
+        | FieldType.Uint32 -> field.DefaultValue.Value + "u"
         | FieldType.Sfixed32 -> field.DefaultValue.Value
         | FieldType.Sfixed64 -> field.DefaultValue.Value + "L"
         | FieldType.Sint32 -> field.DefaultValue.Value
@@ -174,7 +176,7 @@ let hasPropertyCheck (ctx: FileContext, msg: Message, field: Field, identifier: 
     then $"{identifier}.{propertyName (msg, field)}.Count <> 0"
     else $"{identifier}.{propertyName (msg, field)} <> {Helpers.messageTypeName msg}.DefaultValue.{propertyName(msg, field)}"
 
-let defaultValueAccessIgnoreOption (ctx: FileContext, msg: Message, field: Field) =
+let defaultValueAccessIgnoreOption (ctx: FileContext, field: Field) =
     let maybeZero = field.DefaultValue |> ValueOption.defaultValue "0"
 
     match field.Type.Value with
@@ -190,8 +192,8 @@ let defaultValueAccessIgnoreOption (ctx: FileContext, msg: Message, field: Field
     | FieldType.Uint64 -> maybeZero + "UL"
     | FieldType.Int32 -> maybeZero
     | FieldType.Fixed64 -> maybeZero + "UL"
-    | FieldType.Fixed32 -> maybeZero + "U"
-    | FieldType.Uint32 -> maybeZero + "U"
+    | FieldType.Fixed32 -> maybeZero + "u"
+    | FieldType.Uint32 -> maybeZero + "u"
     | FieldType.Sfixed32 -> maybeZero
     | FieldType.Sfixed64 -> maybeZero + "L"
     | FieldType.Sint32 -> maybeZero
@@ -253,8 +255,7 @@ module PrimitiveFieldConverter =
         | Some size -> ctx.Writer.Write <| string (tagSize + size)
         | None ->
             ctx.Writer.Write
-                $"{tagSize} + global.Google.Protobuf.CodedOutputStream.Compute{capitalizedTypeName field}\
-                Size({id})"
+                $"{tagSize} + global.Google.Protobuf.CodedOutputStream.Compute{capitalizedTypeName field}Size({id})"
 
     let writeSerializedSizeCode (field: Field, containingType: Message) (ctx: FileContext) =
         let propCheck = hasPropertyCheck (ctx, containingType, field, "me")
@@ -303,19 +304,22 @@ module PrimitiveFieldConverter =
         writeSerializationCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
         ctx.Writer.Outdent()
 
-    let writeCodecCode (field: Field, containingType: Message) (ctx: FileContext) =
-        ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}\
-            ({Helpers.makeTag field}u, {defaultValueAccessIgnoreOption (ctx, containingType, field)})"
+    let writeCodecCode (field: Field) (ctx: FileContext) =
+        ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}({Helpers.makeTag field}u, {defaultValueAccessIgnoreOption (ctx, field)})"
 
-    let writeExtensionCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeExtensionCode (field: Field, containingType: Message option) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
-        ctx.Writer.WriteLine
-            $"let {propertyName (containingType, field)} = \
-            global.Google.Protobuf.Extension<{Helpers.messageTypeName containingType},{typeName (ctx, field)}>\
-            ({field.Number}, "
-           
-        writeCodecCode (field, containingType) ctx
-            
+
+        // Differs if the extension is nested or in the root of the file
+        match containingType with
+        | Some(containingType) ->
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (propertyName (containingType, field))} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+        | None -> 
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+                
+        writeCodecCode (field) ctx
         ctx.Writer.WriteLine ")"
 
     let create (field: Field, containingType: Message option) =
@@ -334,12 +338,12 @@ module PrimitiveFieldConverter =
                 WriteSerializationCode = writeSerializationCode (field, t)
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = ignore
-                WriteCodecCode = writeCodecCode (field, t)
-                WriteExtensionCode = writeExtensionCode (field, t)
+                WriteCodecCode = writeCodecCode (field)
+                WriteExtensionCode = writeExtensionCode (field, Some(t))
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>)
+                WriteExtensionCode = writeExtensionCode (field, None)
             }
 
 module RepeatedPrimitiveFieldConverter =
@@ -347,15 +351,13 @@ module RepeatedPrimitiveFieldConverter =
         ctx.Writer.WriteLine $"{propertyName (containingType, field)}: global.Google.Protobuf.Collections.RepeatedField<{typeName (ctx, field)}>"
 
     let writeMemberInit (field: Field, containingType: Message) (ctx: FileContext) =
-        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propertyName (containingType, field)} = \
-            global.Google.Protobuf.Collections.RepeatedField<{typeName (ctx, field)}>()"
+        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propertyName (containingType, field)} = global.Google.Protobuf.Collections.RepeatedField<{typeName (ctx, field)}>()"
 
     let writeOneOfCase (field: Field, containingType: Message) (ctx: FileContext) =
         ctx.Writer.WriteLine $"| {propertyName (containingType, field)} of global.Google.Protobuf.Collections.RepeatedField<{typeName (ctx, field)}>"
 
     let writeSerializedSizeCodeWithoutCheck (field: Field, containingType: Message) (ctx: FileContext) (id: string) =
-        ctx.Writer.Write $"{id}.CalculateSize(\
-            {Helpers.messageTypeName containingType}.Repeated{propertyName (containingType, field)}Codec)"
+        ctx.Writer.Write $"{id}.CalculateSize({Helpers.messageTypeName containingType}.Repeated{propertyName (containingType, field)}Codec)"
 
     let writeSerializedSizeCode (field: Field, containingType: Message) (ctx: FileContext) =
         ctx.Writer.Write "size <- size + "
@@ -372,8 +374,7 @@ module RepeatedPrimitiveFieldConverter =
 
     let writeParsingCode (field: Field, containingType: Message) (ctx: FileContext) =
         writeParsingCodeTemplate (ctx, field) <| fun () ->
-            ctx.Writer.WriteLine $"me.{propertyName (containingType, field)}.AddEntriesFrom(&input,\
-                {Helpers.messageTypeName containingType}.Repeated{propertyName (containingType, field)}Codec)"
+            ctx.Writer.WriteLine $"me.{propertyName (containingType, field)}.AddEntriesFrom(&input, {Helpers.messageTypeName containingType}.Repeated{propertyName (containingType, field)}Codec)"
 
     let writeOneOfParsingCode (field: Field, containingType: Message) (ctx: FileContext) =
         ctx.Writer.WriteLines [
@@ -382,8 +383,7 @@ module RepeatedPrimitiveFieldConverter =
         ]
 
     let writeSerializationCodeWithoutCheck (field: Field, containingType: Message) (ctx: FileContext) (id: string) =
-        ctx.Writer.WriteLine $"{id}.WriteTo(&output, \
-            {Helpers.messageTypeName containingType}.Repeated{propertyName (containingType, field)}Codec)"
+        ctx.Writer.WriteLine $"{id}.WriteTo(&output, {Helpers.messageTypeName containingType}.Repeated{propertyName (containingType, field)}Codec)"
 
     let writeSerializationCode (field: Field, containingType: Message) (ctx: FileContext) =
         writeSerializationCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
@@ -391,12 +391,18 @@ module RepeatedPrimitiveFieldConverter =
     let writeCodecCode (field: Field) (ctx: FileContext) =
         ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}({Helpers.makeTag field}u)"
     
-    let writeExtensionCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeExtensionCode (field: Field, containingType: Message option) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
-        ctx.Writer.Write
-            $"let {propertyName (containingType, field)} = \
-            global.Google.Protobuf.RepeatedExtension<{Helpers.messageTypeName containingType},{typeName (ctx, field)}>\
-            ({field.Number}, "
+
+        // Differs if the extension is nested or in the root of the file
+        match containingType with
+        | Some(containingType) ->
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (propertyName (containingType, field))} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+        | None -> 
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+                
         writeCodecCode field ctx
         ctx.Writer.WriteLine ")"
 
@@ -422,18 +428,17 @@ module RepeatedPrimitiveFieldConverter =
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = writeModuleMembers (field, t)
                 WriteCodecCode = writeCodecCode field
-                WriteExtensionCode = writeExtensionCode (field, t)
+                WriteExtensionCode = writeExtensionCode (field, Some(t))
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>)
+                WriteExtensionCode = writeExtensionCode (field, None)
             }
 
 module EnumFieldConverter =
     let writeSerializedSizeCodeWithoutCheck (field: Field, containingType: Message) (ctx: FileContext) (id: string) =
         let tagSize = tagSize field
-        ctx.Writer.Write $"{tagSize} + global.Google.Protobuf.CodedOutputStream.\
-            Compute{capitalizedTypeName field}Size(int {id})"
+        ctx.Writer.Write $"{tagSize} + global.Google.Protobuf.CodedOutputStream.Compute{capitalizedTypeName field}Size(int {id})"
 
     let writeSerializedSizeCode (field: Field, containingType: Message) (ctx: FileContext) =
         let propCheck = hasPropertyCheck (ctx, containingType, field, "me")
@@ -470,18 +475,22 @@ module EnumFieldConverter =
         writeSerializationCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
         ctx.Writer.Outdent()
 
-    let writeCodecCode (field: Field, containingType: Message) (ctx: FileContext) =
-        ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForEnum\
-            ({Helpers.makeTag field}u, global.System.Func<_,_>(fun x -> int x), \
-            global.System.Func<_,_>(fun x -> enum x), {defaultValueAccessIgnoreOption (ctx, containingType, field)})"
+    let writeCodecCode (field: Field) (ctx: FileContext) =
+        ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForEnum({Helpers.makeTag field}u, global.System.Func<_,_>(fun x -> int x), global.System.Func<_,_>(fun x -> enum x), {defaultValueAccessIgnoreOption (ctx, field)})"
 
-    let writeExtensionCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeExtensionCode (field: Field, containingType: Message option) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
-        ctx.Writer.WriteLine
-            $"let {propertyName (containingType, field)} = \
-            global.Google.Protobuf.Extension<{Helpers.messageTypeName containingType},{typeName (ctx, field)}>\
-            ({field.Number}, "
-        writeCodecCode (field, containingType) ctx
+
+        // Differs if the extension is nested or in the root of the file
+        match containingType with
+        | Some(containingType) ->
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (propertyName (containingType, field))} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+        | None -> 
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+                
+        writeCodecCode (field) ctx
         ctx.Writer.WriteLine ")"
 
     let create (field: Field, containingType: Message option) =
@@ -500,25 +509,30 @@ module EnumFieldConverter =
                 WriteSerializationCode = writeSerializationCode (field, t)
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = ignore
-                WriteCodecCode = writeCodecCode(field, t)
-                WriteExtensionCode = writeExtensionCode (field, t)
+                WriteCodecCode = writeCodecCode(field)
+                WriteExtensionCode = writeExtensionCode (field, Some(t))
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>)
+                WriteExtensionCode = writeExtensionCode (field, None)
             }
 
 module RepeatedEnumFieldConverter =
     let writeCodecCode (field: Field) (ctx: FileContext) =
-        ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForEnum({Helpers.makeTag field}u, \
-            global.System.Func<_,_>(fun x -> int x), global.System.Func<_,_>(fun x -> enum x))"
+        ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForEnum({Helpers.makeTag field}u, global.System.Func<_,_>(fun x -> int x), global.System.Func<_,_>(fun x -> enum x))"
 
-    let writeExtensionCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeExtensionCode (field: Field, containingType: Message option) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
-        ctx.Writer.WriteLine
-            $"let {propertyName (containingType, field)} = \
-            global.Google.Protobuf.RepeatedExtension<{Helpers.messageTypeName containingType},{typeName (ctx, field)}>\
-            ({field.Number}, "
+
+        // Differs if the extension is nested or in the root of the file
+        match containingType with
+        | Some(containingType) ->
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (propertyName (containingType, field))} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+        | None -> 
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+            
         writeCodecCode field ctx    
         ctx.Writer.WriteLine ")"
     
@@ -544,11 +558,11 @@ module RepeatedEnumFieldConverter =
                 WriteSerializationCodeWithoutCheck = RepeatedPrimitiveFieldConverter.writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = writeModuleMembers (field, t)
                 WriteCodecCode = writeCodecCode field
-                WriteExtensionCode = writeExtensionCode (field, t)
+                WriteExtensionCode = writeExtensionCode (field, Some(t))
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>)
+                WriteExtensionCode = writeExtensionCode (field, None)
             }
 
 module MessageFieldConverter =
@@ -567,9 +581,7 @@ module MessageFieldConverter =
 
     let writeCloningCode (field: Field, containingType: Message) (ctx: FileContext) =
         let propName = propertyName (containingType, field)
-        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propName} = \
-            me.{propName} |> global.Microsoft.FSharp.Core.ValueOption.map \
-            (fun x -> (x :> global.Google.Protobuf.IMessage<{typeNameWithoutOption (ctx, field)}>).Clone())"
+        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propName} = me.{propName} |> global.Microsoft.FSharp.Core.ValueOption.map (fun x -> (x :> global.Google.Protobuf.IMessage<{typeNameWithoutOption (ctx, field)}>).Clone())"
 
     let writeMergingCode (field: Field, containingType: Message) (ctx: FileContext) =
         let propName = propertyName (containingType, field)
@@ -628,19 +640,28 @@ module MessageFieldConverter =
         writeSerializationCodeWithoutCheck (field, containingType, containerMessages) ctx $"me.{propertyAccess (ctx, containingType, field)}"
         ctx.Writer.Outdent()
     
-    let writeCodecCode (field: Field, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
-        if field.Type = ValueSome FieldType.Group
-        then
-            let endTag = Helpers.groupEndTag (ctx, containingType, containerMessages)
-            ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForMessage({Helpers.makeTag field}u, {endTag}u, {typeNameWithoutOption (ctx, field)}.Parser)"
-        else ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForMessage({Helpers.makeTag field}u, {typeNameWithoutOption (ctx, field)}.Parser)"
+    let writeCodecCode (field: Field, containingType: Message option, containerMessages: Message list) (ctx: FileContext) =
+        match containingType with
+        | Some(containingType) ->
+            if field.Type = ValueSome FieldType.Group
+            then
+                let endTag = Helpers.groupEndTag (ctx, containingType, containerMessages)
+                ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForMessage({Helpers.makeTag field}u, {endTag}u, {typeNameWithoutOption (ctx, field)}.Parser)"
+            else ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForMessage({Helpers.makeTag field}u, {typeNameWithoutOption (ctx, field)}.Parser)"
+        | None -> ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.ForMessage({Helpers.makeTag field}u, {typeNameWithoutOption (ctx, field)}.Parser)"
 
-    let writeExtensionCode (field: Field, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
+    let writeExtensionCode (field: Field, containingType: Message option, containerMessages: Message list) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
-        ctx.Writer.Write
-            $"let {propertyName (containingType, field)} = \
-            global.Google.Protobuf.Extension<{Helpers.messageTypeName containingType},{typeName (ctx, field)}>\
-            ({field.Number}, "
+
+        // Differs if the extension is nested or in the root of the file
+        match containingType with
+        | Some(containingType) ->
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (propertyName (containingType, field))} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+        | None -> 
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.Extension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+
         writeCodecCode (field, containingType, containerMessages) ctx
         ctx.Writer.WriteLine ")"
 
@@ -660,27 +681,33 @@ module MessageFieldConverter =
                 WriteSerializationCode = writeSerializationCode (field, t, containerMessages)
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t, containerMessages)
                 WriteModuleMembers = ignore
-                WriteCodecCode = writeCodecCode (field, t, containerMessages)
-                WriteExtensionCode = writeExtensionCode (field, t, containerMessages)
+                WriteCodecCode = writeCodecCode (field, Some(t), containerMessages)
+                WriteExtensionCode = writeExtensionCode (field, Some(t), containerMessages)
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>, [])
+                WriteExtensionCode = writeExtensionCode (field, None, [])
             }
 
 module RepeatedMessageFieldConverter =
-    let writeExtensionCode (field: Field, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
+    let writeExtensionCode (field: Field, containingType: Message option, containerMessages: Message list) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
-        ctx.Writer.Write
-            $"let {propertyName (containingType, field)} = \
-            global.Google.Protobuf.RepeatedExtension<{Helpers.messageTypeName containingType},{typeName (ctx, field)}>\
-            ({field.Number}, "
+
+        // Differs if the extension is nested or in the root of the file
+        match containingType with
+        | Some(containingType) ->
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (propertyName (containingType, field))} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+        | None -> 
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, "
+
         MessageFieldConverter.writeCodecCode (field, containingType, containerMessages) ctx
         ctx.Writer.WriteLine ")"
 
     let writeModuleMembers (field: Field, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
         ctx.Writer.Write $"let Repeated{propertyName (containingType, field)}Codec = "
-        MessageFieldConverter.writeCodecCode (field, containingType, containerMessages) ctx
+        MessageFieldConverter.writeCodecCode (field, Some(containingType), containerMessages) ctx
         ctx.Writer.WriteLine ""
 
     let create (field: Field, containingType: Message option, containerMessages: Message list) =
@@ -699,12 +726,12 @@ module RepeatedMessageFieldConverter =
                 WriteSerializationCode = RepeatedPrimitiveFieldConverter.writeSerializationCode (field, t)
                 WriteSerializationCodeWithoutCheck = RepeatedPrimitiveFieldConverter.writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = writeModuleMembers (field, t, containerMessages)
-                WriteCodecCode = MessageFieldConverter.writeCodecCode (field, t, containerMessages)
-                WriteExtensionCode = writeExtensionCode (field, t, containerMessages)
+                WriteCodecCode = MessageFieldConverter.writeCodecCode (field, Some(t), containerMessages)
+                WriteExtensionCode = writeExtensionCode (field, Some(t), containerMessages)
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>, [])
+                WriteExtensionCode = writeExtensionCode (field, None, [])
             }
 
 module MapFieldConverter =
@@ -734,8 +761,7 @@ module MapFieldConverter =
         ctx.Writer.WriteLine $"| {propertyName (containingType, field)} of {mapTypeName (ctx, field)}>"
 
     let writeSerializedSizeCodeWithoutCheck (field: Field, containingType: Message) (ctx: FileContext) (id: string) =
-        ctx.Writer.Write $"{id}.CalculateSize(\
-            {Helpers.messageTypeName containingType}.Map{propertyName (containingType, field)}Codec)"
+        ctx.Writer.Write $"{id}.CalculateSize({Helpers.messageTypeName containingType}.Map{propertyName (containingType, field)}Codec)"
 
     let writeSerializedSizeCode (field: Field, containingType: Message) (ctx: FileContext) =
         ctx.Writer.Write "size <- size + "
@@ -752,8 +778,7 @@ module MapFieldConverter =
 
     let writeParsingCode (field: Field, containingType: Message) (ctx: FileContext) =
         writeParsingCodeTemplate (ctx, field) <| fun () ->
-            ctx.Writer.WriteLine $"me.{propertyName (containingType, field)}.AddEntriesFrom(&input,\
-                {Helpers.messageTypeName containingType}.Map{propertyName (containingType, field)}Codec)"
+            ctx.Writer.WriteLine $"me.{propertyName (containingType, field)}.AddEntriesFrom(&input, {Helpers.messageTypeName containingType}.Map{propertyName (containingType, field)}Codec)"
 
     let writeOneOfParsingCode (field: Field, containingType: Message) (ctx: FileContext) =
         ctx.Writer.WriteLines [
@@ -762,18 +787,21 @@ module MapFieldConverter =
         ]
 
     let writeSerializationCodeWithoutCheck (field: Field, containingType: Message) (ctx: FileContext) (id: string) =
-        ctx.Writer.WriteLine $"{id}.WriteTo(&output, \
-            {Helpers.messageTypeName containingType}.Map{propertyName (containingType, field)}Codec)"
+        ctx.Writer.WriteLine $"{id}.WriteTo(&output, {Helpers.messageTypeName containingType}.Map{propertyName (containingType, field)}Codec)"
 
     let writeSerializationCode (field: Field, containingType: Message) (ctx: FileContext) =
         writeSerializationCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
 
-    let writeExtensionCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeExtensionCode (field: Field, containingType: Message option) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
-        ctx.Writer.WriteLine
-            $"let {propertyName (containingType, field)} = \
-            global.Google.Protobuf.RepeatedExtension<{Helpers.messageTypeName containingType},{typeName (ctx, field)}>\
-            ({field.Number}, global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}({Helpers.makeTag field}u))"
+        // Differs if the extension is a nested type or in the file root
+        match containingType with
+        | Some(containingType) ->
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (propertyName (containingType, field))} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}({Helpers.makeTag field}u))"
+        | None -> 
+            ctx.Writer.Write
+                $"let {Helpers.snakeToCamelCase (Helpers.pascalToCamelCase field.Name.Value)} = global.Google.Protobuf.RepeatedExtension<{Helpers.getExtendee field},{typeNameWithoutOption (ctx, field)}>({field.Number}, global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}({Helpers.makeTag field}u))"
 
     let writeCodecCode (field: Field, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
         let mapEntryType, keyField, valueField = getMapFields (ctx, field)
@@ -808,11 +836,11 @@ module MapFieldConverter =
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
                 WriteModuleMembers = writeModuleMembers (field, t, containerMessages)
                 WriteCodecCode = writeCodecCode (field, t, containerMessages)
-                WriteExtensionCode = writeExtensionCode (field, t)
+                WriteExtensionCode = writeExtensionCode (field, Some(t))
             }
         | None ->
             { NotImplementedWriter with
-                WriteExtensionCode = writeExtensionCode (field, Unchecked.defaultof<_>)
+                WriteExtensionCode = writeExtensionCode (field, None)
             }
 
 module SingleFieldConverterFactory =
@@ -842,7 +870,7 @@ module OneOfFieldConverter =
         ctx.Writer.WriteLine $"mutable {oneOfPropertyName oneOf}: {oneOfTypeName (oneOf, containingType, containerMessages, ctx.File)}"
 
     let writeMemberInit (oneOf: OneOf, containingType: Message) (ctx: FileContext) =
-        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{oneOfPropertyName oneOf} = ValueNone"
+        ctx.Writer.WriteLine $"{oneOfPropertyName oneOf} = ValueNone"
 
     let writeSerializedSizeCode (oneOf: OneOf, fields: Field list, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
         ctx.Writer.WriteLines [
@@ -852,13 +880,14 @@ module OneOfFieldConverter =
 
         for f in fields do
             ctx.Writer.Write $"| ValueSome ({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)} x) -> size <- size + "
+
             let conv = SingleFieldConverterFactory.createWriter (f, ctx, Some containingType, containerMessages)
             conv.WriteSerializedSizeCodeWithoutCheck ctx "x"
             ctx.Writer.WriteLine ""
 
     let writeCloningCode (oneOf: OneOf, containingType: Message) (ctx: FileContext) =
         let propName = oneOfPropertyName oneOf
-        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propName} = me.{propName}"
+        ctx.Writer.WriteLine $"{propName} = me.{propName}"
 
     let writeMergingCode (oneOf: OneOf) (ctx: FileContext) =
         let propName = oneOfPropertyName oneOf
@@ -872,6 +901,7 @@ module OneOfFieldConverter =
             writeParsingCodeTemplate (ctx, f) <| fun () ->
                 let conv = SingleFieldConverterFactory.createWriter (f, ctx, Some containingType, containerMessages)
                 conv.WriteOneOfParsingCode ctx
+
                 ctx.Writer.WriteLine $"me.{oneOfPropertyName oneOf} <- ValueSome({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)}(value))"
 
     let writeSerializationCode (oneOf: OneOf, fields: Field list, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
@@ -879,9 +909,9 @@ module OneOfFieldConverter =
             $"match me.{oneOfPropertyName oneOf} with"
             "| ValueNone -> ()"
         ]
-
         for f in fields do
             ctx.Writer.WriteLine $"| ValueSome ({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)} x) ->"
+
             ctx.Writer.Indent()
             let conv = SingleFieldConverterFactory.createWriter (f, ctx, Some containingType, containerMessages)
             conv.WriteSerializationCodeWithoutCheck ctx "x"
@@ -915,4 +945,5 @@ module FieldConverterFactory =
     let createWriter (field: FSField, ctx: FileContext, containingType: Message option, containerMessages: Message list) : FieldConverter.FieldWriter =
         match field with
         | Single field -> SingleFieldConverterFactory.createWriter (field, ctx, containingType, containerMessages)
-        | OneOf (oneOf, fields) -> OneOfFieldConverter.create (oneOf, fields, containingType, containerMessages)
+        | OneOf (oneOf, fields, synthetic) when synthetic -> SingleFieldConverterFactory.createWriter (fields.[0], ctx, containingType, containerMessages)
+        | OneOf (oneOf, fields, synthetic) -> OneOfFieldConverter.create (oneOf, fields, containingType, containerMessages)

@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+
+package well_known_protos;
+
+// We replace the namespace in our test script so that we can have
+// separate namespaces for the F# code and the C# code 
+option csharp_namespace = "REPLACE_ME";
+
+message Request {
+    string message = 1;
+}
+
+message Response {
+    string message = 1;
+}
+
+service AnnotatedService {
+    rpc DoStuff (Request) returns (Response) {
+        option (google.api.http) = {
+			get: "/v1/bootstrap"
+		};
+    }
+}
