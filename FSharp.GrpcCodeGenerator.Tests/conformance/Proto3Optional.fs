@@ -1,11 +1,7 @@
 module Proto3Optional
 
-open System
 open Xunit
 open FSharp.GrpcCodeGenerator.TestProtos.FSharp
-open Grpc.Core
-open System.Threading.Tasks
-open FSharp.GrpcCodeGenerator.TestProtos
 open FSharp.GrpcCodeGenerator.TestProtos
 open Google.Protobuf
 
