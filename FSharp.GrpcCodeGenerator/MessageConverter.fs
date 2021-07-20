@@ -191,49 +191,48 @@ let writeMergingMethods (ctx: MessageContext) =
 let writeAdditionalOneOfMethods (ctx: MessageContext) =
     let oneOfFields =
         ctx.OrderedFSFields
-        |> Seq.choose (function Single _ -> None | OneOf (o, f) -> Some (o, f))
+        |> Seq.choose (function Single _ -> None | OneOf (o, f, true) -> None | OneOf (o, f, false) -> Some (o, f))
     for (oneOf, fields) in oneOfFields do
-        if fields |> List.forall (fun f -> not (f.Proto3Optional |> ValueOption.defaultWith (fun _ -> false))) then
-            let oneOfName = FieldConverter.oneOfPropertyName oneOf
-            
+        let oneOfName = FieldConverter.oneOfPropertyName oneOf
+        
+        Helpers.writeGeneratedCodeAttribute ctx.File
+        ctx.File.Writer.WriteLine $"member me.{oneOfName}Case ="
+        ctx.File.Writer.Indent()
+        
+        ctx.File.Writer.WriteLine $"match me.{oneOfName} with"
+        ctx.File.Writer.WriteLine $"| ValueNone -> 0"
+        for field in fields do
+            ctx.File.Writer.WriteLine $"| ValueSome({FieldConverter.oneOfCaseName (oneOf, field, ctx.Message, ctx.ContainerMessages, ctx.File.File)} _) -> {field.Number.Value}"
+        
+        ctx.File.Writer.Outdent()
+
+        Helpers.writeGeneratedCodeAttribute ctx.File
+        ctx.File.Writer.WriteLine $"member me.Clear{oneOfName}() = me.{oneOfName} <- ValueNone"
+
+        for field in fields do
             Helpers.writeGeneratedCodeAttribute ctx.File
-            ctx.File.Writer.WriteLine $"member me.{oneOfName}Case ="
+            ctx.File.Writer.WriteLine $"member me.{FieldConverter.propertyName (ctx.Message, field)}"
+            ctx.File.Writer.Indent()
+
+            ctx.File.Writer.WriteLine $"with get() ="
             ctx.File.Writer.Indent()
             
             ctx.File.Writer.WriteLine $"match me.{oneOfName} with"
-            ctx.File.Writer.WriteLine $"| ValueNone -> 0"
-            for field in fields do
-                ctx.File.Writer.WriteLine $"| ValueSome({FieldConverter.oneOfCaseName (oneOf, field, ctx.Message, ctx.ContainerMessages, ctx.File.File)} _) -> {field.Number.Value}"
+
+            ctx.File.Writer.WriteLine $"| ValueSome({FieldConverter.oneOfCaseName (oneOf, field, ctx.Message, ctx.ContainerMessages, ctx.File.File)} x) -> x"
+
+            ctx.File.Writer.WriteLine $"| _ -> Unchecked.defaultof<_>"
             
             ctx.File.Writer.Outdent()
 
-            Helpers.writeGeneratedCodeAttribute ctx.File
-            ctx.File.Writer.WriteLine $"member me.Clear{oneOfName}() = me.{oneOfName} <- ValueNone"
-
-            for field in fields do
-                Helpers.writeGeneratedCodeAttribute ctx.File
-                ctx.File.Writer.WriteLine $"member me.{FieldConverter.propertyName (ctx.Message, field)}"
-                ctx.File.Writer.Indent()
-
-                ctx.File.Writer.WriteLine $"with get() ="
-                ctx.File.Writer.Indent()
-                
-                ctx.File.Writer.WriteLine $"match me.{oneOfName} with"
-
-                ctx.File.Writer.WriteLine $"| ValueSome({FieldConverter.oneOfCaseName (oneOf, field, ctx.Message, ctx.ContainerMessages, ctx.File.File)} x) -> x"
-
-                ctx.File.Writer.WriteLine $"| _ -> Unchecked.defaultof<_>"
-                
-                ctx.File.Writer.Outdent()
-
-                ctx.File.Writer.WriteLine $"and set(x) ="
-                ctx.File.Writer.Indent()
-                
-                ctx.File.Writer.WriteLine $"me.{oneOfName} <- ValueSome({FieldConverter.oneOfCaseName (oneOf, field, ctx.Message, ctx.ContainerMessages, ctx.File.File)} x)"
-                
-                ctx.File.Writer.Outdent()
-                
-                ctx.File.Writer.Outdent()
+            ctx.File.Writer.WriteLine $"and set(x) ="
+            ctx.File.Writer.Indent()
+            
+            ctx.File.Writer.WriteLine $"me.{oneOfName} <- ValueSome({FieldConverter.oneOfCaseName (oneOf, field, ctx.Message, ctx.ContainerMessages, ctx.File.File)} x)"
+            
+            ctx.File.Writer.Outdent()
+            
+            ctx.File.Writer.Outdent()
 
 let private requiresPresenceFields (file: File) (field: Field): bool =
     (field.Proto3Optional |> ValueOption.defaultWith (fun _ -> false))
@@ -245,7 +244,7 @@ let private requiresPresenceFields (file: File) (field: Field): bool =
 let writeAdditionalOptionalMethods (ctx: MessageContext) =
     let fields =
         ctx.OrderedFSFields
-        |> Seq.choose (function Single f -> Some([f]) | OneOf (_, f) -> Some(f))
+        |> Seq.choose (function Single f -> Some([f]) | OneOf (_, f, _) -> Some(f))
         |> Seq.concat
     for f in fields do
         if requiresPresenceFields ctx.File.File f then
@@ -347,6 +346,8 @@ let rec writeMessageModule (ctx: MessageContext) =
     ctx.File.Writer.Outdent()
 
 and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Message) =
+    let isSyntheticOneOf msg o = 
+        (Helpers.oneOfFields (msg, o)).[0].Proto3Optional |> ValueOption.defaultWith (fun _ -> false)
     let ctx = {
         Message = msg
         File = ctx
@@ -363,7 +364,7 @@ and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Messag
                 then Seq.empty
                 else
                     msg.OneofDecl
-                    |> Seq.map (fun o -> OneOf (o, Helpers.oneOfFields (msg, o)))
+                    |> Seq.map (fun o -> OneOf (o, Helpers.oneOfFields (msg, o), isSyntheticOneOf msg o))
 
             Seq.toList <| Seq.append nonOneOfFields oneOfFields
     }

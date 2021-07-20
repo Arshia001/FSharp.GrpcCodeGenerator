@@ -60,7 +60,6 @@ let generate (req: Compiler.CodeGeneratorRequest) : Compiler.CodeGeneratorRespon
             req.FileToGenerate
             |> Seq.map (fun name ->
                 let file = findFile req name
-                let publicDeps = file.PublicDependency |> Seq.map (fun i -> findPublicDependency req i)
                 let deps =
                     file.Dependency
                     |> Seq.map (findFile req)

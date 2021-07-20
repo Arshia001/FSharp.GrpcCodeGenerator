@@ -4,7 +4,7 @@ open System
 
 type FSField =
 | Single of Field
-| OneOf of OneOf * Field list
+| OneOf of OneOf * Field list * bool
 
 type FieldWriter = {
     WriteMember: FileContext -> unit
@@ -879,11 +879,7 @@ module OneOfFieldConverter =
         ]
 
         for f in fields do
-            match f.Proto3Optional with
-            | ValueSome(true) ->
-                ctx.Writer.Write $"| ValueSome ({oneOfTypeNameWithoutOption (oneOf, containingType, containerMessages, ctx.File)} x) -> size <- size + "
-            | _ -> 
-                ctx.Writer.Write $"| ValueSome ({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)} x) -> size <- size + "
+            ctx.Writer.Write $"| ValueSome ({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)} x) -> size <- size + "
 
             let conv = SingleFieldConverterFactory.createWriter (f, ctx, Some containingType, containerMessages)
             conv.WriteSerializedSizeCodeWithoutCheck ctx "x"
@@ -906,11 +902,7 @@ module OneOfFieldConverter =
                 let conv = SingleFieldConverterFactory.createWriter (f, ctx, Some containingType, containerMessages)
                 conv.WriteOneOfParsingCode ctx
 
-                match f.Proto3Optional with
-                | ValueSome(true) ->
-                    ctx.Writer.WriteLine $"me.{oneOfPropertyName oneOf} <- ValueSome({oneOfTypeNameWithoutOption (oneOf, containingType, containerMessages, ctx.File)}(value))"
-                | _ -> 
-                    ctx.Writer.WriteLine $"me.{oneOfPropertyName oneOf} <- ValueSome({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)}(value))"
+                ctx.Writer.WriteLine $"me.{oneOfPropertyName oneOf} <- ValueSome({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)}(value))"
 
     let writeSerializationCode (oneOf: OneOf, fields: Field list, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
         ctx.Writer.WriteLines [
@@ -918,11 +910,7 @@ module OneOfFieldConverter =
             "| ValueNone -> ()"
         ]
         for f in fields do
-            match f.Proto3Optional with
-            | ValueSome(true) ->
-                ctx.Writer.WriteLine $"| ValueSome ({oneOfTypeNameWithoutOption (oneOf, containingType, containerMessages, ctx.File)} x) ->"
-            | _ -> 
-                ctx.Writer.WriteLine $"| ValueSome ({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)} x) ->"
+            ctx.Writer.WriteLine $"| ValueSome ({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)} x) ->"
 
             ctx.Writer.Indent()
             let conv = SingleFieldConverterFactory.createWriter (f, ctx, Some containingType, containerMessages)
@@ -957,4 +945,5 @@ module FieldConverterFactory =
     let createWriter (field: FSField, ctx: FileContext, containingType: Message option, containerMessages: Message list) : FieldConverter.FieldWriter =
         match field with
         | Single field -> SingleFieldConverterFactory.createWriter (field, ctx, containingType, containerMessages)
-        | OneOf (oneOf, fields) -> OneOfFieldConverter.create (oneOf, fields, containingType, containerMessages)
+        | OneOf (oneOf, fields, synthetic) when synthetic -> SingleFieldConverterFactory.createWriter (fields.[0], ctx, containingType, containerMessages)
+        | OneOf (oneOf, fields, synthetic) -> OneOfFieldConverter.create (oneOf, fields, containingType, containerMessages)
