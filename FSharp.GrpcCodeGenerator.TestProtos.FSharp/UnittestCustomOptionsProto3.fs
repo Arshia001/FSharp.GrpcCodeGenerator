@@ -264,7 +264,7 @@ type AggregateEnum =
 | [<global.Google.Protobuf.Reflection.OriginalName("VALUE")>] Value = 1
 type TestMessageWithCustomOptions = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Field1: ValueOption<string>
+    mutable Field1: string
     mutable AnOneof: ValueOption<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestMessageWithCustomOptions.Types.AnOneof>
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -275,10 +275,10 @@ type TestMessageWithCustomOptions = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Field1 <> ValueNone
+        if me.Field1 <> TestMessageWithCustomOptions.DefaultValue.Field1
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Field1.Value)
+            output.WriteString(me.Field1)
         match me.AnOneof with
         | ValueNone -> ()
         | ValueSome (global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestMessageWithCustomOptions.Types.AnOneof.OneofField x) ->
@@ -288,7 +288,7 @@ type TestMessageWithCustomOptions = {
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Field1 <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Field1.Value)
+        if me.Field1 <> TestMessageWithCustomOptions.DefaultValue.Field1 then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Field1)
         match me.AnOneof with
         | ValueNone -> ()
         | ValueSome (global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestMessageWithCustomOptions.Types.AnOneof.OneofField x) -> size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(x)
@@ -296,7 +296,7 @@ type TestMessageWithCustomOptions = {
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: TestMessageWithCustomOptions) =
-        if other.Field1 <> ValueNone
+        if other.Field1 <> TestMessageWithCustomOptions.DefaultValue.Field1
         then me.Field1 <- other.Field1
         if other.AnOneof <> ValueNone
         then me.AnOneof <- other.AnOneof
@@ -307,7 +307,7 @@ type TestMessageWithCustomOptions = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Field1 <- ValueSome(input.ReadString())
+                me.Field1 <- input.ReadString()
             | 16u ->
                 let value = input.ReadInt32()
                 me.AnOneof <- ValueSome(global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestMessageWithCustomOptions.Types.AnOneof.OneofField(value))
@@ -352,13 +352,13 @@ module TestMessageWithCustomOptions =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         TestMessageWithCustomOptions._UnknownFields = null
-        TestMessageWithCustomOptions.Field1 = ValueNone
+        TestMessageWithCustomOptions.Field1 = ""
         AnOneof = ValueNone
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         TestMessageWithCustomOptions._UnknownFields = null
-        TestMessageWithCustomOptions.Field1 = ValueNone
+        TestMessageWithCustomOptions.Field1 = ""
         AnOneof = ValueNone
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -995,9 +995,9 @@ module SettingRealsFromNegativeInts =
     let Parser = global.Google.Protobuf.MessageParser<SettingRealsFromNegativeInts>(global.System.Func<_>(empty))
 type ComplexOptionType1 = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Foo: ValueOption<int32>
-    mutable Foo2: ValueOption<int32>
-    mutable Foo3: ValueOption<int32>
+    mutable Foo: int32
+    mutable Foo2: int32
+    mutable Foo3: int32
     Foo4: global.Google.Protobuf.Collections.RepeatedField<int32>
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -1010,36 +1010,36 @@ type ComplexOptionType1 = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Foo <> ValueNone
+        if me.Foo <> ComplexOptionType1.DefaultValue.Foo
         then
             output.WriteRawTag(8uy)
-            output.WriteInt32(me.Foo.Value)
-        if me.Foo2 <> ValueNone
+            output.WriteInt32(me.Foo)
+        if me.Foo2 <> ComplexOptionType1.DefaultValue.Foo2
         then
             output.WriteRawTag(16uy)
-            output.WriteInt32(me.Foo2.Value)
-        if me.Foo3 <> ValueNone
+            output.WriteInt32(me.Foo2)
+        if me.Foo3 <> ComplexOptionType1.DefaultValue.Foo3
         then
             output.WriteRawTag(24uy)
-            output.WriteInt32(me.Foo3.Value)
+            output.WriteInt32(me.Foo3)
         me.Foo4.WriteTo(&output, ComplexOptionType1.RepeatedFoo4Codec)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Foo <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Foo.Value)
-        if me.Foo2 <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Foo2.Value)
-        if me.Foo3 <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Foo3.Value)
+        if me.Foo <> ComplexOptionType1.DefaultValue.Foo then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Foo)
+        if me.Foo2 <> ComplexOptionType1.DefaultValue.Foo2 then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Foo2)
+        if me.Foo3 <> ComplexOptionType1.DefaultValue.Foo3 then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Foo3)
         size <- size + me.Foo4.CalculateSize(ComplexOptionType1.RepeatedFoo4Codec)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: ComplexOptionType1) =
-        if other.Foo <> ValueNone
+        if other.Foo <> ComplexOptionType1.DefaultValue.Foo
         then me.Foo <- other.Foo
-        if other.Foo2 <> ValueNone
+        if other.Foo2 <> ComplexOptionType1.DefaultValue.Foo2
         then me.Foo2 <- other.Foo2
-        if other.Foo3 <> ValueNone
+        if other.Foo3 <> ComplexOptionType1.DefaultValue.Foo3
         then me.Foo3 <- other.Foo3
         me.Foo4.Add(other.Foo4)
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
@@ -1049,11 +1049,11 @@ type ComplexOptionType1 = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.Foo <- ValueSome(input.ReadInt32())
+                me.Foo <- input.ReadInt32()
             | 16u ->
-                me.Foo2 <- ValueSome(input.ReadInt32())
+                me.Foo2 <- input.ReadInt32()
             | 24u ->
-                me.Foo3 <- ValueSome(input.ReadInt32())
+                me.Foo3 <- input.ReadInt32()
             | 34u | 32u ->
                 me.Foo4.AddEntriesFrom(&input, ComplexOptionType1.RepeatedFoo4Codec)
             | _ ->
@@ -1082,17 +1082,17 @@ module ComplexOptionType1 =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         ComplexOptionType1._UnknownFields = null
-        ComplexOptionType1.Foo = ValueNone
-        ComplexOptionType1.Foo2 = ValueNone
-        ComplexOptionType1.Foo3 = ValueNone
+        ComplexOptionType1.Foo = 0
+        ComplexOptionType1.Foo2 = 0
+        ComplexOptionType1.Foo3 = 0
         ComplexOptionType1.Foo4 = global.Google.Protobuf.Collections.RepeatedField<int32>()
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         ComplexOptionType1._UnknownFields = null
-        ComplexOptionType1.Foo = ValueNone
-        ComplexOptionType1.Foo2 = ValueNone
-        ComplexOptionType1.Foo3 = ValueNone
+        ComplexOptionType1.Foo = 0
+        ComplexOptionType1.Foo2 = 0
+        ComplexOptionType1.Foo3 = 0
         ComplexOptionType1.Foo4 = global.Google.Protobuf.Collections.RepeatedField<int32>()
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -1105,7 +1105,7 @@ module ComplexOptionType1 =
 type ComplexOptionType2 = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
     mutable Bar: ValueOption<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.ComplexOptionType1>
-    mutable Baz: ValueOption<int32>
+    mutable Baz: int32
     mutable Fred: ValueOption<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.ComplexOptionType2.Types.ComplexOptionType4>
     Barney: global.Google.Protobuf.Collections.RepeatedField<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.ComplexOptionType2.Types.ComplexOptionType4>
 } with
@@ -1123,10 +1123,10 @@ type ComplexOptionType2 = {
         then
             output.WriteRawTag(10uy)
             output.WriteMessage(me.Bar.Value)
-        if me.Baz <> ValueNone
+        if me.Baz <> ComplexOptionType2.DefaultValue.Baz
         then
             output.WriteRawTag(16uy)
-            output.WriteInt32(me.Baz.Value)
+            output.WriteInt32(me.Baz)
         if me.Fred <> ValueNone
         then
             output.WriteRawTag(26uy)
@@ -1137,7 +1137,7 @@ type ComplexOptionType2 = {
     member private me.CalculateSize() =
         let mutable size = 0
         if me.Bar <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeMessageSize(me.Bar.Value)
-        if me.Baz <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Baz.Value)
+        if me.Baz <> ComplexOptionType2.DefaultValue.Baz then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Baz)
         if me.Fred <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeMessageSize(me.Fred.Value)
         size <- size + me.Barney.CalculateSize(ComplexOptionType2.RepeatedBarneyCodec)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
@@ -1149,7 +1149,7 @@ type ComplexOptionType2 = {
             if me.Bar.IsNone
             then me.Bar <- ValueSome(global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.ComplexOptionType1.empty())
             (me.Bar.Value :> global.Google.Protobuf.IMessage<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.ComplexOptionType1>).MergeFrom(other.Bar.Value)
-        if other.Baz <> ValueNone
+        if other.Baz <> ComplexOptionType2.DefaultValue.Baz
         then me.Baz <- other.Baz
         if other.Fred <> ValueNone
         then
@@ -1168,7 +1168,7 @@ type ComplexOptionType2 = {
                 then me.Bar <- ValueSome(global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.ComplexOptionType1.empty())
                 input.ReadMessage(me.Bar.Value)
             | 16u ->
-                me.Baz <- ValueSome(input.ReadInt32())
+                me.Baz <- input.ReadInt32()
             | 26u ->
                 if me.Fred.IsNone
                 then me.Fred <- ValueSome(global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.ComplexOptionType2.Types.ComplexOptionType4.empty())
@@ -1202,7 +1202,7 @@ module ComplexOptionType2 =
     let internal DefaultValue = {
         ComplexOptionType2._UnknownFields = null
         ComplexOptionType2.Bar = ValueNone
-        ComplexOptionType2.Baz = ValueNone
+        ComplexOptionType2.Baz = 0
         ComplexOptionType2.Fred = ValueNone
         ComplexOptionType2.Barney = global.Google.Protobuf.Collections.RepeatedField<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.ComplexOptionType2.Types.ComplexOptionType4>()
     }
@@ -1210,7 +1210,7 @@ module ComplexOptionType2 =
     let empty () = {
         ComplexOptionType2._UnknownFields = null
         ComplexOptionType2.Bar = ValueNone
-        ComplexOptionType2.Baz = ValueNone
+        ComplexOptionType2.Baz = 0
         ComplexOptionType2.Fred = ValueNone
         ComplexOptionType2.Barney = global.Google.Protobuf.Collections.RepeatedField<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.ComplexOptionType2.Types.ComplexOptionType4>()
     }
@@ -1224,7 +1224,7 @@ module ComplexOptionType2 =
     module Types =
         type ComplexOptionType4 = {
             mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-            mutable Waldo: ValueOption<int32>
+            mutable Waldo: int32
         } with
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member me.Clone() : ComplexOptionType4 = {
@@ -1233,20 +1233,20 @@ module ComplexOptionType2 =
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-                if me.Waldo <> ValueNone
+                if me.Waldo <> ComplexOptionType4.DefaultValue.Waldo
                 then
                     output.WriteRawTag(8uy)
-                    output.WriteInt32(me.Waldo.Value)
+                    output.WriteInt32(me.Waldo)
                 if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.CalculateSize() =
                 let mutable size = 0
-                if me.Waldo <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Waldo.Value)
+                if me.Waldo <> ComplexOptionType4.DefaultValue.Waldo then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Waldo)
                 if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
                 size
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.MergeFrom(other: ComplexOptionType4) =
-                if other.Waldo <> ValueNone
+                if other.Waldo <> ComplexOptionType4.DefaultValue.Waldo
                 then me.Waldo <- other.Waldo
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -1255,7 +1255,7 @@ module ComplexOptionType2 =
                 while tag <> 0u do
                     match tag with
                     | 8u ->
-                        me.Waldo <- ValueSome(input.ReadInt32())
+                        me.Waldo <- input.ReadInt32()
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
@@ -1282,12 +1282,12 @@ module ComplexOptionType2 =
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let internal DefaultValue = {
                 ComplexOptionType4._UnknownFields = null
-                ComplexOptionType4.Waldo = ValueNone
+                ComplexOptionType4.Waldo = 0
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let empty () = {
                 ComplexOptionType4._UnknownFields = null
-                ComplexOptionType4.Waldo = ValueNone
+                ComplexOptionType4.Waldo = 0
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let Parser = global.Google.Protobuf.MessageParser<ComplexOptionType4>(global.System.Func<_>(empty))
@@ -1297,7 +1297,7 @@ module ComplexOptionType2 =
 
 type ComplexOptionType3 = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Qux: ValueOption<int32>
+    mutable Qux: int32
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : ComplexOptionType3 = {
@@ -1306,20 +1306,20 @@ type ComplexOptionType3 = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Qux <> ValueNone
+        if me.Qux <> ComplexOptionType3.DefaultValue.Qux
         then
             output.WriteRawTag(8uy)
-            output.WriteInt32(me.Qux.Value)
+            output.WriteInt32(me.Qux)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Qux <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Qux.Value)
+        if me.Qux <> ComplexOptionType3.DefaultValue.Qux then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Qux)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: ComplexOptionType3) =
-        if other.Qux <> ValueNone
+        if other.Qux <> ComplexOptionType3.DefaultValue.Qux
         then me.Qux <- other.Qux
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -1328,7 +1328,7 @@ type ComplexOptionType3 = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.Qux <- ValueSome(input.ReadInt32())
+                me.Qux <- input.ReadInt32()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -1355,12 +1355,12 @@ module ComplexOptionType3 =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         ComplexOptionType3._UnknownFields = null
-        ComplexOptionType3.Qux = ValueNone
+        ComplexOptionType3.Qux = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         ComplexOptionType3._UnknownFields = null
-        ComplexOptionType3.Qux = ValueNone
+        ComplexOptionType3.Qux = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<ComplexOptionType3>(global.System.Func<_>(empty))
@@ -1423,8 +1423,8 @@ module VariousComplexOptions =
     let Parser = global.Google.Protobuf.MessageParser<VariousComplexOptions>(global.System.Func<_>(empty))
 type Aggregate = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable I: ValueOption<int32>
-    mutable S: ValueOption<string>
+    mutable I: int32
+    mutable S: string
     mutable Sub: ValueOption<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.Aggregate>
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -1436,14 +1436,14 @@ type Aggregate = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.I <> ValueNone
+        if me.I <> Aggregate.DefaultValue.I
         then
             output.WriteRawTag(8uy)
-            output.WriteInt32(me.I.Value)
-        if me.S <> ValueNone
+            output.WriteInt32(me.I)
+        if me.S <> Aggregate.DefaultValue.S
         then
             output.WriteRawTag(18uy)
-            output.WriteString(me.S.Value)
+            output.WriteString(me.S)
         if me.Sub <> ValueNone
         then
             output.WriteRawTag(26uy)
@@ -1452,16 +1452,16 @@ type Aggregate = {
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.I <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.I.Value)
-        if me.S <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.S.Value)
+        if me.I <> Aggregate.DefaultValue.I then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.I)
+        if me.S <> Aggregate.DefaultValue.S then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.S)
         if me.Sub <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeMessageSize(me.Sub.Value)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Aggregate) =
-        if other.I <> ValueNone
+        if other.I <> Aggregate.DefaultValue.I
         then me.I <- other.I
-        if other.S <> ValueNone
+        if other.S <> Aggregate.DefaultValue.S
         then me.S <- other.S
         if other.Sub <> ValueNone
         then
@@ -1475,9 +1475,9 @@ type Aggregate = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.I <- ValueSome(input.ReadInt32())
+                me.I <- input.ReadInt32()
             | 18u ->
-                me.S <- ValueSome(input.ReadString())
+                me.S <- input.ReadString()
             | 26u ->
                 if me.Sub.IsNone
                 then me.Sub <- ValueSome(global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.Aggregate.empty())
@@ -1508,15 +1508,15 @@ module Aggregate =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Aggregate._UnknownFields = null
-        Aggregate.I = ValueNone
-        Aggregate.S = ValueNone
+        Aggregate.I = 0
+        Aggregate.S = ""
         Aggregate.Sub = ValueNone
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Aggregate._UnknownFields = null
-        Aggregate.I = ValueNone
-        Aggregate.S = ValueNone
+        Aggregate.I = 0
+        Aggregate.S = ""
         Aggregate.Sub = ValueNone
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -1526,7 +1526,7 @@ module Aggregate =
     let SubFieldNumber = 3
 type AggregateMessage = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Fieldname: ValueOption<int32>
+    mutable Fieldname: int32
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : AggregateMessage = {
@@ -1535,20 +1535,20 @@ type AggregateMessage = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Fieldname <> ValueNone
+        if me.Fieldname <> AggregateMessage.DefaultValue.Fieldname
         then
             output.WriteRawTag(8uy)
-            output.WriteInt32(me.Fieldname.Value)
+            output.WriteInt32(me.Fieldname)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Fieldname <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Fieldname.Value)
+        if me.Fieldname <> AggregateMessage.DefaultValue.Fieldname then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Fieldname)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: AggregateMessage) =
-        if other.Fieldname <> ValueNone
+        if other.Fieldname <> AggregateMessage.DefaultValue.Fieldname
         then me.Fieldname <- other.Fieldname
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -1557,7 +1557,7 @@ type AggregateMessage = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.Fieldname <- ValueSome(input.ReadInt32())
+                me.Fieldname <- input.ReadInt32()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -1584,12 +1584,12 @@ module AggregateMessage =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         AggregateMessage._UnknownFields = null
-        AggregateMessage.Fieldname = ValueNone
+        AggregateMessage.Fieldname = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         AggregateMessage._UnknownFields = null
-        AggregateMessage.Fieldname = ValueNone
+        AggregateMessage.Fieldname = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<AggregateMessage>(global.System.Func<_>(empty))
@@ -1656,7 +1656,7 @@ module NestedOptionType =
         | [<global.Google.Protobuf.Reflection.OriginalName("NESTED_ENUM_VALUE")>] Value = 1
         type NestedMessage = {
             mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-            mutable NestedField: ValueOption<int32>
+            mutable NestedField: int32
         } with
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member me.Clone() : NestedMessage = {
@@ -1665,20 +1665,20 @@ module NestedOptionType =
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-                if me.NestedField <> ValueNone
+                if me.NestedField <> NestedMessage.DefaultValue.NestedField
                 then
                     output.WriteRawTag(8uy)
-                    output.WriteInt32(me.NestedField.Value)
+                    output.WriteInt32(me.NestedField)
                 if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.CalculateSize() =
                 let mutable size = 0
-                if me.NestedField <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.NestedField.Value)
+                if me.NestedField <> NestedMessage.DefaultValue.NestedField then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.NestedField)
                 if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
                 size
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.MergeFrom(other: NestedMessage) =
-                if other.NestedField <> ValueNone
+                if other.NestedField <> NestedMessage.DefaultValue.NestedField
                 then me.NestedField <- other.NestedField
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -1687,7 +1687,7 @@ module NestedOptionType =
                 while tag <> 0u do
                     match tag with
                     | 8u ->
-                        me.NestedField <- ValueSome(input.ReadInt32())
+                        me.NestedField <- input.ReadInt32()
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
@@ -1714,12 +1714,12 @@ module NestedOptionType =
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let internal DefaultValue = {
                 NestedMessage._UnknownFields = null
-                NestedMessage.NestedField = ValueNone
+                NestedMessage.NestedField = 0
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let empty () = {
                 NestedMessage._UnknownFields = null
-                NestedMessage.NestedField = ValueNone
+                NestedMessage.NestedField = 0
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let Parser = global.Google.Protobuf.MessageParser<NestedMessage>(global.System.Func<_>(empty))

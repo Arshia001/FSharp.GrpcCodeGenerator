@@ -39,7 +39,7 @@ module WellKnownProtosReflection =
     let Descriptor(): global.Google.Protobuf.Reflection.FileDescriptor = descriptorBackingField.Value
 type Request = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Message: ValueOption<string>
+    mutable Message: string
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Request = {
@@ -48,20 +48,20 @@ type Request = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Message <> ValueNone
+        if me.Message <> Request.DefaultValue.Message
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Message.Value)
+            output.WriteString(me.Message)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Message <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Message.Value)
+        if me.Message <> Request.DefaultValue.Message then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Message)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Request) =
-        if other.Message <> ValueNone
+        if other.Message <> Request.DefaultValue.Message
         then me.Message <- other.Message
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -70,7 +70,7 @@ type Request = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Message <- ValueSome(input.ReadString())
+                me.Message <- input.ReadString()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -97,19 +97,19 @@ module Request =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Request._UnknownFields = null
-        Request.Message = ValueNone
+        Request.Message = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Request._UnknownFields = null
-        Request.Message = ValueNone
+        Request.Message = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Request>(global.System.Func<_>(empty))
     let MessageFieldNumber = 1
 type Response = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Message: ValueOption<string>
+    mutable Message: string
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Response = {
@@ -118,20 +118,20 @@ type Response = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Message <> ValueNone
+        if me.Message <> Response.DefaultValue.Message
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Message.Value)
+            output.WriteString(me.Message)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Message <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Message.Value)
+        if me.Message <> Response.DefaultValue.Message then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Message)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Response) =
-        if other.Message <> ValueNone
+        if other.Message <> Response.DefaultValue.Message
         then me.Message <- other.Message
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -140,7 +140,7 @@ type Response = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Message <- ValueSome(input.ReadString())
+                me.Message <- input.ReadString()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -167,12 +167,12 @@ module Response =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Response._UnknownFields = null
-        Response.Message = ValueNone
+        Response.Message = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Response._UnknownFields = null
-        Response.Message = ValueNone
+        Response.Message = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Response>(global.System.Func<_>(empty))

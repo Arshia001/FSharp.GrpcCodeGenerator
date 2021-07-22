@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="conformance/Proto3AllTypes.fs" />
     <Compile Include="conformance/Proto3Optional.fs" />
     <Compile Include="issues/Issue6.fs" />
     <Compile Include="Program.fs" />

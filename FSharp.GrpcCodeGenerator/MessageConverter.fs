@@ -254,14 +254,22 @@ let writeAdditionalOptionalMethods (ctx: MessageContext) =
             ctx.File.Writer.WriteLine $"member me.Has{propertyName} ="
             ctx.File.Writer.Indent()
             
-            ctx.File.Writer.WriteLine $"match me.{propertyName} with"
-            ctx.File.Writer.WriteLine $"| ValueNone -> false"
-            ctx.File.Writer.WriteLine $"| ValueSome(_) -> true"
+            // If the oneof field is optional there will only be one case and it has been unwrapped
+            if f.Proto3Optional |> ValueOption.defaultWith (fun _ -> false) then
+                ctx.File.Writer.WriteLine (hasPropertyCheck (ctx.File, ctx.Message, f, "me"))
+            else
+                ctx.File.Writer.WriteLine $"match me.{propertyName} with"
+                ctx.File.Writer.WriteLine $"| ValueNone -> false"
+                ctx.File.Writer.WriteLine $"| ValueSome(_) -> true"
             
             ctx.File.Writer.Outdent()
 
             Helpers.writeGeneratedCodeAttribute ctx.File
-            ctx.File.Writer.WriteLine $"member me.Clear{propertyName} () = me.{propertyName} <- ValueNone"
+            // If the oneof field is optional there will only be one case and it has been unwrapped
+            if f.Proto3Optional |> ValueOption.defaultWith (fun _ -> false) then
+                ctx.File.Writer.WriteLine $"member me.Clear{propertyName} () = me.{propertyName} <- {Helpers.messageTypeName ctx.Message}.DefaultValue.{propertyName}"
+            else
+                ctx.File.Writer.WriteLine $"member me.Clear{propertyName} () = me.{propertyName} <- ValueNone"
 
 let rec writeMessageModule (ctx: MessageContext) =
     ctx.File.Writer.WriteLine $"module {Helpers.accessSpecifier ctx.File}{typeName ctx} ="

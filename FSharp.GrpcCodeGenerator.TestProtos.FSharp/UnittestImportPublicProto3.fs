@@ -32,7 +32,7 @@ module UnittestImportPublicProto3Reflection =
     let Descriptor(): global.Google.Protobuf.Reflection.FileDescriptor = descriptorBackingField.Value
 type PublicImportMessage = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable E: ValueOption<int32>
+    mutable E: int32
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : PublicImportMessage = {
@@ -41,20 +41,20 @@ type PublicImportMessage = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.E <> ValueNone
+        if me.E <> PublicImportMessage.DefaultValue.E
         then
             output.WriteRawTag(8uy)
-            output.WriteInt32(me.E.Value)
+            output.WriteInt32(me.E)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.E <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.E.Value)
+        if me.E <> PublicImportMessage.DefaultValue.E then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.E)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: PublicImportMessage) =
-        if other.E <> ValueNone
+        if other.E <> PublicImportMessage.DefaultValue.E
         then me.E <- other.E
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -63,7 +63,7 @@ type PublicImportMessage = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.E <- ValueSome(input.ReadInt32())
+                me.E <- input.ReadInt32()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -90,12 +90,12 @@ module PublicImportMessage =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         PublicImportMessage._UnknownFields = null
-        PublicImportMessage.E = ValueNone
+        PublicImportMessage.E = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         PublicImportMessage._UnknownFields = null
-        PublicImportMessage.E = ValueNone
+        PublicImportMessage.E = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<PublicImportMessage>(global.System.Func<_>(empty))

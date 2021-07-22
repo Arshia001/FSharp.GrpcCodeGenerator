@@ -48,7 +48,7 @@ module HttpReflection =
 type Http = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
     Rules: global.Google.Protobuf.Collections.RepeatedField<global.Google.Api.HttpRule>
-    mutable FullyDecodeReservedExpansion: ValueOption<bool>
+    mutable FullyDecodeReservedExpansion: bool
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Http = {
@@ -59,22 +59,22 @@ type Http = {
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
         me.Rules.WriteTo(&output, Http.RepeatedRulesCodec)
-        if me.FullyDecodeReservedExpansion <> ValueNone
+        if me.FullyDecodeReservedExpansion <> Http.DefaultValue.FullyDecodeReservedExpansion
         then
             output.WriteRawTag(16uy)
-            output.WriteBool(me.FullyDecodeReservedExpansion.Value)
+            output.WriteBool(me.FullyDecodeReservedExpansion)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
         size <- size + me.Rules.CalculateSize(Http.RepeatedRulesCodec)
-        if me.FullyDecodeReservedExpansion <> ValueNone then size <- size + 2
+        if me.FullyDecodeReservedExpansion <> Http.DefaultValue.FullyDecodeReservedExpansion then size <- size + 2
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Http) =
         me.Rules.Add(other.Rules)
-        if other.FullyDecodeReservedExpansion <> ValueNone
+        if other.FullyDecodeReservedExpansion <> Http.DefaultValue.FullyDecodeReservedExpansion
         then me.FullyDecodeReservedExpansion <- other.FullyDecodeReservedExpansion
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -85,7 +85,7 @@ type Http = {
             | 10u ->
                 me.Rules.AddEntriesFrom(&input, Http.RepeatedRulesCodec)
             | 16u ->
-                me.FullyDecodeReservedExpansion <- ValueSome(input.ReadBool())
+                me.FullyDecodeReservedExpansion <- input.ReadBool()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -113,13 +113,13 @@ module Http =
     let internal DefaultValue = {
         Http._UnknownFields = null
         Http.Rules = global.Google.Protobuf.Collections.RepeatedField<global.Google.Api.HttpRule>()
-        Http.FullyDecodeReservedExpansion = ValueNone
+        Http.FullyDecodeReservedExpansion = false
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Http._UnknownFields = null
         Http.Rules = global.Google.Protobuf.Collections.RepeatedField<global.Google.Api.HttpRule>()
-        Http.FullyDecodeReservedExpansion = ValueNone
+        Http.FullyDecodeReservedExpansion = false
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Http>(global.System.Func<_>(empty))
@@ -128,10 +128,10 @@ module Http =
     let RepeatedRulesCodec = global.Google.Protobuf.FieldCodec.ForMessage(10u, global.Google.Api.HttpRule.Parser)
 type HttpRule = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Selector: ValueOption<string>
-    mutable Body: ValueOption<string>
+    mutable Selector: string
+    mutable Body: string
     AdditionalBindings: global.Google.Protobuf.Collections.RepeatedField<global.Google.Api.HttpRule>
-    mutable ResponseBody: ValueOption<string>
+    mutable ResponseBody: string
     mutable Pattern: ValueOption<global.Google.Api.HttpRule.Types.Pattern>
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -145,19 +145,19 @@ type HttpRule = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Selector <> ValueNone
+        if me.Selector <> HttpRule.DefaultValue.Selector
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Selector.Value)
-        if me.Body <> ValueNone
+            output.WriteString(me.Selector)
+        if me.Body <> HttpRule.DefaultValue.Body
         then
             output.WriteRawTag(58uy)
-            output.WriteString(me.Body.Value)
+            output.WriteString(me.Body)
         me.AdditionalBindings.WriteTo(&output, HttpRule.RepeatedAdditionalBindingsCodec)
-        if me.ResponseBody <> ValueNone
+        if me.ResponseBody <> HttpRule.DefaultValue.ResponseBody
         then
             output.WriteRawTag(98uy)
-            output.WriteString(me.ResponseBody.Value)
+            output.WriteString(me.ResponseBody)
         match me.Pattern with
         | ValueNone -> ()
         | ValueSome (global.Google.Api.HttpRule.Types.Pattern.Get x) ->
@@ -182,10 +182,10 @@ type HttpRule = {
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Selector <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Selector.Value)
-        if me.Body <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Body.Value)
+        if me.Selector <> HttpRule.DefaultValue.Selector then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Selector)
+        if me.Body <> HttpRule.DefaultValue.Body then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Body)
         size <- size + me.AdditionalBindings.CalculateSize(HttpRule.RepeatedAdditionalBindingsCodec)
-        if me.ResponseBody <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.ResponseBody.Value)
+        if me.ResponseBody <> HttpRule.DefaultValue.ResponseBody then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.ResponseBody)
         match me.Pattern with
         | ValueNone -> ()
         | ValueSome (global.Google.Api.HttpRule.Types.Pattern.Get x) -> size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(x)
@@ -198,12 +198,12 @@ type HttpRule = {
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: HttpRule) =
-        if other.Selector <> ValueNone
+        if other.Selector <> HttpRule.DefaultValue.Selector
         then me.Selector <- other.Selector
-        if other.Body <> ValueNone
+        if other.Body <> HttpRule.DefaultValue.Body
         then me.Body <- other.Body
         me.AdditionalBindings.Add(other.AdditionalBindings)
-        if other.ResponseBody <> ValueNone
+        if other.ResponseBody <> HttpRule.DefaultValue.ResponseBody
         then me.ResponseBody <- other.ResponseBody
         if other.Pattern <> ValueNone
         then me.Pattern <- other.Pattern
@@ -214,13 +214,13 @@ type HttpRule = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Selector <- ValueSome(input.ReadString())
+                me.Selector <- input.ReadString()
             | 58u ->
-                me.Body <- ValueSome(input.ReadString())
+                me.Body <- input.ReadString()
             | 90u ->
                 me.AdditionalBindings.AddEntriesFrom(&input, HttpRule.RepeatedAdditionalBindingsCodec)
             | 98u ->
-                me.ResponseBody <- ValueSome(input.ReadString())
+                me.ResponseBody <- input.ReadString()
             | 18u ->
                 let value = input.ReadString()
                 me.Pattern <- ValueSome(global.Google.Api.HttpRule.Types.Pattern.Get(value))
@@ -326,19 +326,19 @@ module HttpRule =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         HttpRule._UnknownFields = null
-        HttpRule.Selector = ValueNone
-        HttpRule.Body = ValueNone
+        HttpRule.Selector = ""
+        HttpRule.Body = ""
         HttpRule.AdditionalBindings = global.Google.Protobuf.Collections.RepeatedField<global.Google.Api.HttpRule>()
-        HttpRule.ResponseBody = ValueNone
+        HttpRule.ResponseBody = ""
         Pattern = ValueNone
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         HttpRule._UnknownFields = null
-        HttpRule.Selector = ValueNone
-        HttpRule.Body = ValueNone
+        HttpRule.Selector = ""
+        HttpRule.Body = ""
         HttpRule.AdditionalBindings = global.Google.Protobuf.Collections.RepeatedField<global.Google.Api.HttpRule>()
-        HttpRule.ResponseBody = ValueNone
+        HttpRule.ResponseBody = ""
         Pattern = ValueNone
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -364,8 +364,8 @@ module HttpRule =
         | Custom of global.Google.Api.CustomHttpPattern
 type CustomHttpPattern = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Kind: ValueOption<string>
-    mutable Path: ValueOption<string>
+    mutable Kind: string
+    mutable Path: string
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : CustomHttpPattern = {
@@ -375,27 +375,27 @@ type CustomHttpPattern = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Kind <> ValueNone
+        if me.Kind <> CustomHttpPattern.DefaultValue.Kind
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Kind.Value)
-        if me.Path <> ValueNone
+            output.WriteString(me.Kind)
+        if me.Path <> CustomHttpPattern.DefaultValue.Path
         then
             output.WriteRawTag(18uy)
-            output.WriteString(me.Path.Value)
+            output.WriteString(me.Path)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Kind <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Kind.Value)
-        if me.Path <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Path.Value)
+        if me.Kind <> CustomHttpPattern.DefaultValue.Kind then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Kind)
+        if me.Path <> CustomHttpPattern.DefaultValue.Path then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Path)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: CustomHttpPattern) =
-        if other.Kind <> ValueNone
+        if other.Kind <> CustomHttpPattern.DefaultValue.Kind
         then me.Kind <- other.Kind
-        if other.Path <> ValueNone
+        if other.Path <> CustomHttpPattern.DefaultValue.Path
         then me.Path <- other.Path
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -404,9 +404,9 @@ type CustomHttpPattern = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Kind <- ValueSome(input.ReadString())
+                me.Kind <- input.ReadString()
             | 18u ->
-                me.Path <- ValueSome(input.ReadString())
+                me.Path <- input.ReadString()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -433,14 +433,14 @@ module CustomHttpPattern =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         CustomHttpPattern._UnknownFields = null
-        CustomHttpPattern.Kind = ValueNone
-        CustomHttpPattern.Path = ValueNone
+        CustomHttpPattern.Kind = ""
+        CustomHttpPattern.Path = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         CustomHttpPattern._UnknownFields = null
-        CustomHttpPattern.Kind = ValueNone
-        CustomHttpPattern.Path = ValueNone
+        CustomHttpPattern.Kind = ""
+        CustomHttpPattern.Path = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<CustomHttpPattern>(global.System.Func<_>(empty))

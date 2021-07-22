@@ -40,10 +40,33 @@ let oneOfPropertyName (oneOf: OneOf) = Helpers.snakeToPascalCase false oneOf.Nam
 
 let propertyName (msg: Message, field: Field) = Helpers.propertyName msg field
 
+let isPrimitiveField (field: Field) =
+    match field.Type.Value with
+    | FieldType.Enum -> true
+    | FieldType.Message -> false
+    | FieldType.Group -> false
+    | FieldType.Double -> true
+    | FieldType.Float -> true
+    | FieldType.Int64 -> true
+    | FieldType.Uint64 -> true
+    | FieldType.Int32 -> true
+    | FieldType.Uint32 -> true
+    | FieldType.Fixed64 -> true
+    | FieldType.Sfixed64 -> true
+    | FieldType.Fixed32 -> true
+    | FieldType.Sfixed32 -> true
+    | FieldType.Bool -> true
+    | FieldType.String -> true
+    | FieldType.Bytes -> true
+    | FieldType.Sint64 -> true
+    | FieldType.Sint32 -> true
+    | _ -> failwithf "Unknown field type %A" field.Type
+
 let needsOptionType (ctx: FileContext, field: Field) =
     if field.Label = ValueSome FieldLabel.Repeated then false
     elif ctx.File.Syntax = ValueSome "proto2" then true
     elif field.Label = ValueSome FieldLabel.Required then true // We don't support proto2 but we need this to generate Descriptor.fs from descriptor.proto
+    elif isPrimitiveField field && ctx.File.Syntax = ValueSome("proto3") then false
     elif field.Label = ValueSome FieldLabel.Optional then true
     elif field.Type = ValueSome FieldType.Message || field.Type = ValueSome FieldType.Group then true
     else false
@@ -116,34 +139,36 @@ let defaultValueEnum (ctx: FileContext, field: Field) =
     Helpers.qualifiedInnerNameFromMessages (enum.Enum.Name.Value, enum.ContainerMessages, enum.File) + "." + Helpers.enumValueName (enum.Enum.Name.Value, caseName)
     
 let defaultValue (ctx: FileContext, field: Field) =
+    let maybeZero = field.DefaultValue |> ValueOption.defaultValue "0"
+
     let rec helper (ctx: FileContext, field: Field) =
         if needsOptionType (ctx, field)
         then "ValueNone"
         else
+            match field.Type.Value with
+            | FieldType.Enum -> defaultValueEnum (ctx, field)
 
-        match field.Type.Value with
-        | FieldType.Enum -> defaultValueEnum (ctx, field)
+            | FieldType.String -> defaultValueString field
+            | FieldType.Bytes -> defaultValueBytes field
+            | FieldType.Bool -> if field.DefaultValue = ValueSome "true" then "true" else "false"
 
-        | FieldType.Message
-        | FieldType.Group -> "ValueNone"
+            | FieldType.Double -> if maybeZero.Contains '.' then maybeZero else maybeZero + ".0"
+            | FieldType.Float -> maybeZero + "f"
+            | FieldType.Int64 -> maybeZero + "L"
+            | FieldType.Uint64 -> maybeZero + "UL"
+            | FieldType.Int32 -> maybeZero
+            | FieldType.Fixed64 -> maybeZero + "UL"
+            | FieldType.Fixed32 -> maybeZero + "u"
+            | FieldType.Uint32 -> maybeZero + "u"
+            | FieldType.Sfixed32 -> maybeZero
+            | FieldType.Sfixed64 -> maybeZero + "L"
+            | FieldType.Sint32 -> maybeZero
+            | FieldType.Sint64 -> maybeZero + "L"
+                
+            | FieldType.Message
+            | FieldType.Group -> failwith "Not supported"
 
-        | FieldType.String -> defaultValueString field
-        | FieldType.Bytes -> defaultValueBytes field
-        | FieldType.Bool -> if field.DefaultValue = ValueSome "true" then "true" else "false"
-        | FieldType.Double -> if field.DefaultValue.Value.Contains '.' then field.DefaultValue.Value else field.DefaultValue.Value + ".0"
-        | FieldType.Float -> field.DefaultValue.Value + "f"
-        | FieldType.Int64 -> field.DefaultValue.Value + "L"
-        | FieldType.Uint64 -> field.DefaultValue.Value + "UL"
-        | FieldType.Int32 -> field.DefaultValue.Value
-        | FieldType.Fixed64 -> field.DefaultValue.Value + "UL"
-        | FieldType.Fixed32 -> field.DefaultValue.Value + "u"
-        | FieldType.Uint32 -> field.DefaultValue.Value + "u"
-        | FieldType.Sfixed32 -> field.DefaultValue.Value
-        | FieldType.Sfixed64 -> field.DefaultValue.Value + "L"
-        | FieldType.Sint32 -> field.DefaultValue.Value
-        | FieldType.Sint64 -> field.DefaultValue.Value + "L"
-    
-        | _ -> failwithf "Unknown field type %A" field.Type
+            | _ -> failwithf "Unknown field type %A" field.Type
 
     helper (ctx, field)
 
