@@ -219,7 +219,6 @@ module UnittestProto3Reflection =
                 global.Google.Protobuf.Reflection.FileDescriptor.FromGeneratedCode(
                     descriptorData,
                     [|
-                        global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.UnittestImportPublicProto3Reflection.Descriptor()
                         global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.UnittestImportProto3Reflection.Descriptor()
                     |],
                     new global.Google.Protobuf.Reflection.GeneratedClrTypeInfo(
