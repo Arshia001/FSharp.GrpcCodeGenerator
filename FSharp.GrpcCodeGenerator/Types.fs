@@ -31,6 +31,7 @@ type Options = {
 type FileContext = {
     File: File
     Dependencies: File list
+    PublicDependencies: File list
     Writer: FSWriter
     Options: Options
 }

@@ -3,7 +3,7 @@
 open System
 open Google.Protobuf.FSharp
 
-let private generateFile (file: File, dependencies: File list, options: Options) : Compiler.CodeGeneratorResponse.Types.File =
+let private generateFile (file: File, dependencies: File list, publicDependencies: File list, options: Options) : Compiler.CodeGeneratorResponse.Types.File =
     if Helpers.isProto2 file && not <| Helpers.isBuiltInGoogleDefinition file
     then failwith "proto2 not supported"
 
@@ -12,6 +12,7 @@ let private generateFile (file: File, dependencies: File list, options: Options)
         Writer = writer
         File = file
         Dependencies = dependencies
+        PublicDependencies = publicDependencies
         Options = options
     }
     FileConverter.generateCode ctx
@@ -70,13 +71,14 @@ let generate (req: Compiler.CodeGeneratorRequest) : Compiler.CodeGeneratorRespon
                     |> Seq.collect (fun c -> c)
                     |> Seq.distinct
                     |> Seq.map (fun i -> findPublicDependency req i)
+                    |> Seq.distinct
+                    |> Seq.toList
                 let uniqueDeps =
                     deps
-                    |> Seq.append publicDeps
                     |> Seq.distinct
                     |> Seq.toList
 
-                generateFile (file, uniqueDeps, options)
+                generateFile (file, uniqueDeps, publicDeps, options)
             )
 
         let r = { Compiler.CodeGeneratorResponse.empty() with SupportedFeatures = ValueSome <| uint64 Compiler.CodeGeneratorResponse.Types.Feature.Proto3Optional }

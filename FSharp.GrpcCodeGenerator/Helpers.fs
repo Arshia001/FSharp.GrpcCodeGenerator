@@ -271,6 +271,7 @@ let flatMapFileTypes fFile fMessage (file: File) =
 let flatMapAllFiles fFile fMessage (ctx: FileContext) =
     [ ctx.File ]
     |> Seq.append ctx.Dependencies
+    |> Seq.append ctx.PublicDependencies
     |> Seq.map (fun file -> flatMapFileTypes fFile (fMessage file) file)
     |> Seq.concat
 
