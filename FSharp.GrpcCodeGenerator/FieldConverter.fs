@@ -66,6 +66,7 @@ let needsOptionType (ctx: FileContext, field: Field) =
     if field.Label = ValueSome FieldLabel.Repeated then false
     elif ctx.File.Syntax = ValueSome "proto2" then true
     elif field.Label = ValueSome FieldLabel.Required then true // We don't support proto2 but we need this to generate Descriptor.fs from descriptor.proto
+    elif field.Proto3Optional = ValueSome(true) then true
     elif isPrimitiveField field && ctx.File.Syntax = ValueSome("proto3") then false
     elif field.Label = ValueSome FieldLabel.Optional then true
     elif field.Type = ValueSome FieldType.Message || field.Type = ValueSome FieldType.Group then true
