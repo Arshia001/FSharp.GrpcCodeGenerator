@@ -80,27 +80,27 @@ module UnittestProto3OptionalReflection =
     let Descriptor(): global.Google.Protobuf.Reflection.FileDescriptor = descriptorBackingField.Value
 type TestProto3Optional = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable SingularInt32: ValueOption<int32>
-    mutable SingularInt64: ValueOption<int64>
-    mutable OptionalInt32: ValueOption<int32>
-    mutable OptionalInt64: ValueOption<int64>
-    mutable OptionalUint32: ValueOption<uint32>
-    mutable OptionalUint64: ValueOption<uint64>
-    mutable OptionalSint32: ValueOption<int32>
-    mutable OptionalSint64: ValueOption<int64>
-    mutable OptionalFixed32: ValueOption<uint32>
-    mutable OptionalFixed64: ValueOption<uint64>
-    mutable OptionalSfixed32: ValueOption<int32>
-    mutable OptionalSfixed64: ValueOption<int64>
-    mutable OptionalFloat: ValueOption<float32>
-    mutable OptionalDouble: ValueOption<float>
-    mutable OptionalBool: ValueOption<bool>
-    mutable OptionalString: ValueOption<string>
-    mutable OptionalBytes: ValueOption<global.Google.Protobuf.ByteString>
-    mutable OptionalCord: ValueOption<string>
+    mutable SingularInt32: int32
+    mutable SingularInt64: int64
+    mutable OptionalInt32: int32
+    mutable OptionalInt64: int64
+    mutable OptionalUint32: uint32
+    mutable OptionalUint64: uint64
+    mutable OptionalSint32: int32
+    mutable OptionalSint64: int64
+    mutable OptionalFixed32: uint32
+    mutable OptionalFixed64: uint64
+    mutable OptionalSfixed32: int32
+    mutable OptionalSfixed64: int64
+    mutable OptionalFloat: float32
+    mutable OptionalDouble: float
+    mutable OptionalBool: bool
+    mutable OptionalString: string
+    mutable OptionalBytes: global.Google.Protobuf.ByteString
+    mutable OptionalCord: string
     mutable OptionalNestedMessage: ValueOption<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestProto3Optional.Types.NestedMessage>
     mutable LazyNestedMessage: ValueOption<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestProto3Optional.Types.NestedMessage>
-    mutable OptionalNestedEnum: ValueOption<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestProto3Optional.Types.NestedEnum>
+    mutable OptionalNestedEnum: global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestProto3Optional.Types.NestedEnum
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : TestProto3Optional = {
@@ -129,78 +129,78 @@ type TestProto3Optional = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.SingularInt32 <> ValueNone
+        if me.SingularInt32 <> TestProto3Optional.DefaultValue.SingularInt32
         then
             output.WriteRawTag(176uy, 1uy)
-            output.WriteInt32(me.SingularInt32.Value)
-        if me.SingularInt64 <> ValueNone
+            output.WriteInt32(me.SingularInt32)
+        if me.SingularInt64 <> TestProto3Optional.DefaultValue.SingularInt64
         then
             output.WriteRawTag(184uy, 1uy)
-            output.WriteInt64(me.SingularInt64.Value)
-        if me.OptionalInt32 <> ValueNone
+            output.WriteInt64(me.SingularInt64)
+        if me.OptionalInt32 <> TestProto3Optional.DefaultValue.OptionalInt32
         then
             output.WriteRawTag(8uy)
-            output.WriteInt32(me.OptionalInt32.Value)
-        if me.OptionalInt64 <> ValueNone
+            output.WriteInt32(me.OptionalInt32)
+        if me.OptionalInt64 <> TestProto3Optional.DefaultValue.OptionalInt64
         then
             output.WriteRawTag(16uy)
-            output.WriteInt64(me.OptionalInt64.Value)
-        if me.OptionalUint32 <> ValueNone
+            output.WriteInt64(me.OptionalInt64)
+        if me.OptionalUint32 <> TestProto3Optional.DefaultValue.OptionalUint32
         then
             output.WriteRawTag(24uy)
-            output.WriteUInt32(me.OptionalUint32.Value)
-        if me.OptionalUint64 <> ValueNone
+            output.WriteUInt32(me.OptionalUint32)
+        if me.OptionalUint64 <> TestProto3Optional.DefaultValue.OptionalUint64
         then
             output.WriteRawTag(32uy)
-            output.WriteUInt64(me.OptionalUint64.Value)
-        if me.OptionalSint32 <> ValueNone
+            output.WriteUInt64(me.OptionalUint64)
+        if me.OptionalSint32 <> TestProto3Optional.DefaultValue.OptionalSint32
         then
             output.WriteRawTag(40uy)
-            output.WriteSInt32(me.OptionalSint32.Value)
-        if me.OptionalSint64 <> ValueNone
+            output.WriteSInt32(me.OptionalSint32)
+        if me.OptionalSint64 <> TestProto3Optional.DefaultValue.OptionalSint64
         then
             output.WriteRawTag(48uy)
-            output.WriteSInt64(me.OptionalSint64.Value)
-        if me.OptionalFixed32 <> ValueNone
+            output.WriteSInt64(me.OptionalSint64)
+        if me.OptionalFixed32 <> TestProto3Optional.DefaultValue.OptionalFixed32
         then
             output.WriteRawTag(61uy)
-            output.WriteFixed32(me.OptionalFixed32.Value)
-        if me.OptionalFixed64 <> ValueNone
+            output.WriteFixed32(me.OptionalFixed32)
+        if me.OptionalFixed64 <> TestProto3Optional.DefaultValue.OptionalFixed64
         then
             output.WriteRawTag(65uy)
-            output.WriteFixed64(me.OptionalFixed64.Value)
-        if me.OptionalSfixed32 <> ValueNone
+            output.WriteFixed64(me.OptionalFixed64)
+        if me.OptionalSfixed32 <> TestProto3Optional.DefaultValue.OptionalSfixed32
         then
             output.WriteRawTag(77uy)
-            output.WriteSFixed32(me.OptionalSfixed32.Value)
-        if me.OptionalSfixed64 <> ValueNone
+            output.WriteSFixed32(me.OptionalSfixed32)
+        if me.OptionalSfixed64 <> TestProto3Optional.DefaultValue.OptionalSfixed64
         then
             output.WriteRawTag(81uy)
-            output.WriteSFixed64(me.OptionalSfixed64.Value)
-        if me.OptionalFloat <> ValueNone
+            output.WriteSFixed64(me.OptionalSfixed64)
+        if me.OptionalFloat <> TestProto3Optional.DefaultValue.OptionalFloat
         then
             output.WriteRawTag(93uy)
-            output.WriteFloat(me.OptionalFloat.Value)
-        if me.OptionalDouble <> ValueNone
+            output.WriteFloat(me.OptionalFloat)
+        if me.OptionalDouble <> TestProto3Optional.DefaultValue.OptionalDouble
         then
             output.WriteRawTag(97uy)
-            output.WriteDouble(me.OptionalDouble.Value)
-        if me.OptionalBool <> ValueNone
+            output.WriteDouble(me.OptionalDouble)
+        if me.OptionalBool <> TestProto3Optional.DefaultValue.OptionalBool
         then
             output.WriteRawTag(104uy)
-            output.WriteBool(me.OptionalBool.Value)
-        if me.OptionalString <> ValueNone
+            output.WriteBool(me.OptionalBool)
+        if me.OptionalString <> TestProto3Optional.DefaultValue.OptionalString
         then
             output.WriteRawTag(114uy)
-            output.WriteString(me.OptionalString.Value)
-        if me.OptionalBytes <> ValueNone
+            output.WriteString(me.OptionalString)
+        if me.OptionalBytes <> TestProto3Optional.DefaultValue.OptionalBytes
         then
             output.WriteRawTag(122uy)
-            output.WriteBytes(me.OptionalBytes.Value)
-        if me.OptionalCord <> ValueNone
+            output.WriteBytes(me.OptionalBytes)
+        if me.OptionalCord <> TestProto3Optional.DefaultValue.OptionalCord
         then
             output.WriteRawTag(130uy, 1uy)
-            output.WriteString(me.OptionalCord.Value)
+            output.WriteString(me.OptionalCord)
         if me.OptionalNestedMessage <> ValueNone
         then
             output.WriteRawTag(146uy, 1uy)
@@ -209,74 +209,74 @@ type TestProto3Optional = {
         then
             output.WriteRawTag(154uy, 1uy)
             output.WriteMessage(me.LazyNestedMessage.Value)
-        if me.OptionalNestedEnum <> ValueNone
+        if me.OptionalNestedEnum <> TestProto3Optional.DefaultValue.OptionalNestedEnum
         then
             output.WriteRawTag(168uy, 1uy)
-            output.WriteEnum(int me.OptionalNestedEnum.Value)
+            output.WriteEnum(int me.OptionalNestedEnum)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.SingularInt32 <> ValueNone then size <- size + 2 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.SingularInt32.Value)
-        if me.SingularInt64 <> ValueNone then size <- size + 2 + global.Google.Protobuf.CodedOutputStream.ComputeInt64Size(me.SingularInt64.Value)
-        if me.OptionalInt32 <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.OptionalInt32.Value)
-        if me.OptionalInt64 <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt64Size(me.OptionalInt64.Value)
-        if me.OptionalUint32 <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeUInt32Size(me.OptionalUint32.Value)
-        if me.OptionalUint64 <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeUInt64Size(me.OptionalUint64.Value)
-        if me.OptionalSint32 <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeSInt32Size(me.OptionalSint32.Value)
-        if me.OptionalSint64 <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeSInt64Size(me.OptionalSint64.Value)
-        if me.OptionalFixed32 <> ValueNone then size <- size + 5
-        if me.OptionalFixed64 <> ValueNone then size <- size + 9
-        if me.OptionalSfixed32 <> ValueNone then size <- size + 5
-        if me.OptionalSfixed64 <> ValueNone then size <- size + 9
-        if me.OptionalFloat <> ValueNone then size <- size + 5
-        if me.OptionalDouble <> ValueNone then size <- size + 9
-        if me.OptionalBool <> ValueNone then size <- size + 2
-        if me.OptionalString <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.OptionalString.Value)
-        if me.OptionalBytes <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeBytesSize(me.OptionalBytes.Value)
-        if me.OptionalCord <> ValueNone then size <- size + 2 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.OptionalCord.Value)
+        if me.SingularInt32 <> TestProto3Optional.DefaultValue.SingularInt32 then size <- size + 2 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.SingularInt32)
+        if me.SingularInt64 <> TestProto3Optional.DefaultValue.SingularInt64 then size <- size + 2 + global.Google.Protobuf.CodedOutputStream.ComputeInt64Size(me.SingularInt64)
+        if me.OptionalInt32 <> TestProto3Optional.DefaultValue.OptionalInt32 then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.OptionalInt32)
+        if me.OptionalInt64 <> TestProto3Optional.DefaultValue.OptionalInt64 then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt64Size(me.OptionalInt64)
+        if me.OptionalUint32 <> TestProto3Optional.DefaultValue.OptionalUint32 then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeUInt32Size(me.OptionalUint32)
+        if me.OptionalUint64 <> TestProto3Optional.DefaultValue.OptionalUint64 then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeUInt64Size(me.OptionalUint64)
+        if me.OptionalSint32 <> TestProto3Optional.DefaultValue.OptionalSint32 then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeSInt32Size(me.OptionalSint32)
+        if me.OptionalSint64 <> TestProto3Optional.DefaultValue.OptionalSint64 then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeSInt64Size(me.OptionalSint64)
+        if me.OptionalFixed32 <> TestProto3Optional.DefaultValue.OptionalFixed32 then size <- size + 5
+        if me.OptionalFixed64 <> TestProto3Optional.DefaultValue.OptionalFixed64 then size <- size + 9
+        if me.OptionalSfixed32 <> TestProto3Optional.DefaultValue.OptionalSfixed32 then size <- size + 5
+        if me.OptionalSfixed64 <> TestProto3Optional.DefaultValue.OptionalSfixed64 then size <- size + 9
+        if me.OptionalFloat <> TestProto3Optional.DefaultValue.OptionalFloat then size <- size + 5
+        if me.OptionalDouble <> TestProto3Optional.DefaultValue.OptionalDouble then size <- size + 9
+        if me.OptionalBool <> TestProto3Optional.DefaultValue.OptionalBool then size <- size + 2
+        if me.OptionalString <> TestProto3Optional.DefaultValue.OptionalString then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.OptionalString)
+        if me.OptionalBytes <> TestProto3Optional.DefaultValue.OptionalBytes then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeBytesSize(me.OptionalBytes)
+        if me.OptionalCord <> TestProto3Optional.DefaultValue.OptionalCord then size <- size + 2 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.OptionalCord)
         if me.OptionalNestedMessage <> ValueNone then size <- size + 2 + global.Google.Protobuf.CodedOutputStream.ComputeMessageSize(me.OptionalNestedMessage.Value)
         if me.LazyNestedMessage <> ValueNone then size <- size + 2 + global.Google.Protobuf.CodedOutputStream.ComputeMessageSize(me.LazyNestedMessage.Value)
-        if me.OptionalNestedEnum <> ValueNone then size <- size + 2 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.OptionalNestedEnum.Value)
+        if me.OptionalNestedEnum <> TestProto3Optional.DefaultValue.OptionalNestedEnum then size <- size + 2 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.OptionalNestedEnum)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: TestProto3Optional) =
-        if other.SingularInt32 <> ValueNone
+        if other.SingularInt32 <> TestProto3Optional.DefaultValue.SingularInt32
         then me.SingularInt32 <- other.SingularInt32
-        if other.SingularInt64 <> ValueNone
+        if other.SingularInt64 <> TestProto3Optional.DefaultValue.SingularInt64
         then me.SingularInt64 <- other.SingularInt64
-        if other.OptionalInt32 <> ValueNone
+        if other.OptionalInt32 <> TestProto3Optional.DefaultValue.OptionalInt32
         then me.OptionalInt32 <- other.OptionalInt32
-        if other.OptionalInt64 <> ValueNone
+        if other.OptionalInt64 <> TestProto3Optional.DefaultValue.OptionalInt64
         then me.OptionalInt64 <- other.OptionalInt64
-        if other.OptionalUint32 <> ValueNone
+        if other.OptionalUint32 <> TestProto3Optional.DefaultValue.OptionalUint32
         then me.OptionalUint32 <- other.OptionalUint32
-        if other.OptionalUint64 <> ValueNone
+        if other.OptionalUint64 <> TestProto3Optional.DefaultValue.OptionalUint64
         then me.OptionalUint64 <- other.OptionalUint64
-        if other.OptionalSint32 <> ValueNone
+        if other.OptionalSint32 <> TestProto3Optional.DefaultValue.OptionalSint32
         then me.OptionalSint32 <- other.OptionalSint32
-        if other.OptionalSint64 <> ValueNone
+        if other.OptionalSint64 <> TestProto3Optional.DefaultValue.OptionalSint64
         then me.OptionalSint64 <- other.OptionalSint64
-        if other.OptionalFixed32 <> ValueNone
+        if other.OptionalFixed32 <> TestProto3Optional.DefaultValue.OptionalFixed32
         then me.OptionalFixed32 <- other.OptionalFixed32
-        if other.OptionalFixed64 <> ValueNone
+        if other.OptionalFixed64 <> TestProto3Optional.DefaultValue.OptionalFixed64
         then me.OptionalFixed64 <- other.OptionalFixed64
-        if other.OptionalSfixed32 <> ValueNone
+        if other.OptionalSfixed32 <> TestProto3Optional.DefaultValue.OptionalSfixed32
         then me.OptionalSfixed32 <- other.OptionalSfixed32
-        if other.OptionalSfixed64 <> ValueNone
+        if other.OptionalSfixed64 <> TestProto3Optional.DefaultValue.OptionalSfixed64
         then me.OptionalSfixed64 <- other.OptionalSfixed64
-        if other.OptionalFloat <> ValueNone
+        if other.OptionalFloat <> TestProto3Optional.DefaultValue.OptionalFloat
         then me.OptionalFloat <- other.OptionalFloat
-        if other.OptionalDouble <> ValueNone
+        if other.OptionalDouble <> TestProto3Optional.DefaultValue.OptionalDouble
         then me.OptionalDouble <- other.OptionalDouble
-        if other.OptionalBool <> ValueNone
+        if other.OptionalBool <> TestProto3Optional.DefaultValue.OptionalBool
         then me.OptionalBool <- other.OptionalBool
-        if other.OptionalString <> ValueNone
+        if other.OptionalString <> TestProto3Optional.DefaultValue.OptionalString
         then me.OptionalString <- other.OptionalString
-        if other.OptionalBytes <> ValueNone
+        if other.OptionalBytes <> TestProto3Optional.DefaultValue.OptionalBytes
         then me.OptionalBytes <- other.OptionalBytes
-        if other.OptionalCord <> ValueNone
+        if other.OptionalCord <> TestProto3Optional.DefaultValue.OptionalCord
         then me.OptionalCord <- other.OptionalCord
         if other.OptionalNestedMessage <> ValueNone
         then
@@ -288,7 +288,7 @@ type TestProto3Optional = {
             if me.LazyNestedMessage.IsNone
             then me.LazyNestedMessage <- ValueSome(global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestProto3Optional.Types.NestedMessage.empty())
             (me.LazyNestedMessage.Value :> global.Google.Protobuf.IMessage<global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestProto3Optional.Types.NestedMessage>).MergeFrom(other.LazyNestedMessage.Value)
-        if other.OptionalNestedEnum <> ValueNone
+        if other.OptionalNestedEnum <> TestProto3Optional.DefaultValue.OptionalNestedEnum
         then me.OptionalNestedEnum <- other.OptionalNestedEnum
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -297,41 +297,41 @@ type TestProto3Optional = {
         while tag <> 0u do
             match tag with
             | 176u ->
-                me.SingularInt32 <- ValueSome(input.ReadInt32())
+                me.SingularInt32 <- input.ReadInt32()
             | 184u ->
-                me.SingularInt64 <- ValueSome(input.ReadInt64())
+                me.SingularInt64 <- input.ReadInt64()
             | 8u ->
-                me.OptionalInt32 <- ValueSome(input.ReadInt32())
+                me.OptionalInt32 <- input.ReadInt32()
             | 16u ->
-                me.OptionalInt64 <- ValueSome(input.ReadInt64())
+                me.OptionalInt64 <- input.ReadInt64()
             | 24u ->
-                me.OptionalUint32 <- ValueSome(input.ReadUInt32())
+                me.OptionalUint32 <- input.ReadUInt32()
             | 32u ->
-                me.OptionalUint64 <- ValueSome(input.ReadUInt64())
+                me.OptionalUint64 <- input.ReadUInt64()
             | 40u ->
-                me.OptionalSint32 <- ValueSome(input.ReadSInt32())
+                me.OptionalSint32 <- input.ReadSInt32()
             | 48u ->
-                me.OptionalSint64 <- ValueSome(input.ReadSInt64())
+                me.OptionalSint64 <- input.ReadSInt64()
             | 61u ->
-                me.OptionalFixed32 <- ValueSome(input.ReadFixed32())
+                me.OptionalFixed32 <- input.ReadFixed32()
             | 65u ->
-                me.OptionalFixed64 <- ValueSome(input.ReadFixed64())
+                me.OptionalFixed64 <- input.ReadFixed64()
             | 77u ->
-                me.OptionalSfixed32 <- ValueSome(input.ReadSFixed32())
+                me.OptionalSfixed32 <- input.ReadSFixed32()
             | 81u ->
-                me.OptionalSfixed64 <- ValueSome(input.ReadSFixed64())
+                me.OptionalSfixed64 <- input.ReadSFixed64()
             | 93u ->
-                me.OptionalFloat <- ValueSome(input.ReadFloat())
+                me.OptionalFloat <- input.ReadFloat()
             | 97u ->
-                me.OptionalDouble <- ValueSome(input.ReadDouble())
+                me.OptionalDouble <- input.ReadDouble()
             | 104u ->
-                me.OptionalBool <- ValueSome(input.ReadBool())
+                me.OptionalBool <- input.ReadBool()
             | 114u ->
-                me.OptionalString <- ValueSome(input.ReadString())
+                me.OptionalString <- input.ReadString()
             | 122u ->
-                me.OptionalBytes <- ValueSome(input.ReadBytes())
+                me.OptionalBytes <- input.ReadBytes()
             | 130u ->
-                me.OptionalCord <- ValueSome(input.ReadString())
+                me.OptionalCord <- input.ReadString()
             | 146u ->
                 if me.OptionalNestedMessage.IsNone
                 then me.OptionalNestedMessage <- ValueSome(global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestProto3Optional.Types.NestedMessage.empty())
@@ -341,143 +341,105 @@ type TestProto3Optional = {
                 then me.LazyNestedMessage <- ValueSome(global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestProto3Optional.Types.NestedMessage.empty())
                 input.ReadMessage(me.LazyNestedMessage.Value)
             | 168u ->
-                me.OptionalNestedEnum <- ValueSome(enum(input.ReadEnum()))
+                me.OptionalNestedEnum <- enum(input.ReadEnum())
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalInt32 =
-        match me.OptionalInt32 with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalInt32 <> TestProto3Optional.DefaultValue.OptionalInt32
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalInt32 () = me.OptionalInt32 <- ValueNone
+    member me.ClearOptionalInt32 () = me.OptionalInt32 <- TestProto3Optional.DefaultValue.OptionalInt32
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalInt64 =
-        match me.OptionalInt64 with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalInt64 <> TestProto3Optional.DefaultValue.OptionalInt64
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalInt64 () = me.OptionalInt64 <- ValueNone
+    member me.ClearOptionalInt64 () = me.OptionalInt64 <- TestProto3Optional.DefaultValue.OptionalInt64
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalUint32 =
-        match me.OptionalUint32 with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalUint32 <> TestProto3Optional.DefaultValue.OptionalUint32
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalUint32 () = me.OptionalUint32 <- ValueNone
+    member me.ClearOptionalUint32 () = me.OptionalUint32 <- TestProto3Optional.DefaultValue.OptionalUint32
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalUint64 =
-        match me.OptionalUint64 with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalUint64 <> TestProto3Optional.DefaultValue.OptionalUint64
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalUint64 () = me.OptionalUint64 <- ValueNone
+    member me.ClearOptionalUint64 () = me.OptionalUint64 <- TestProto3Optional.DefaultValue.OptionalUint64
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalSint32 =
-        match me.OptionalSint32 with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalSint32 <> TestProto3Optional.DefaultValue.OptionalSint32
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalSint32 () = me.OptionalSint32 <- ValueNone
+    member me.ClearOptionalSint32 () = me.OptionalSint32 <- TestProto3Optional.DefaultValue.OptionalSint32
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalSint64 =
-        match me.OptionalSint64 with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalSint64 <> TestProto3Optional.DefaultValue.OptionalSint64
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalSint64 () = me.OptionalSint64 <- ValueNone
+    member me.ClearOptionalSint64 () = me.OptionalSint64 <- TestProto3Optional.DefaultValue.OptionalSint64
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalFixed32 =
-        match me.OptionalFixed32 with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalFixed32 <> TestProto3Optional.DefaultValue.OptionalFixed32
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalFixed32 () = me.OptionalFixed32 <- ValueNone
+    member me.ClearOptionalFixed32 () = me.OptionalFixed32 <- TestProto3Optional.DefaultValue.OptionalFixed32
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalFixed64 =
-        match me.OptionalFixed64 with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalFixed64 <> TestProto3Optional.DefaultValue.OptionalFixed64
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalFixed64 () = me.OptionalFixed64 <- ValueNone
+    member me.ClearOptionalFixed64 () = me.OptionalFixed64 <- TestProto3Optional.DefaultValue.OptionalFixed64
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalSfixed32 =
-        match me.OptionalSfixed32 with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalSfixed32 <> TestProto3Optional.DefaultValue.OptionalSfixed32
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalSfixed32 () = me.OptionalSfixed32 <- ValueNone
+    member me.ClearOptionalSfixed32 () = me.OptionalSfixed32 <- TestProto3Optional.DefaultValue.OptionalSfixed32
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalSfixed64 =
-        match me.OptionalSfixed64 with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalSfixed64 <> TestProto3Optional.DefaultValue.OptionalSfixed64
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalSfixed64 () = me.OptionalSfixed64 <- ValueNone
+    member me.ClearOptionalSfixed64 () = me.OptionalSfixed64 <- TestProto3Optional.DefaultValue.OptionalSfixed64
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalFloat =
-        match me.OptionalFloat with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalFloat <> TestProto3Optional.DefaultValue.OptionalFloat
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalFloat () = me.OptionalFloat <- ValueNone
+    member me.ClearOptionalFloat () = me.OptionalFloat <- TestProto3Optional.DefaultValue.OptionalFloat
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalDouble =
-        match me.OptionalDouble with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalDouble <> TestProto3Optional.DefaultValue.OptionalDouble
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalDouble () = me.OptionalDouble <- ValueNone
+    member me.ClearOptionalDouble () = me.OptionalDouble <- TestProto3Optional.DefaultValue.OptionalDouble
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalBool =
-        match me.OptionalBool with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalBool <> TestProto3Optional.DefaultValue.OptionalBool
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalBool () = me.OptionalBool <- ValueNone
+    member me.ClearOptionalBool () = me.OptionalBool <- TestProto3Optional.DefaultValue.OptionalBool
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalString =
-        match me.OptionalString with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalString <> TestProto3Optional.DefaultValue.OptionalString
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalString () = me.OptionalString <- ValueNone
+    member me.ClearOptionalString () = me.OptionalString <- TestProto3Optional.DefaultValue.OptionalString
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalBytes =
-        match me.OptionalBytes with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalBytes <> TestProto3Optional.DefaultValue.OptionalBytes
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalBytes () = me.OptionalBytes <- ValueNone
+    member me.ClearOptionalBytes () = me.OptionalBytes <- TestProto3Optional.DefaultValue.OptionalBytes
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalCord =
-        match me.OptionalCord with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalCord <> TestProto3Optional.DefaultValue.OptionalCord
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalCord () = me.OptionalCord <- ValueNone
+    member me.ClearOptionalCord () = me.OptionalCord <- TestProto3Optional.DefaultValue.OptionalCord
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalNestedMessage =
-        match me.OptionalNestedMessage with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalNestedMessage <> ValueNone
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalNestedMessage () = me.OptionalNestedMessage <- ValueNone
+    member me.ClearOptionalNestedMessage () = me.OptionalNestedMessage <- TestProto3Optional.DefaultValue.OptionalNestedMessage
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasLazyNestedMessage =
-        match me.LazyNestedMessage with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.LazyNestedMessage <> ValueNone
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearLazyNestedMessage () = me.LazyNestedMessage <- ValueNone
+    member me.ClearLazyNestedMessage () = me.LazyNestedMessage <- TestProto3Optional.DefaultValue.LazyNestedMessage
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalNestedEnum =
-        match me.OptionalNestedEnum with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalNestedEnum <> TestProto3Optional.DefaultValue.OptionalNestedEnum
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalNestedEnum () = me.OptionalNestedEnum <- ValueNone
+    member me.ClearOptionalNestedEnum () = me.OptionalNestedEnum <- TestProto3Optional.DefaultValue.OptionalNestedEnum
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -501,52 +463,52 @@ module TestProto3Optional =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         TestProto3Optional._UnknownFields = null
-        TestProto3Optional.SingularInt32 = ValueNone
-        TestProto3Optional.SingularInt64 = ValueNone
-        TestProto3Optional.OptionalInt32 = ValueNone
-        TestProto3Optional.OptionalInt64 = ValueNone
-        TestProto3Optional.OptionalUint32 = ValueNone
-        TestProto3Optional.OptionalUint64 = ValueNone
-        TestProto3Optional.OptionalSint32 = ValueNone
-        TestProto3Optional.OptionalSint64 = ValueNone
-        TestProto3Optional.OptionalFixed32 = ValueNone
-        TestProto3Optional.OptionalFixed64 = ValueNone
-        TestProto3Optional.OptionalSfixed32 = ValueNone
-        TestProto3Optional.OptionalSfixed64 = ValueNone
-        TestProto3Optional.OptionalFloat = ValueNone
-        TestProto3Optional.OptionalDouble = ValueNone
-        TestProto3Optional.OptionalBool = ValueNone
-        TestProto3Optional.OptionalString = ValueNone
-        TestProto3Optional.OptionalBytes = ValueNone
-        TestProto3Optional.OptionalCord = ValueNone
+        TestProto3Optional.SingularInt32 = 0
+        TestProto3Optional.SingularInt64 = 0L
+        TestProto3Optional.OptionalInt32 = 0
+        TestProto3Optional.OptionalInt64 = 0L
+        TestProto3Optional.OptionalUint32 = 0u
+        TestProto3Optional.OptionalUint64 = 0UL
+        TestProto3Optional.OptionalSint32 = 0
+        TestProto3Optional.OptionalSint64 = 0L
+        TestProto3Optional.OptionalFixed32 = 0u
+        TestProto3Optional.OptionalFixed64 = 0UL
+        TestProto3Optional.OptionalSfixed32 = 0
+        TestProto3Optional.OptionalSfixed64 = 0L
+        TestProto3Optional.OptionalFloat = 0f
+        TestProto3Optional.OptionalDouble = 0.0
+        TestProto3Optional.OptionalBool = false
+        TestProto3Optional.OptionalString = ""
+        TestProto3Optional.OptionalBytes = global.Google.Protobuf.ByteString.Empty
+        TestProto3Optional.OptionalCord = ""
         TestProto3Optional.OptionalNestedMessage = ValueNone
         TestProto3Optional.LazyNestedMessage = ValueNone
-        TestProto3Optional.OptionalNestedEnum = ValueNone
+        TestProto3Optional.OptionalNestedEnum = global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestProto3Optional.Types.NestedEnum.Unspecified
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         TestProto3Optional._UnknownFields = null
-        TestProto3Optional.SingularInt32 = ValueNone
-        TestProto3Optional.SingularInt64 = ValueNone
-        TestProto3Optional.OptionalInt32 = ValueNone
-        TestProto3Optional.OptionalInt64 = ValueNone
-        TestProto3Optional.OptionalUint32 = ValueNone
-        TestProto3Optional.OptionalUint64 = ValueNone
-        TestProto3Optional.OptionalSint32 = ValueNone
-        TestProto3Optional.OptionalSint64 = ValueNone
-        TestProto3Optional.OptionalFixed32 = ValueNone
-        TestProto3Optional.OptionalFixed64 = ValueNone
-        TestProto3Optional.OptionalSfixed32 = ValueNone
-        TestProto3Optional.OptionalSfixed64 = ValueNone
-        TestProto3Optional.OptionalFloat = ValueNone
-        TestProto3Optional.OptionalDouble = ValueNone
-        TestProto3Optional.OptionalBool = ValueNone
-        TestProto3Optional.OptionalString = ValueNone
-        TestProto3Optional.OptionalBytes = ValueNone
-        TestProto3Optional.OptionalCord = ValueNone
+        TestProto3Optional.SingularInt32 = 0
+        TestProto3Optional.SingularInt64 = 0L
+        TestProto3Optional.OptionalInt32 = 0
+        TestProto3Optional.OptionalInt64 = 0L
+        TestProto3Optional.OptionalUint32 = 0u
+        TestProto3Optional.OptionalUint64 = 0UL
+        TestProto3Optional.OptionalSint32 = 0
+        TestProto3Optional.OptionalSint64 = 0L
+        TestProto3Optional.OptionalFixed32 = 0u
+        TestProto3Optional.OptionalFixed64 = 0UL
+        TestProto3Optional.OptionalSfixed32 = 0
+        TestProto3Optional.OptionalSfixed64 = 0L
+        TestProto3Optional.OptionalFloat = 0f
+        TestProto3Optional.OptionalDouble = 0.0
+        TestProto3Optional.OptionalBool = false
+        TestProto3Optional.OptionalString = ""
+        TestProto3Optional.OptionalBytes = global.Google.Protobuf.ByteString.Empty
+        TestProto3Optional.OptionalCord = ""
         TestProto3Optional.OptionalNestedMessage = ValueNone
         TestProto3Optional.LazyNestedMessage = ValueNone
-        TestProto3Optional.OptionalNestedEnum = ValueNone
+        TestProto3Optional.OptionalNestedEnum = global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestProto3Optional.Types.NestedEnum.Unspecified
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<TestProto3Optional>(global.System.Func<_>(empty))
@@ -618,7 +580,7 @@ module TestProto3Optional =
         | [<global.Google.Protobuf.Reflection.OriginalName("NEG")>] Neg = -1
         type NestedMessage = {
             mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-            mutable Bb: ValueOption<int32>
+            mutable Bb: int32
         } with
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member me.Clone() : NestedMessage = {
@@ -627,20 +589,20 @@ module TestProto3Optional =
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-                if me.Bb <> ValueNone
+                if me.Bb <> NestedMessage.DefaultValue.Bb
                 then
                     output.WriteRawTag(8uy)
-                    output.WriteInt32(me.Bb.Value)
+                    output.WriteInt32(me.Bb)
                 if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.CalculateSize() =
                 let mutable size = 0
-                if me.Bb <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Bb.Value)
+                if me.Bb <> NestedMessage.DefaultValue.Bb then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Bb)
                 if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
                 size
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.MergeFrom(other: NestedMessage) =
-                if other.Bb <> ValueNone
+                if other.Bb <> NestedMessage.DefaultValue.Bb
                 then me.Bb <- other.Bb
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -649,17 +611,15 @@ module TestProto3Optional =
                 while tag <> 0u do
                     match tag with
                     | 8u ->
-                        me.Bb <- ValueSome(input.ReadInt32())
+                        me.Bb <- input.ReadInt32()
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member me.HasBb =
-                match me.Bb with
-                | ValueNone -> false
-                | ValueSome(_) -> true
+                me.Bb <> NestedMessage.DefaultValue.Bb
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-            member me.ClearBb () = me.Bb <- ValueNone
+            member me.ClearBb () = me.Bb <- NestedMessage.DefaultValue.Bb
             interface global.Google.Protobuf.IBufferMessage with
                 [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
                 member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -683,12 +643,12 @@ module TestProto3Optional =
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let internal DefaultValue = {
                 NestedMessage._UnknownFields = null
-                NestedMessage.Bb = ValueNone
+                NestedMessage.Bb = 0
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let empty () = {
                 NestedMessage._UnknownFields = null
-                NestedMessage.Bb = ValueNone
+                NestedMessage.Bb = 0
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let Parser = global.Google.Protobuf.MessageParser<NestedMessage>(global.System.Func<_>(empty))
@@ -756,11 +716,9 @@ type TestProto3OptionalMessage = {
             tag <- input.ReadTag()
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.HasOptionalNestedMessage =
-        match me.OptionalNestedMessage with
-        | ValueNone -> false
-        | ValueSome(_) -> true
+        me.OptionalNestedMessage <> ValueNone
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
-    member me.ClearOptionalNestedMessage () = me.OptionalNestedMessage <- ValueNone
+    member me.ClearOptionalNestedMessage () = me.OptionalNestedMessage <- TestProto3OptionalMessage.DefaultValue.OptionalNestedMessage
     interface global.Google.Protobuf.IBufferMessage with
         [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
         member me.InternalMergeFrom(ctx) = me.InternalMergeFrom(&ctx)
@@ -802,7 +760,7 @@ module TestProto3OptionalMessage =
         | OptionalNestedMessage of global.FSharp.GrpcCodeGenerator.TestProtos.FSharp.TestProto3OptionalMessage.Types.NestedMessage
         type NestedMessage = {
             mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-            mutable S: ValueOption<string>
+            mutable S: string
         } with
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member me.Clone() : NestedMessage = {
@@ -811,20 +769,20 @@ module TestProto3OptionalMessage =
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-                if me.S <> ValueNone
+                if me.S <> NestedMessage.DefaultValue.S
                 then
                     output.WriteRawTag(10uy)
-                    output.WriteString(me.S.Value)
+                    output.WriteString(me.S)
                 if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.CalculateSize() =
                 let mutable size = 0
-                if me.S <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.S.Value)
+                if me.S <> NestedMessage.DefaultValue.S then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.S)
                 if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
                 size
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             member private me.MergeFrom(other: NestedMessage) =
-                if other.S <> ValueNone
+                if other.S <> NestedMessage.DefaultValue.S
                 then me.S <- other.S
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -833,7 +791,7 @@ module TestProto3OptionalMessage =
                 while tag <> 0u do
                     match tag with
                     | 10u ->
-                        me.S <- ValueSome(input.ReadString())
+                        me.S <- input.ReadString()
                     | _ ->
                         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
                     tag <- input.ReadTag()
@@ -860,12 +818,12 @@ module TestProto3OptionalMessage =
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let internal DefaultValue = {
                 NestedMessage._UnknownFields = null
-                NestedMessage.S = ValueNone
+                NestedMessage.S = ""
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let empty () = {
                 NestedMessage._UnknownFields = null
-                NestedMessage.S = ValueNone
+                NestedMessage.S = ""
             }
             [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
             let Parser = global.Google.Protobuf.MessageParser<NestedMessage>(global.System.Func<_>(empty))

@@ -41,7 +41,7 @@ module AnnotationsExtensions =
     let http = global.Google.Protobuf.Extension<global.Google.Protobuf.Reflection.MethodOptions,global.Google.Api.HttpRule>(72295728, global.Google.Protobuf.FieldCodec.ForMessage(578365826u, global.Google.Api.HttpRule.Parser))
 type Empty = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Empty: ValueOption<string>
+    mutable Empty: string
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Empty = {
@@ -50,20 +50,20 @@ type Empty = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Empty <> ValueNone
+        if me.Empty <> Empty.DefaultValue.Empty
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Empty.Value)
+            output.WriteString(me.Empty)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Empty <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Empty.Value)
+        if me.Empty <> Empty.DefaultValue.Empty then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Empty)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Empty) =
-        if other.Empty <> ValueNone
+        if other.Empty <> Empty.DefaultValue.Empty
         then me.Empty <- other.Empty
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -72,7 +72,7 @@ type Empty = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Empty <- ValueSome(input.ReadString())
+                me.Empty <- input.ReadString()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -99,12 +99,12 @@ module Empty =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Empty._UnknownFields = null
-        Empty.Empty = ValueNone
+        Empty.Empty = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Empty._UnknownFields = null
-        Empty.Empty = ValueNone
+        Empty.Empty = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Empty>(global.System.Func<_>(empty))

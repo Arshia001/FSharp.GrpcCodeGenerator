@@ -42,7 +42,7 @@ type ImportEnum =
 | [<global.Google.Protobuf.Reflection.OriginalName("IMPORT_BAZ")>] ImportBaz = 9
 type ImportMessage = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable D: ValueOption<int32>
+    mutable D: int32
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : ImportMessage = {
@@ -51,20 +51,20 @@ type ImportMessage = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.D <> ValueNone
+        if me.D <> ImportMessage.DefaultValue.D
         then
             output.WriteRawTag(8uy)
-            output.WriteInt32(me.D.Value)
+            output.WriteInt32(me.D)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.D <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.D.Value)
+        if me.D <> ImportMessage.DefaultValue.D then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.D)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: ImportMessage) =
-        if other.D <> ValueNone
+        if other.D <> ImportMessage.DefaultValue.D
         then me.D <- other.D
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -73,7 +73,7 @@ type ImportMessage = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.D <- ValueSome(input.ReadInt32())
+                me.D <- input.ReadInt32()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -100,12 +100,12 @@ module ImportMessage =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         ImportMessage._UnknownFields = null
-        ImportMessage.D = ValueNone
+        ImportMessage.D = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         ImportMessage._UnknownFields = null
-        ImportMessage.D = ValueNone
+        ImportMessage.D = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<ImportMessage>(global.System.Func<_>(empty))
