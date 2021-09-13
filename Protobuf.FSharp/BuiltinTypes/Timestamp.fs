@@ -125,7 +125,7 @@ type Timestamp = {
         member __.Descriptor = global.Google.Protobuf.FSharp.WellKnownTypes.TimestampReflection.Timestamp_Descriptor()
 module Timestamp =
     // Start of hand-written code
-    let internal unixEpoch : System.DateTime = System.DateTime.Parse("1970-01-01T00:00:00Z")
+    let internal unixEpoch : System.DateTime = System.DateTime.Parse("1970-01-01T00:00:00Z").ToUniversalTime()
     // End of hand-written code
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
