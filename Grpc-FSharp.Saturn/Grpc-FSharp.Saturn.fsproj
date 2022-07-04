@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0</TargetFrameworks>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
 	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	  <Version>0.1.2-saturn15preview03</Version>
+	  <Version>0.1.3</Version>
 	  <Authors>Arshia001</Authors>
 	  <Description>Adds a Saturn application extension to enable hosting .proto based gRPC services</Description>
 	  <PackageOutputPath>../nupkg</PackageOutputPath>

@@ -4,12 +4,12 @@
     <Description>F# gRPC meta-package for ASP.NET Core</Description>
     <PackageTags>F# FSharp functional gRPC RPC HTTP/2 aspnetcore</PackageTags>
 
-    <TargetFrameworks>netcoreapp3.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
 
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <IncludeSymbols>false</IncludeSymbols>
 
-	<Version>0.1.1</Version>
+	<Version>0.1.2</Version>
 	<Authors>Arshia001</Authors>
 	<PackageOutputPath>../nupkg</PackageOutputPath>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
