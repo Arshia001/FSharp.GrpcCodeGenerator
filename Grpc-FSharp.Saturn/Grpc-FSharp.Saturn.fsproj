@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Saturn" Version="0.15.0-preview03" />
+    <PackageReference Include="Saturn" Version="0.15.0" />
   </ItemGroup>
 
   <ItemGroup>
