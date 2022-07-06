@@ -39,7 +39,11 @@ type Timestamp = {
 } with
     // Start of hand-written code
     static member FromDateTime(dt: System.DateTime) : Timestamp =
-        let ticks = (dt.ToUniversalTime() - Timestamp.unixEpoch).Ticks
+        let ticks = 
+            if dt.Kind = System.DateTimeKind.Unspecified then
+                (System.DateTime.SpecifyKind(dt, System.DateTimeKind.Utc) - Timestamp.unixEpoch).Ticks
+            else
+                (dt.ToUniversalTime() - Timestamp.unixEpoch).Ticks
         let seconds = ticks / System.TimeSpan.TicksPerSecond
         let nanos = int ((ticks % System.TimeSpan.TicksPerSecond) * 100L)
         { Timestamp.empty() with
