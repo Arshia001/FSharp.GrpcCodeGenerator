@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
     <RootNamespace>Grpc.FSharp.Tools</RootNamespace>
-    <Version>0.1.1</Version>
+    <Version>$(PackageVersion)</Version>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <BuildOutputTargetFolder>build\_protobuf\</BuildOutputTargetFolder>
@@ -79,6 +79,7 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="Microsoft.Build.Framework; Microsoft.Build.Utilities.v4.0" Pack="false" />
+    <PackageReference Update="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <FSharpCoreImplicitPackageVersion>4.7.0</FSharpCoreImplicitPackageVersion>

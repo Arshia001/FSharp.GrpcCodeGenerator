@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30709.132
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSharp.GrpcCodeGenerator", "FSharp.GrpcCodeGenerator\FSharp.GrpcCodeGenerator.fsproj", "{724C27AC-0E2B-4515-8BD3-2B96EAEE588B}"
 EndProject
@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Meta-packages", "Meta-packa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{645D3517-0564-4F95-86BC-22E748B96C7E}"
 	ProjectSection(SolutionItems) = preProject
+		Directory.Build.Props = Directory.Build.Props
 		README.md = README.md
 	EndProjectSection
 EndProject
