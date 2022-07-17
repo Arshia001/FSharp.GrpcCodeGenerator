@@ -24,7 +24,7 @@
     </None>
 
     <PackageReference Include="Protobuf.FSharp" Version="$(PackageVersion)" />
-    <PackageReference Include="Grpc.Net.Client" Version="2.34.0" PrivateAssets="None" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.47.0" PrivateAssets="None" />
     <!-- PrivateAssets set to None to ensure the build targets/props are propagated to parent project -->
      <PackageReference Include="Grpc-FSharp.Tools" Version="$(PackageVersion)" PrivateAssets="None" /> 
   </ItemGroup>
