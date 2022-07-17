@@ -3,7 +3,7 @@
 open System
 open Google.Protobuf.FSharp
 
-let private generateFile (file: File, dependencies: File list, options: Options) : Compiler.CodeGeneratorResponse.Types.File =
+let private generateFile (file: File, dependencies: File list, publicDependencies: File list, options: Options) : Compiler.CodeGeneratorResponse.Types.File =
     if Helpers.isProto2 file && not <| Helpers.isBuiltInGoogleDefinition file
     then failwith "proto2 not supported"
 
@@ -12,6 +12,7 @@ let private generateFile (file: File, dependencies: File list, options: Options)
         Writer = writer
         File = file
         Dependencies = dependencies
+        PublicDependencies = publicDependencies
         Options = options
     }
     FileConverter.generateCode ctx
@@ -24,6 +25,9 @@ let private findFile (req: Compiler.CodeGeneratorRequest) name =
     req.ProtoFile
     |> Seq.filter (fun f -> f.Name = ValueSome name)
     |> Seq.exactlyOne
+
+let private findPublicDependency (req: Compiler.CodeGeneratorRequest) (index: int32) =
+    req.ProtoFile.[index]
 
 let parseOptions (opts: string voption) =
     let defaultOptions = {
@@ -60,8 +64,21 @@ let generate (req: Compiler.CodeGeneratorRequest) : Compiler.CodeGeneratorRespon
                 let deps =
                     file.Dependency
                     |> Seq.map (findFile req)
+                let publicDeps =
+                    deps
+                    |> Seq.append [file]
+                    |> Seq.map (fun d -> d.PublicDependency)
+                    |> Seq.collect id
+                    |> Seq.distinct
+                    |> Seq.map (findPublicDependency req)
+                    |> Seq.distinct
                     |> Seq.toList
-                generateFile (file, deps, options)
+                let uniqueDeps =
+                    deps
+                    |> Seq.distinct
+                    |> Seq.toList
+
+                generateFile (file, uniqueDeps, publicDeps, options)
             )
 
         let r = { Compiler.CodeGeneratorResponse.empty() with SupportedFeatures = ValueSome <| uint64 Compiler.CodeGeneratorResponse.Types.Feature.Proto3Optional }

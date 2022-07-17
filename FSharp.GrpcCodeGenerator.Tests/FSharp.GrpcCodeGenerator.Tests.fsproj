@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+    <GenerateProgramFile>false</GenerateProgramFile>
+    <Version>$(PackageVersion)</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="conformance/Proto3AllTypes.fs" />
+    <Compile Include="conformance/Proto3Optional.fs" />
+    <Compile Include="issues/Issue6.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.Core" Version="2.38.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="1.3.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+		<ProjectReference Include="..\Protobuf.FSharp\Protobuf.FSharp.fsproj" />
+		<ProjectReference Include="..\FSharp.GrpcCodeGenerator.TestProtos.FSharp\FSharp.GrpcCodeGenerator.TestProtos.FSharp.fsproj" />
+		<ProjectReference Include="..\FSharp.GrpcCodeGenerator.TestProtos.CSharp\FSharp.GrpcCodeGenerator.TestProtos.CSharp.csproj" />
+	</ItemGroup>
+
+</Project>

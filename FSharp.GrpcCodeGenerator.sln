@@ -18,7 +18,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{645D3517-0564-4F95-86BC-22E748B96C7E}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.Props = Directory.Build.Props
+		generate-protobuf-fsharp.sh = generate-protobuf-fsharp.sh
 		README.md = README.md
+		test.sh = test.sh
 	EndProjectSection
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc-FSharp.Saturn", "Grpc-FSharp.Saturn\Grpc-FSharp.Saturn.fsproj", "{36C3A647-7A0E-49A9-B23F-9FFA6B5DA9E8}"
@@ -26,6 +28,12 @@ EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc-FSharp.Tools", "Grpc-FSharp.Tools\Grpc-FSharp.Tools.fsproj", "{C9F7BF0F-7477-4490-B3CA-E9F693613B6E}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Grpc-FSharp.Core", "Grpc-FSharp.Core\Grpc-FSharp.Core.fsproj", "{54F0A547-10C3-45C6-8046-A3C84FED4E03}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSharp.GrpcCodeGenerator.TestProtos.FSharp", "FSharp.GrpcCodeGenerator.TestProtos.FSharp\FSharp.GrpcCodeGenerator.TestProtos.FSharp.fsproj", "{9A569317-D441-4E08-BBF6-0F71FA8E0EC3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSharp.GrpcCodeGenerator.TestProtos.CSharp", "FSharp.GrpcCodeGenerator.TestProtos.CSharp\FSharp.GrpcCodeGenerator.TestProtos.CSharp.csproj", "{C88E379E-C0A0-4781-9570-5DC5F71F84E8}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FSharp.GrpcCodeGenerator.Tests", "FSharp.GrpcCodeGenerator.Tests\FSharp.GrpcCodeGenerator.Tests.fsproj", "{657ADCA1-3A23-4B44-BA42-2C4E91A575DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +73,18 @@ Global
 		{54F0A547-10C3-45C6-8046-A3C84FED4E03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54F0A547-10C3-45C6-8046-A3C84FED4E03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54F0A547-10C3-45C6-8046-A3C84FED4E03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A569317-D441-4E08-BBF6-0F71FA8E0EC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A569317-D441-4E08-BBF6-0F71FA8E0EC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A569317-D441-4E08-BBF6-0F71FA8E0EC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A569317-D441-4E08-BBF6-0F71FA8E0EC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C88E379E-C0A0-4781-9570-5DC5F71F84E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C88E379E-C0A0-4781-9570-5DC5F71F84E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C88E379E-C0A0-4781-9570-5DC5F71F84E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C88E379E-C0A0-4781-9570-5DC5F71F84E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{657ADCA1-3A23-4B44-BA42-2C4E91A575DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{657ADCA1-3A23-4B44-BA42-2C4E91A575DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{657ADCA1-3A23-4B44-BA42-2C4E91A575DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{657ADCA1-3A23-4B44-BA42-2C4E91A575DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

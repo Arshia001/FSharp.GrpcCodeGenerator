@@ -2,6 +2,7 @@
 
 open System
 open Google.Protobuf
+open System.IO
 
 let writeIntroduction (ctx: FileContext) =
     ctx.Writer.WriteLines [
@@ -70,7 +71,7 @@ let rec writeGeneratedCodeInfo (ctx: FileContext, outerTypeName: string, msg: Me
             "[| "
             (
                 msg.Extension
-                |> Seq.map (fun e -> Helpers.fullExtensionName(ctx.File, e) + ":> global.Google.Protobuf.Extension")
+                |> Seq.map (fun e -> $"{typeName}.Extensions.{Helpers.snakeToCamelCase (Helpers.pascalToCamelCase e.Name.Value)}")
                 |> String.concat "; "
             )
             " |], "
@@ -190,7 +191,7 @@ let writeReflectionDescriptor (ctx: FileContext) =
         ctx.Writer.Indent()
 
         ctx.File.Extension
-        |> Seq.map (fun e -> Helpers.fullExtensionName (ctx.File, e) + ":> global.Google.Protobuf.Extension")
+        |> Seq.map (fun e -> Helpers.fullExtensionName (ctx.File, e))
         |> ctx.Writer.WriteLines
 
         ctx.Writer.Outdent()
@@ -242,13 +243,11 @@ let generateCode (ctx: FileContext) =
         ctx.Writer.WriteLine $"module {Helpers.accessSpecifier ctx}{Helpers.extensionClassUnqualifiedName ctx.File} ="
 
         ctx.Writer.Indent()
-
-        // TODO: Do we even need to support extensions? AFAIK, it's a proto2 concept
-        //ctx.File.Extension
-        //|> Seq.iter (fun f ->
-        //    let conv = SingleFieldConverterFactory.createWriter (f, ctx, None, [])
-        //    conv.WriteExtensionCode ctx
-        //)
+        ctx.File.Extension
+        |> Seq.iter (fun f ->
+           let conv = SingleFieldConverterFactory.createWriter (f, ctx, None, [])
+           conv.WriteExtensionCode ctx
+        )
 
         ctx.Writer.Outdent()
 

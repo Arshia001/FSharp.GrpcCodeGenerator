@@ -34,7 +34,7 @@ module SourceContextReflection =
     let Descriptor(): global.Google.Protobuf.Reflection.FileDescriptor = descriptorBackingField.Value
 type SourceContext = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable FileName: ValueOption<string>
+    mutable FileName: string
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : SourceContext = {
@@ -43,20 +43,20 @@ type SourceContext = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.FileName <> ValueNone
+        if me.FileName <> SourceContext.DefaultValue.FileName
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.FileName.Value)
+            output.WriteString(me.FileName)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.FileName <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.FileName.Value)
+        if me.FileName <> SourceContext.DefaultValue.FileName then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.FileName)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: SourceContext) =
-        if other.FileName <> ValueNone
+        if other.FileName <> SourceContext.DefaultValue.FileName
         then me.FileName <- other.FileName
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -65,7 +65,7 @@ type SourceContext = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.FileName <- ValueSome(input.ReadString())
+                me.FileName <- input.ReadString()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -92,12 +92,12 @@ module SourceContext =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         SourceContext._UnknownFields = null
-        SourceContext.FileName = ValueNone
+        SourceContext.FileName = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         SourceContext._UnknownFields = null
-        SourceContext.FileName = ValueNone
+        SourceContext.FileName = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<SourceContext>(global.System.Func<_>(empty))

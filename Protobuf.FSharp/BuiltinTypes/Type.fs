@@ -79,12 +79,12 @@ type Syntax =
 | [<global.Google.Protobuf.Reflection.OriginalName("SYNTAX_PROTO3")>] Proto3 = 1
 type Type = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Name: ValueOption<string>
+    mutable Name: string
     Fields: global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Field>
     Oneofs: global.Google.Protobuf.Collections.RepeatedField<string>
     Options: global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>
     mutable SourceContext: ValueOption<global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext>
-    mutable Syntax: ValueOption<global.Google.Protobuf.FSharp.WellKnownTypes.Syntax>
+    mutable Syntax: global.Google.Protobuf.FSharp.WellKnownTypes.Syntax
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Type = {
@@ -98,10 +98,10 @@ type Type = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Name <> ValueNone
+        if me.Name <> Type.DefaultValue.Name
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Name.Value)
+            output.WriteString(me.Name)
         me.Fields.WriteTo(&output, Type.RepeatedFieldsCodec)
         me.Oneofs.WriteTo(&output, Type.RepeatedOneofsCodec)
         me.Options.WriteTo(&output, Type.RepeatedOptionsCodec)
@@ -109,25 +109,25 @@ type Type = {
         then
             output.WriteRawTag(42uy)
             output.WriteMessage(me.SourceContext.Value)
-        if me.Syntax <> ValueNone
+        if me.Syntax <> Type.DefaultValue.Syntax
         then
             output.WriteRawTag(48uy)
-            output.WriteEnum(int me.Syntax.Value)
+            output.WriteEnum(int me.Syntax)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Name <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name.Value)
+        if me.Name <> Type.DefaultValue.Name then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name)
         size <- size + me.Fields.CalculateSize(Type.RepeatedFieldsCodec)
         size <- size + me.Oneofs.CalculateSize(Type.RepeatedOneofsCodec)
         size <- size + me.Options.CalculateSize(Type.RepeatedOptionsCodec)
         if me.SourceContext <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeMessageSize(me.SourceContext.Value)
-        if me.Syntax <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Syntax.Value)
+        if me.Syntax <> Type.DefaultValue.Syntax then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Syntax)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Type) =
-        if other.Name <> ValueNone
+        if other.Name <> Type.DefaultValue.Name
         then me.Name <- other.Name
         me.Fields.Add(other.Fields)
         me.Oneofs.Add(other.Oneofs)
@@ -137,7 +137,7 @@ type Type = {
             if me.SourceContext.IsNone
             then me.SourceContext <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext.empty())
             (me.SourceContext.Value :> global.Google.Protobuf.IMessage<global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext>).MergeFrom(other.SourceContext.Value)
-        if other.Syntax <> ValueNone
+        if other.Syntax <> Type.DefaultValue.Syntax
         then me.Syntax <- other.Syntax
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -146,19 +146,19 @@ type Type = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Name <- ValueSome(input.ReadString())
+                me.Name <- input.ReadString()
             | 18u ->
-                me.Fields.AddEntriesFrom(&input,Type.RepeatedFieldsCodec)
+                me.Fields.AddEntriesFrom(&input, Type.RepeatedFieldsCodec)
             | 26u ->
-                me.Oneofs.AddEntriesFrom(&input,Type.RepeatedOneofsCodec)
+                me.Oneofs.AddEntriesFrom(&input, Type.RepeatedOneofsCodec)
             | 34u ->
-                me.Options.AddEntriesFrom(&input,Type.RepeatedOptionsCodec)
+                me.Options.AddEntriesFrom(&input, Type.RepeatedOptionsCodec)
             | 42u ->
                 if me.SourceContext.IsNone
                 then me.SourceContext <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext.empty())
                 input.ReadMessage(me.SourceContext.Value)
             | 48u ->
-                me.Syntax <- ValueSome(enum(input.ReadEnum()))
+                me.Syntax <- enum(input.ReadEnum())
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -185,22 +185,22 @@ module Type =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Type._UnknownFields = null
-        Type.Name = ValueNone
+        Type.Name = ""
         Type.Fields = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Field>()
         Type.Oneofs = global.Google.Protobuf.Collections.RepeatedField<string>()
         Type.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
         Type.SourceContext = ValueNone
-        Type.Syntax = ValueNone
+        Type.Syntax = global.Google.Protobuf.FSharp.WellKnownTypes.Syntax.Proto2
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Type._UnknownFields = null
-        Type.Name = ValueNone
+        Type.Name = ""
         Type.Fields = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Field>()
         Type.Oneofs = global.Google.Protobuf.Collections.RepeatedField<string>()
         Type.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
         Type.SourceContext = ValueNone
-        Type.Syntax = ValueNone
+        Type.Syntax = global.Google.Protobuf.FSharp.WellKnownTypes.Syntax.Proto2
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Type>(global.System.Func<_>(empty))
@@ -215,16 +215,16 @@ module Type =
     let RepeatedOptionsCodec = global.Google.Protobuf.FieldCodec.ForMessage(34u, global.Google.Protobuf.FSharp.WellKnownTypes.Option.Parser)
 type Field = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Kind: ValueOption<global.Google.Protobuf.FSharp.WellKnownTypes.Field.Types.Kind>
-    mutable Cardinality: ValueOption<global.Google.Protobuf.FSharp.WellKnownTypes.Field.Types.Cardinality>
-    mutable Number: ValueOption<int32>
-    mutable Name: ValueOption<string>
-    mutable TypeUrl: ValueOption<string>
-    mutable OneofIndex: ValueOption<int32>
-    mutable Packed: ValueOption<bool>
+    mutable Kind: global.Google.Protobuf.FSharp.WellKnownTypes.Field.Types.Kind
+    mutable Cardinality: global.Google.Protobuf.FSharp.WellKnownTypes.Field.Types.Cardinality
+    mutable Number: int32
+    mutable Name: string
+    mutable TypeUrl: string
+    mutable OneofIndex: int32
+    mutable Packed: bool
     Options: global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>
-    mutable JsonName: ValueOption<string>
-    mutable DefaultValue: ValueOption<string>
+    mutable JsonName: string
+    mutable DefaultValue: string
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Field = {
@@ -242,79 +242,79 @@ type Field = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Kind <> ValueNone
+        if me.Kind <> Field.DefaultValue.Kind
         then
             output.WriteRawTag(8uy)
-            output.WriteEnum(int me.Kind.Value)
-        if me.Cardinality <> ValueNone
+            output.WriteEnum(int me.Kind)
+        if me.Cardinality <> Field.DefaultValue.Cardinality
         then
             output.WriteRawTag(16uy)
-            output.WriteEnum(int me.Cardinality.Value)
-        if me.Number <> ValueNone
+            output.WriteEnum(int me.Cardinality)
+        if me.Number <> Field.DefaultValue.Number
         then
             output.WriteRawTag(24uy)
-            output.WriteInt32(me.Number.Value)
-        if me.Name <> ValueNone
+            output.WriteInt32(me.Number)
+        if me.Name <> Field.DefaultValue.Name
         then
             output.WriteRawTag(34uy)
-            output.WriteString(me.Name.Value)
-        if me.TypeUrl <> ValueNone
+            output.WriteString(me.Name)
+        if me.TypeUrl <> Field.DefaultValue.TypeUrl
         then
             output.WriteRawTag(50uy)
-            output.WriteString(me.TypeUrl.Value)
-        if me.OneofIndex <> ValueNone
+            output.WriteString(me.TypeUrl)
+        if me.OneofIndex <> Field.DefaultValue.OneofIndex
         then
             output.WriteRawTag(56uy)
-            output.WriteInt32(me.OneofIndex.Value)
-        if me.Packed <> ValueNone
+            output.WriteInt32(me.OneofIndex)
+        if me.Packed <> Field.DefaultValue.Packed
         then
             output.WriteRawTag(64uy)
-            output.WriteBool(me.Packed.Value)
+            output.WriteBool(me.Packed)
         me.Options.WriteTo(&output, Field.RepeatedOptionsCodec)
-        if me.JsonName <> ValueNone
+        if me.JsonName <> Field.DefaultValue.JsonName
         then
             output.WriteRawTag(82uy)
-            output.WriteString(me.JsonName.Value)
-        if me.DefaultValue <> ValueNone
+            output.WriteString(me.JsonName)
+        if me.DefaultValue <> Field.DefaultValue.DefaultValue
         then
             output.WriteRawTag(90uy)
-            output.WriteString(me.DefaultValue.Value)
+            output.WriteString(me.DefaultValue)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Kind <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Kind.Value)
-        if me.Cardinality <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Cardinality.Value)
-        if me.Number <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Number.Value)
-        if me.Name <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name.Value)
-        if me.TypeUrl <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.TypeUrl.Value)
-        if me.OneofIndex <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.OneofIndex.Value)
-        if me.Packed <> ValueNone then size <- size + 2
+        if me.Kind <> Field.DefaultValue.Kind then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Kind)
+        if me.Cardinality <> Field.DefaultValue.Cardinality then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Cardinality)
+        if me.Number <> Field.DefaultValue.Number then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Number)
+        if me.Name <> Field.DefaultValue.Name then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name)
+        if me.TypeUrl <> Field.DefaultValue.TypeUrl then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.TypeUrl)
+        if me.OneofIndex <> Field.DefaultValue.OneofIndex then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.OneofIndex)
+        if me.Packed <> Field.DefaultValue.Packed then size <- size + 2
         size <- size + me.Options.CalculateSize(Field.RepeatedOptionsCodec)
-        if me.JsonName <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.JsonName.Value)
-        if me.DefaultValue <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.DefaultValue.Value)
+        if me.JsonName <> Field.DefaultValue.JsonName then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.JsonName)
+        if me.DefaultValue <> Field.DefaultValue.DefaultValue then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.DefaultValue)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Field) =
-        if other.Kind <> ValueNone
+        if other.Kind <> Field.DefaultValue.Kind
         then me.Kind <- other.Kind
-        if other.Cardinality <> ValueNone
+        if other.Cardinality <> Field.DefaultValue.Cardinality
         then me.Cardinality <- other.Cardinality
-        if other.Number <> ValueNone
+        if other.Number <> Field.DefaultValue.Number
         then me.Number <- other.Number
-        if other.Name <> ValueNone
+        if other.Name <> Field.DefaultValue.Name
         then me.Name <- other.Name
-        if other.TypeUrl <> ValueNone
+        if other.TypeUrl <> Field.DefaultValue.TypeUrl
         then me.TypeUrl <- other.TypeUrl
-        if other.OneofIndex <> ValueNone
+        if other.OneofIndex <> Field.DefaultValue.OneofIndex
         then me.OneofIndex <- other.OneofIndex
-        if other.Packed <> ValueNone
+        if other.Packed <> Field.DefaultValue.Packed
         then me.Packed <- other.Packed
         me.Options.Add(other.Options)
-        if other.JsonName <> ValueNone
+        if other.JsonName <> Field.DefaultValue.JsonName
         then me.JsonName <- other.JsonName
-        if other.DefaultValue <> ValueNone
+        if other.DefaultValue <> Field.DefaultValue.DefaultValue
         then me.DefaultValue <- other.DefaultValue
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -323,25 +323,25 @@ type Field = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.Kind <- ValueSome(enum(input.ReadEnum()))
+                me.Kind <- enum(input.ReadEnum())
             | 16u ->
-                me.Cardinality <- ValueSome(enum(input.ReadEnum()))
+                me.Cardinality <- enum(input.ReadEnum())
             | 24u ->
-                me.Number <- ValueSome(input.ReadInt32())
+                me.Number <- input.ReadInt32()
             | 34u ->
-                me.Name <- ValueSome(input.ReadString())
+                me.Name <- input.ReadString()
             | 50u ->
-                me.TypeUrl <- ValueSome(input.ReadString())
+                me.TypeUrl <- input.ReadString()
             | 56u ->
-                me.OneofIndex <- ValueSome(input.ReadInt32())
+                me.OneofIndex <- input.ReadInt32()
             | 64u ->
-                me.Packed <- ValueSome(input.ReadBool())
+                me.Packed <- input.ReadBool()
             | 74u ->
-                me.Options.AddEntriesFrom(&input,Field.RepeatedOptionsCodec)
+                me.Options.AddEntriesFrom(&input, Field.RepeatedOptionsCodec)
             | 82u ->
-                me.JsonName <- ValueSome(input.ReadString())
+                me.JsonName <- input.ReadString()
             | 90u ->
-                me.DefaultValue <- ValueSome(input.ReadString())
+                me.DefaultValue <- input.ReadString()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -368,30 +368,30 @@ module Field =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Field._UnknownFields = null
-        Field.Kind = ValueNone
-        Field.Cardinality = ValueNone
-        Field.Number = ValueNone
-        Field.Name = ValueNone
-        Field.TypeUrl = ValueNone
-        Field.OneofIndex = ValueNone
-        Field.Packed = ValueNone
+        Field.Kind = global.Google.Protobuf.FSharp.WellKnownTypes.Field.Types.Kind.TypeUnknown
+        Field.Cardinality = global.Google.Protobuf.FSharp.WellKnownTypes.Field.Types.Cardinality.Unknown
+        Field.Number = 0
+        Field.Name = ""
+        Field.TypeUrl = ""
+        Field.OneofIndex = 0
+        Field.Packed = false
         Field.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
-        Field.JsonName = ValueNone
-        Field.DefaultValue = ValueNone
+        Field.JsonName = ""
+        Field.DefaultValue = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Field._UnknownFields = null
-        Field.Kind = ValueNone
-        Field.Cardinality = ValueNone
-        Field.Number = ValueNone
-        Field.Name = ValueNone
-        Field.TypeUrl = ValueNone
-        Field.OneofIndex = ValueNone
-        Field.Packed = ValueNone
+        Field.Kind = global.Google.Protobuf.FSharp.WellKnownTypes.Field.Types.Kind.TypeUnknown
+        Field.Cardinality = global.Google.Protobuf.FSharp.WellKnownTypes.Field.Types.Cardinality.Unknown
+        Field.Number = 0
+        Field.Name = ""
+        Field.TypeUrl = ""
+        Field.OneofIndex = 0
+        Field.Packed = false
         Field.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
-        Field.JsonName = ValueNone
-        Field.DefaultValue = ValueNone
+        Field.JsonName = ""
+        Field.DefaultValue = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Field>(global.System.Func<_>(empty))
@@ -434,11 +434,11 @@ module Field =
         | [<global.Google.Protobuf.Reflection.OriginalName("CARDINALITY_REPEATED")>] Repeated = 3
 type Enum = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Name: ValueOption<string>
+    mutable Name: string
     Enumvalue: global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.EnumValue>
     Options: global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>
     mutable SourceContext: ValueOption<global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext>
-    mutable Syntax: ValueOption<global.Google.Protobuf.FSharp.WellKnownTypes.Syntax>
+    mutable Syntax: global.Google.Protobuf.FSharp.WellKnownTypes.Syntax
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Enum = {
@@ -451,34 +451,34 @@ type Enum = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Name <> ValueNone
+        if me.Name <> Enum.DefaultValue.Name
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Name.Value)
+            output.WriteString(me.Name)
         me.Enumvalue.WriteTo(&output, Enum.RepeatedEnumvalueCodec)
         me.Options.WriteTo(&output, Enum.RepeatedOptionsCodec)
         if me.SourceContext <> ValueNone
         then
             output.WriteRawTag(34uy)
             output.WriteMessage(me.SourceContext.Value)
-        if me.Syntax <> ValueNone
+        if me.Syntax <> Enum.DefaultValue.Syntax
         then
             output.WriteRawTag(40uy)
-            output.WriteEnum(int me.Syntax.Value)
+            output.WriteEnum(int me.Syntax)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Name <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name.Value)
+        if me.Name <> Enum.DefaultValue.Name then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name)
         size <- size + me.Enumvalue.CalculateSize(Enum.RepeatedEnumvalueCodec)
         size <- size + me.Options.CalculateSize(Enum.RepeatedOptionsCodec)
         if me.SourceContext <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeMessageSize(me.SourceContext.Value)
-        if me.Syntax <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Syntax.Value)
+        if me.Syntax <> Enum.DefaultValue.Syntax then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Syntax)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Enum) =
-        if other.Name <> ValueNone
+        if other.Name <> Enum.DefaultValue.Name
         then me.Name <- other.Name
         me.Enumvalue.Add(other.Enumvalue)
         me.Options.Add(other.Options)
@@ -487,7 +487,7 @@ type Enum = {
             if me.SourceContext.IsNone
             then me.SourceContext <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext.empty())
             (me.SourceContext.Value :> global.Google.Protobuf.IMessage<global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext>).MergeFrom(other.SourceContext.Value)
-        if other.Syntax <> ValueNone
+        if other.Syntax <> Enum.DefaultValue.Syntax
         then me.Syntax <- other.Syntax
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -496,17 +496,17 @@ type Enum = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Name <- ValueSome(input.ReadString())
+                me.Name <- input.ReadString()
             | 18u ->
-                me.Enumvalue.AddEntriesFrom(&input,Enum.RepeatedEnumvalueCodec)
+                me.Enumvalue.AddEntriesFrom(&input, Enum.RepeatedEnumvalueCodec)
             | 26u ->
-                me.Options.AddEntriesFrom(&input,Enum.RepeatedOptionsCodec)
+                me.Options.AddEntriesFrom(&input, Enum.RepeatedOptionsCodec)
             | 34u ->
                 if me.SourceContext.IsNone
                 then me.SourceContext <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext.empty())
                 input.ReadMessage(me.SourceContext.Value)
             | 40u ->
-                me.Syntax <- ValueSome(enum(input.ReadEnum()))
+                me.Syntax <- enum(input.ReadEnum())
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -533,20 +533,20 @@ module Enum =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Enum._UnknownFields = null
-        Enum.Name = ValueNone
+        Enum.Name = ""
         Enum.Enumvalue = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.EnumValue>()
         Enum.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
         Enum.SourceContext = ValueNone
-        Enum.Syntax = ValueNone
+        Enum.Syntax = global.Google.Protobuf.FSharp.WellKnownTypes.Syntax.Proto2
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Enum._UnknownFields = null
-        Enum.Name = ValueNone
+        Enum.Name = ""
         Enum.Enumvalue = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.EnumValue>()
         Enum.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
         Enum.SourceContext = ValueNone
-        Enum.Syntax = ValueNone
+        Enum.Syntax = global.Google.Protobuf.FSharp.WellKnownTypes.Syntax.Proto2
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Enum>(global.System.Func<_>(empty))
@@ -559,8 +559,8 @@ module Enum =
     let RepeatedOptionsCodec = global.Google.Protobuf.FieldCodec.ForMessage(26u, global.Google.Protobuf.FSharp.WellKnownTypes.Option.Parser)
 type EnumValue = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Name: ValueOption<string>
-    mutable Number: ValueOption<int32>
+    mutable Name: string
+    mutable Number: int32
     Options: global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -572,29 +572,29 @@ type EnumValue = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Name <> ValueNone
+        if me.Name <> EnumValue.DefaultValue.Name
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Name.Value)
-        if me.Number <> ValueNone
+            output.WriteString(me.Name)
+        if me.Number <> EnumValue.DefaultValue.Number
         then
             output.WriteRawTag(16uy)
-            output.WriteInt32(me.Number.Value)
+            output.WriteInt32(me.Number)
         me.Options.WriteTo(&output, EnumValue.RepeatedOptionsCodec)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Name <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name.Value)
-        if me.Number <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Number.Value)
+        if me.Name <> EnumValue.DefaultValue.Name then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name)
+        if me.Number <> EnumValue.DefaultValue.Number then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Number)
         size <- size + me.Options.CalculateSize(EnumValue.RepeatedOptionsCodec)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: EnumValue) =
-        if other.Name <> ValueNone
+        if other.Name <> EnumValue.DefaultValue.Name
         then me.Name <- other.Name
-        if other.Number <> ValueNone
+        if other.Number <> EnumValue.DefaultValue.Number
         then me.Number <- other.Number
         me.Options.Add(other.Options)
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
@@ -604,11 +604,11 @@ type EnumValue = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Name <- ValueSome(input.ReadString())
+                me.Name <- input.ReadString()
             | 16u ->
-                me.Number <- ValueSome(input.ReadInt32())
+                me.Number <- input.ReadInt32()
             | 26u ->
-                me.Options.AddEntriesFrom(&input,EnumValue.RepeatedOptionsCodec)
+                me.Options.AddEntriesFrom(&input, EnumValue.RepeatedOptionsCodec)
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -635,15 +635,15 @@ module EnumValue =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         EnumValue._UnknownFields = null
-        EnumValue.Name = ValueNone
-        EnumValue.Number = ValueNone
+        EnumValue.Name = ""
+        EnumValue.Number = 0
         EnumValue.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         EnumValue._UnknownFields = null
-        EnumValue.Name = ValueNone
-        EnumValue.Number = ValueNone
+        EnumValue.Name = ""
+        EnumValue.Number = 0
         EnumValue.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -654,7 +654,7 @@ module EnumValue =
     let RepeatedOptionsCodec = global.Google.Protobuf.FieldCodec.ForMessage(26u, global.Google.Protobuf.FSharp.WellKnownTypes.Option.Parser)
 type Option = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Name: ValueOption<string>
+    mutable Name: string
     mutable Value: ValueOption<global.Google.Protobuf.FSharp.WellKnownTypes.Any>
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -665,10 +665,10 @@ type Option = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Name <> ValueNone
+        if me.Name <> Option.DefaultValue.Name
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Name.Value)
+            output.WriteString(me.Name)
         if me.Value <> ValueNone
         then
             output.WriteRawTag(18uy)
@@ -677,13 +677,13 @@ type Option = {
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Name <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name.Value)
+        if me.Name <> Option.DefaultValue.Name then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name)
         if me.Value <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeMessageSize(me.Value.Value)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Option) =
-        if other.Name <> ValueNone
+        if other.Name <> Option.DefaultValue.Name
         then me.Name <- other.Name
         if other.Value <> ValueNone
         then
@@ -697,7 +697,7 @@ type Option = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Name <- ValueSome(input.ReadString())
+                me.Name <- input.ReadString()
             | 18u ->
                 if me.Value.IsNone
                 then me.Value <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.Any.empty())
@@ -728,13 +728,13 @@ module Option =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Option._UnknownFields = null
-        Option.Name = ValueNone
+        Option.Name = ""
         Option.Value = ValueNone
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Option._UnknownFields = null
-        Option.Name = ValueNone
+        Option.Name = ""
         Option.Value = ValueNone
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]

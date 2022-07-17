@@ -33,8 +33,8 @@ module AnyReflection =
     let Descriptor(): global.Google.Protobuf.Reflection.FileDescriptor = descriptorBackingField.Value
 type Any = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable TypeUrl: ValueOption<string>
-    mutable Value: ValueOption<global.Google.Protobuf.ByteString>
+    mutable TypeUrl: string
+    mutable Value: global.Google.Protobuf.ByteString
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Any = {
@@ -44,27 +44,27 @@ type Any = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.TypeUrl <> ValueNone
+        if me.TypeUrl <> Any.DefaultValue.TypeUrl
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.TypeUrl.Value)
-        if me.Value <> ValueNone
+            output.WriteString(me.TypeUrl)
+        if me.Value <> Any.DefaultValue.Value
         then
             output.WriteRawTag(18uy)
-            output.WriteBytes(me.Value.Value)
+            output.WriteBytes(me.Value)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.TypeUrl <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.TypeUrl.Value)
-        if me.Value <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeBytesSize(me.Value.Value)
+        if me.TypeUrl <> Any.DefaultValue.TypeUrl then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.TypeUrl)
+        if me.Value <> Any.DefaultValue.Value then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeBytesSize(me.Value)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Any) =
-        if other.TypeUrl <> ValueNone
+        if other.TypeUrl <> Any.DefaultValue.TypeUrl
         then me.TypeUrl <- other.TypeUrl
-        if other.Value <> ValueNone
+        if other.Value <> Any.DefaultValue.Value
         then me.Value <- other.Value
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -73,9 +73,9 @@ type Any = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.TypeUrl <- ValueSome(input.ReadString())
+                me.TypeUrl <- input.ReadString()
             | 18u ->
-                me.Value <- ValueSome(input.ReadBytes())
+                me.Value <- input.ReadBytes()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -102,14 +102,14 @@ module Any =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Any._UnknownFields = null
-        Any.TypeUrl = ValueNone
-        Any.Value = ValueNone
+        Any.TypeUrl = ""
+        Any.Value = global.Google.Protobuf.ByteString.Empty
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Any._UnknownFields = null
-        Any.TypeUrl = ValueNone
-        Any.Value = ValueNone
+        Any.TypeUrl = ""
+        Any.Value = global.Google.Protobuf.ByteString.Empty
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Any>(global.System.Func<_>(empty))

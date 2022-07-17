@@ -9,7 +9,9 @@ type MessageContext = {
 
 let typeName ctx = Helpers.messageTypeName ctx.Message
 
-let hasExtension (ctx: MessageContext) = ctx.Message.ExtensionRange.Count > 0
+let hasExtensionRange (ctx: MessageContext) = ctx.Message.ExtensionRange.Count > 0
+
+let hasExtensions (ctx: MessageContext) = ctx.Message.Extension.Count > 0
 
 let fullClassName (ctx: MessageContext) =
     Helpers.qualifiedInnerNameFromMessages (ctx.Message.Name.Value, ctx.ContainerMessages, ctx.File.File)
@@ -38,7 +40,7 @@ let writeMessageInterfaces (ctx: MessageContext) =
 
     let typeName = typeName ctx
 
-    if hasExtension ctx
+    if hasExtensionRange ctx
     then ctx.File.Writer.WriteLine $"interface global.Google.Protobuf.IExtendableMessage<{typeName}> with"
     else ctx.File.Writer.WriteLine $"interface global.Google.Protobuf.IMessage<{typeName}> with"
 
@@ -48,7 +50,7 @@ let writeMessageInterfaces (ctx: MessageContext) =
     Helpers.writeGeneratedCodeAttribute ctx.File
     ctx.File.Writer.WriteLine "member me.MergeFrom(other) = me.MergeFrom(other)"
     
-    if hasExtension ctx
+    if hasExtensionRange ctx
     then
         ctx.File.Writer.WriteLines [
             "[<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]"
@@ -106,7 +108,7 @@ let writeMessageSerializationMethods (ctx: MessageContext) =
         let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
         conv.WriteSerializationCode ctx.File
 
-    if hasExtension ctx
+    if hasExtensionRange ctx
     then ctx.File.Writer.WriteLine "if not <| isNull me._Extensions then me._Extensions.WriteTo(&output)"
 
     ctx.File.Writer.WriteLine "if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)"
@@ -123,7 +125,7 @@ let writeMessageSerializationMethods (ctx: MessageContext) =
         let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
         conv.WriteSerializedSizeCode ctx.File
 
-    if hasExtension ctx
+    if hasExtensionRange ctx
     then ctx.File.Writer.WriteLine "if not <| isNull me._Extensions then size <- size + me._Extensions.CalculateSize()"
 
     ctx.File.Writer.WriteLine "if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()"
@@ -140,7 +142,7 @@ let writeMergingMethods (ctx: MessageContext) =
         let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
         conv.WriteMergingCode ctx.File
 
-    if hasExtension ctx
+    if hasExtensionRange ctx
     then ctx.File.Writer.WriteLine "global.Google.Protobuf.ExtensionSet.MergeFrom(&me._Extensions, other._Extensions)"
 
     ctx.File.Writer.WriteLine "me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)"
@@ -171,7 +173,7 @@ let writeMergingMethods (ctx: MessageContext) =
     
     ctx.File.Writer.WriteLine "| _ ->"
     ctx.File.Writer.Indent()
-    if hasExtension ctx
+    if hasExtensionRange ctx
     then
         ctx.File.Writer.WriteLines [
             "if not <| global.Google.Protobuf.ExtensionSet.TryMergeFieldFrom(&me._Extensions, &input)"
@@ -189,7 +191,7 @@ let writeMergingMethods (ctx: MessageContext) =
 let writeAdditionalOneOfMethods (ctx: MessageContext) =
     let oneOfFields =
         ctx.OrderedFSFields
-        |> Seq.choose (function Single _ -> None | OneOf (o, f) -> Some (o, f))
+        |> Seq.choose (function Single _ -> None | OneOf (o, f, true) -> None | OneOf (o, f, false) -> Some (o, f))
     for (oneOf, fields) in oneOfFields do
         let oneOfName = FieldConverter.oneOfPropertyName oneOf
         
@@ -216,7 +218,9 @@ let writeAdditionalOneOfMethods (ctx: MessageContext) =
             ctx.File.Writer.Indent()
             
             ctx.File.Writer.WriteLine $"match me.{oneOfName} with"
+
             ctx.File.Writer.WriteLine $"| ValueSome({FieldConverter.oneOfCaseName (oneOf, field, ctx.Message, ctx.ContainerMessages, ctx.File.File)} x) -> x"
+
             ctx.File.Writer.WriteLine $"| _ -> Unchecked.defaultof<_>"
             
             ctx.File.Writer.Outdent()
@@ -230,6 +234,44 @@ let writeAdditionalOneOfMethods (ctx: MessageContext) =
             
             ctx.File.Writer.Outdent()
 
+let private requiresPresenceFields (file: File) (field: Field): bool =
+    (field.Proto3Optional |> ValueOption.defaultWith (fun _ -> false))
+    || (not (field.Type.Value = Google.Protobuf.FSharp.Reflection.FieldDescriptorProto.Types.Type.Message)
+        && not (field.Label.Value = Google.Protobuf.FSharp.Reflection.FieldDescriptorProto.Types.Label.Repeated)
+        && (field.OneofIndex = ValueNone)
+        && (file.Syntax |> ValueOption.defaultWith (fun _ -> "proto2")) = "proto2")
+
+let writeAdditionalOptionalMethods (ctx: MessageContext) =
+    let fields =
+        ctx.OrderedFSFields
+        |> Seq.map (function Single f -> [f] | OneOf (_, f, _) -> f)
+        |> Seq.concat
+
+    for f in fields do
+        if requiresPresenceFields ctx.File.File f then
+            let propertyName = propertyName (ctx.Message, f)
+            
+            Helpers.writeGeneratedCodeAttribute ctx.File
+            ctx.File.Writer.WriteLine $"member me.Has{propertyName} ="
+            ctx.File.Writer.Indent()
+            
+            // If the oneof field is optional there will only be one case and it has been unwrapped
+            if f.Proto3Optional |> ValueOption.defaultWith (fun _ -> false) then
+                ctx.File.Writer.WriteLine (hasPropertyCheck (ctx.File, ctx.Message, f, "me"))
+            else
+                ctx.File.Writer.WriteLine $"match me.{propertyName} with"
+                ctx.File.Writer.WriteLine $"| ValueNone -> false"
+                ctx.File.Writer.WriteLine $"| ValueSome(_) -> true"
+            
+            ctx.File.Writer.Outdent()
+
+            Helpers.writeGeneratedCodeAttribute ctx.File
+            // If the oneof field is optional there will only be one case and it has been unwrapped
+            if f.Proto3Optional |> ValueOption.defaultWith (fun _ -> false) then
+                ctx.File.Writer.WriteLine $"member me.Clear{propertyName} () = me.{propertyName} <- {Helpers.messageTypeName ctx.Message}.DefaultValue.{propertyName}"
+            else
+                ctx.File.Writer.WriteLine $"member me.Clear{propertyName} () = me.{propertyName} <- ValueNone"
+
 let rec writeMessageModule (ctx: MessageContext) =
     ctx.File.Writer.WriteLine $"module {Helpers.accessSpecifier ctx.File}{typeName ctx} ="
     ctx.File.Writer.Indent()
@@ -240,7 +282,7 @@ let rec writeMessageModule (ctx: MessageContext) =
 
     ctx.File.Writer.WriteLine $"{typeName ctx}._UnknownFields = null"
     
-    if hasExtension ctx
+    if hasExtensionRange ctx
     then ctx.File.Writer.WriteLine $"{typeName ctx}._Extensions = null"
 
     for f in ctx.OrderedFSFields do
@@ -257,7 +299,7 @@ let rec writeMessageModule (ctx: MessageContext) =
 
     ctx.File.Writer.WriteLine $"{typeName ctx}._UnknownFields = null"
     
-    if hasExtension ctx
+    if hasExtensionRange ctx
     then ctx.File.Writer.WriteLine $"{typeName ctx}._Extensions = null"
 
     for f in ctx.OrderedFSFields do
@@ -298,22 +340,23 @@ let rec writeMessageModule (ctx: MessageContext) =
 
         ctx.File.Writer.Outdent()
 
-    // TODO: Do we even need to support extensions? AFAIK, it's a proto2 concept
-    //if hasExtension ctx
-    //then
-    //    ctx.File.Writer.WriteLine "module Extensions ="
-    //    ctx.File.Writer.Indent()
+    if hasExtensions ctx
+    then
+       ctx.File.Writer.WriteLine "module Extensions ="
+       ctx.File.Writer.Indent()
 
-    //    for e in ctx.Message.Extension do
-    //        let conv = SingleFieldConverterFactory.createWriter (e, ctx.File, Some ctx.Message, ctx.ContainerMessages)
-    //        conv.WriteExtensionCode ctx.File
+       for e in ctx.Message.Extension do
+           let conv = SingleFieldConverterFactory.createWriter (e, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+           conv.WriteExtensionCode ctx.File
 
-    //    ctx.File.Writer.Outdent()
-    //    ctx.File.Writer.WriteLine ""
+       ctx.File.Writer.Outdent()
+       ctx.File.Writer.WriteLine ""
 
     ctx.File.Writer.Outdent()
 
 and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Message) =
+    let isSyntheticOneOf msg o = 
+        (Helpers.oneOfFields (msg, o)).[0].Proto3Optional |> ValueOption.defaultWith (fun _ -> false)
     let ctx = {
         Message = msg
         File = ctx
@@ -330,7 +373,7 @@ and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Messag
                 then Seq.empty
                 else
                     msg.OneofDecl
-                    |> Seq.map (fun o -> OneOf (o, Helpers.oneOfFields (msg, o)))
+                    |> Seq.map (fun o -> OneOf (o, Helpers.oneOfFields (msg, o), isSyntheticOneOf msg o))
 
             Seq.toList <| Seq.append nonOneOfFields oneOfFields
     }
@@ -342,7 +385,7 @@ and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Messag
 
     ctx.File.Writer.WriteLine "mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet"
 
-    if hasExtension ctx
+    if hasExtensionRange ctx
     then ctx.File.Writer.WriteLine $"mutable _Extensions: global.Google.Protobuf.ExtensionSet<{typeName ctx}>"
 
     for f in ctx.OrderedFSFields do
@@ -357,6 +400,7 @@ and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Messag
     writeMessageSerializationMethods ctx
     writeMergingMethods ctx
     writeAdditionalOneOfMethods ctx
+    writeAdditionalOptionalMethods ctx
 
     writeMessageInterfaces ctx
 
