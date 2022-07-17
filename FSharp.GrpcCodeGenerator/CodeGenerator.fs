@@ -68,9 +68,9 @@ let generate (req: Compiler.CodeGeneratorRequest) : Compiler.CodeGeneratorRespon
                     deps
                     |> Seq.append [file]
                     |> Seq.map (fun d -> d.PublicDependency)
-                    |> Seq.collect (fun c -> c)
+                    |> Seq.collect id
                     |> Seq.distinct
-                    |> Seq.map (fun i -> findPublicDependency req i)
+                    |> Seq.map (findPublicDependency req)
                     |> Seq.distinct
                     |> Seq.toList
                 let uniqueDeps =

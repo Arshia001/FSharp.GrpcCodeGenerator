@@ -2,9 +2,11 @@
 module rec FieldConverter
 open System
 
+type OneOfIsSynthetic = bool
+
 type FSField =
 | Single of Field
-| OneOf of OneOf * Field list * bool
+| OneOf of OneOf * Field list * OneOfIsSynthetic 
 
 type FieldWriter = {
     WriteMember: FileContext -> unit
@@ -140,7 +142,7 @@ let defaultValueEnum (ctx: FileContext, field: Field) =
     Helpers.qualifiedInnerNameFromMessages (enum.Enum.Name.Value, enum.ContainerMessages, enum.File) + "." + Helpers.enumValueName (enum.Enum.Name.Value, caseName)
     
 let defaultValue (ctx: FileContext, field: Field) =
-    let maybeZero = field.DefaultValue |> ValueOption.defaultValue "0"
+    let defaultOrZero = field.DefaultValue |> ValueOption.defaultValue "0"
 
     let rec helper (ctx: FileContext, field: Field) =
         if needsOptionType (ctx, field)
@@ -153,18 +155,18 @@ let defaultValue (ctx: FileContext, field: Field) =
             | FieldType.Bytes -> defaultValueBytes field
             | FieldType.Bool -> if field.DefaultValue = ValueSome "true" then "true" else "false"
 
-            | FieldType.Double -> if maybeZero.Contains '.' then maybeZero else maybeZero + ".0"
-            | FieldType.Float -> maybeZero + "f"
-            | FieldType.Int64 -> maybeZero + "L"
-            | FieldType.Uint64 -> maybeZero + "UL"
-            | FieldType.Int32 -> maybeZero
-            | FieldType.Fixed64 -> maybeZero + "UL"
-            | FieldType.Fixed32 -> maybeZero + "u"
-            | FieldType.Uint32 -> maybeZero + "u"
-            | FieldType.Sfixed32 -> maybeZero
-            | FieldType.Sfixed64 -> maybeZero + "L"
-            | FieldType.Sint32 -> maybeZero
-            | FieldType.Sint64 -> maybeZero + "L"
+            | FieldType.Double -> if defaultOrZero.Contains '.' then defaultOrZero else defaultOrZero + ".0"
+            | FieldType.Float -> defaultOrZero + "f"
+            | FieldType.Int64 -> defaultOrZero + "L"
+            | FieldType.Uint64 -> defaultOrZero + "UL"
+            | FieldType.Int32 -> defaultOrZero
+            | FieldType.Fixed64 -> defaultOrZero + "UL"
+            | FieldType.Fixed32 -> defaultOrZero + "u"
+            | FieldType.Uint32 -> defaultOrZero + "u"
+            | FieldType.Sfixed32 -> defaultOrZero
+            | FieldType.Sfixed64 -> defaultOrZero + "L"
+            | FieldType.Sint32 -> defaultOrZero
+            | FieldType.Sint64 -> defaultOrZero + "L"
                 
             | FieldType.Message
             | FieldType.Group -> failwith "Not supported"
@@ -971,5 +973,5 @@ module FieldConverterFactory =
     let createWriter (field: FSField, ctx: FileContext, containingType: Message option, containerMessages: Message list) : FieldConverter.FieldWriter =
         match field with
         | Single field -> SingleFieldConverterFactory.createWriter (field, ctx, containingType, containerMessages)
-        | OneOf (oneOf, fields, synthetic) when synthetic -> SingleFieldConverterFactory.createWriter (fields.[0], ctx, containingType, containerMessages)
-        | OneOf (oneOf, fields, synthetic) -> OneOfFieldConverter.create (oneOf, fields, containingType, containerMessages)
+        | OneOf (_, fields, synthetic) when synthetic -> SingleFieldConverterFactory.createWriter (fields.[0], ctx, containingType, containerMessages)
+        | OneOf (oneOf, fields, _) -> OneOfFieldConverter.create (oneOf, fields, containingType, containerMessages)

@@ -6,7 +6,7 @@ open Google.Protobuf
 let accessSpecifier (ctx: FileContext) =
     if ctx.Options.InternalAccess then "private " else ""
 
-let firstCharToUpper (s: string) =
+let private firstCharToUpper (s: string) =
     match s.Length with
     | 0 -> s
     | 1 -> s.ToUpper()
@@ -20,7 +20,6 @@ let private firstCharToLower (s: string) =
 
 let pascalToCamelCase s = firstCharToLower s
 
-    
 let snakeToPascalCase includesDots (s: string) =
     let convertOne (s: string) =
         s.Split '_' |> Seq.map firstCharToUpper |> String.concat ""
@@ -261,7 +260,7 @@ let flatMapFileTypes fFile fMessage (file: File) =
         |> Seq.map (subTypes (ns + "." + msg.Name.Value, msg :: containerTypes))
         |> Seq.concat
         |> Seq.append [ fMessage (msg, containerTypes, ns) ]
-        
+
     let fileNs = file.Package |> ValueOption.map ((+) ".") |> ValueOption.defaultValue "" 
     file.MessageType
     |> Seq.map (subTypes (fileNs, []))

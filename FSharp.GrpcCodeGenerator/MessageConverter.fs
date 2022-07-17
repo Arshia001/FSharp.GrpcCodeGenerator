@@ -244,8 +244,9 @@ let private requiresPresenceFields (file: File) (field: Field): bool =
 let writeAdditionalOptionalMethods (ctx: MessageContext) =
     let fields =
         ctx.OrderedFSFields
-        |> Seq.choose (function Single f -> Some([f]) | OneOf (_, f, _) -> Some(f))
+        |> Seq.map (function Single f -> [f] | OneOf (_, f, _) -> f)
         |> Seq.concat
+
     for f in fields do
         if requiresPresenceFields ctx.File.File f then
             let propertyName = propertyName (ctx.Message, f)
