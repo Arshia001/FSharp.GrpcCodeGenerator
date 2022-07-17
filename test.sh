@@ -2,8 +2,17 @@
 
 set -eoux pipefail
 
+os=$(echo $OS | awk '{print tolower($0)}' | cut -c -7)
+if [ "$os" == "windows" ]; then
+        protoc_path='./Protoc/windows_x64/protoc.exe'
+	plugin_path='FSharp.GrpcCodeGenerator.exe'
+else
+        protoc_path='./Protoc/linux_x64/protoc'
+	plugin_path='FSharp.GrpcCodeGenerator'
+fi
+
 function cleanup {
-    chmod -x ./Protoc/linux_x64/protoc
+    chmod -x $protoc_path
     find ./test-protos -type f -name "*.proto" -print0 | xargs -0 sed -i 's/.*csharp_namespace.*/option csharp_namespace = "REPLACE_ME";/' 
 }
 trap cleanup EXIT
@@ -12,9 +21,9 @@ dotnet build ./FSharp.GrpcCodeGenerator/FSharp.GrpcCodeGenerator.fsproj
 
 find ./test-protos -type f -name "*.proto" -print0 | xargs -0 sed -i 's/.*csharp_namespace.*/option csharp_namespace = "FSharp.GrpcCodeGenerator.TestProtos.FSharp";/' 
 
-chmod +x ./Protoc/linux_x64/protoc && \
-./Protoc/linux_x64/protoc \
---plugin=protoc-gen-fsharp=./FSharp.GrpcCodeGenerator/bin/Debug/net5.0/FSharp.GrpcCodeGenerator \
+chmod +x $protoc_path && \
+$protoc_path \
+--plugin=protoc-gen-fsharp=./FSharp.GrpcCodeGenerator/bin/Debug/net6.0/$plugin_path \
 --fsharp_out=./FSharp.GrpcCodeGenerator.TestProtos.FSharp \
 -I ./test-protos \
 -I ./Proto \
@@ -30,8 +39,8 @@ chmod +x ./Protoc/linux_x64/protoc && \
 
 find ./test-protos -type f -name "*.proto" -print0 | xargs -0 sed -i 's/.*csharp_namespace.*/option csharp_namespace = "FSharp.GrpcCodeGenerator.TestProtos.CSharp";/' 
 
-chmod +x ./Protoc/linux_x64/protoc && \
-./Protoc/linux_x64/protoc \
+chmod +x $protoc_path && \
+$protoc_path \
 --csharp_out=./FSharp.GrpcCodeGenerator.TestProtos.CSharp \
 -I ./test-protos \
 -I ./Proto \
