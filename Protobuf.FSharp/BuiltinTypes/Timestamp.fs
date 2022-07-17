@@ -34,8 +34,8 @@ module TimestampReflection =
     let Descriptor(): global.Google.Protobuf.Reflection.FileDescriptor = descriptorBackingField.Value
 type Timestamp = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Seconds: ValueOption<int64>
-    mutable Nanos: ValueOption<int32>
+    mutable Seconds: int64
+    mutable Nanos: int32
 } with
     // Start of hand-written code
     static member FromDateTime(dt: System.DateTime) : Timestamp =
@@ -47,23 +47,15 @@ type Timestamp = {
         let seconds = ticks / System.TimeSpan.TicksPerSecond
         let nanos = int ((ticks % System.TimeSpan.TicksPerSecond) * 100L)
         { Timestamp.empty() with
-            Seconds = ValueSome seconds
-            Nanos = ValueSome nanos
+            Seconds = seconds
+            Nanos = nanos
         }
     member me.ToDateTime() : ValueOption<System.DateTime> =
-        match me.Seconds with
-        | ValueNone -> ValueNone
-        | ValueSome secs ->
-            let nanos = ValueOption.defaultValue 0 me.Nanos
-            let ticks = int64 nanos / 100L + secs * System.TimeSpan.TicksPerSecond
-            ValueSome(Timestamp.unixEpoch.AddTicks(ticks))
+        let ticks = int64 me.Nanos / 100L + me.Seconds * System.TimeSpan.TicksPerSecond
+        ValueSome(Timestamp.unixEpoch.AddTicks(ticks))
     member me.ToDateTimeOffset() : ValueOption<System.DateTimeOffset> =
-        match me.Seconds with
-        | ValueNone -> ValueNone
-        | ValueSome secs ->
-            let nanos = ValueOption.defaultValue 0 me.Nanos
-            let ticks = int64 nanos / 100L + secs * System.TimeSpan.TicksPerSecond
-            ValueSome(System.DateTimeOffset(Timestamp.unixEpoch.AddTicks(ticks)))
+        let ticks = int64 me.Nanos / 100L + me.Seconds * System.TimeSpan.TicksPerSecond
+        ValueSome(System.DateTimeOffset(Timestamp.unixEpoch.AddTicks(ticks)))
     // End of hand-written code
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Timestamp = {
@@ -73,27 +65,27 @@ type Timestamp = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Seconds <> ValueNone
+        if me.Seconds <> Timestamp.DefaultValue.Seconds
         then
             output.WriteRawTag(8uy)
-            output.WriteInt64(me.Seconds.Value)
-        if me.Nanos <> ValueNone
+            output.WriteInt64(me.Seconds)
+        if me.Nanos <> Timestamp.DefaultValue.Nanos
         then
             output.WriteRawTag(16uy)
-            output.WriteInt32(me.Nanos.Value)
+            output.WriteInt32(me.Nanos)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Seconds <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt64Size(me.Seconds.Value)
-        if me.Nanos <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Nanos.Value)
+        if me.Seconds <> Timestamp.DefaultValue.Seconds then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt64Size(me.Seconds)
+        if me.Nanos <> Timestamp.DefaultValue.Nanos then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Nanos)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Timestamp) =
-        if other.Seconds <> ValueNone
+        if other.Seconds <> Timestamp.DefaultValue.Seconds
         then me.Seconds <- other.Seconds
-        if other.Nanos <> ValueNone
+        if other.Nanos <> Timestamp.DefaultValue.Nanos
         then me.Nanos <- other.Nanos
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -102,9 +94,9 @@ type Timestamp = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.Seconds <- ValueSome(input.ReadInt64())
+                me.Seconds <- input.ReadInt64()
             | 16u ->
-                me.Nanos <- ValueSome(input.ReadInt32())
+                me.Nanos <- input.ReadInt32()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -134,14 +126,14 @@ module Timestamp =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Timestamp._UnknownFields = null
-        Timestamp.Seconds = ValueNone
-        Timestamp.Nanos = ValueNone
+        Timestamp.Seconds = 0L
+        Timestamp.Nanos = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Timestamp._UnknownFields = null
-        Timestamp.Seconds = ValueNone
-        Timestamp.Nanos = ValueNone
+        Timestamp.Seconds = 0L
+        Timestamp.Nanos = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Timestamp>(global.System.Func<_>(empty))

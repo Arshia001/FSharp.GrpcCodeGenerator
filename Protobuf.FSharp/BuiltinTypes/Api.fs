@@ -53,13 +53,13 @@ module ApiReflection =
     let Descriptor(): global.Google.Protobuf.Reflection.FileDescriptor = descriptorBackingField.Value
 type Api = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Name: ValueOption<string>
+    mutable Name: string
     Methods: global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Method>
     Options: global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>
-    mutable Version: ValueOption<string>
+    mutable Version: string
     mutable SourceContext: ValueOption<global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext>
     Mixins: global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Mixin>
-    mutable Syntax: ValueOption<global.Google.Protobuf.FSharp.WellKnownTypes.Syntax>
+    mutable Syntax: global.Google.Protobuf.FSharp.WellKnownTypes.Syntax
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Api = {
@@ -74,45 +74,45 @@ type Api = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Name <> ValueNone
+        if me.Name <> Api.DefaultValue.Name
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Name.Value)
+            output.WriteString(me.Name)
         me.Methods.WriteTo(&output, Api.RepeatedMethodsCodec)
         me.Options.WriteTo(&output, Api.RepeatedOptionsCodec)
-        if me.Version <> ValueNone
+        if me.Version <> Api.DefaultValue.Version
         then
             output.WriteRawTag(34uy)
-            output.WriteString(me.Version.Value)
+            output.WriteString(me.Version)
         if me.SourceContext <> ValueNone
         then
             output.WriteRawTag(42uy)
             output.WriteMessage(me.SourceContext.Value)
         me.Mixins.WriteTo(&output, Api.RepeatedMixinsCodec)
-        if me.Syntax <> ValueNone
+        if me.Syntax <> Api.DefaultValue.Syntax
         then
             output.WriteRawTag(56uy)
-            output.WriteEnum(int me.Syntax.Value)
+            output.WriteEnum(int me.Syntax)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Name <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name.Value)
+        if me.Name <> Api.DefaultValue.Name then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name)
         size <- size + me.Methods.CalculateSize(Api.RepeatedMethodsCodec)
         size <- size + me.Options.CalculateSize(Api.RepeatedOptionsCodec)
-        if me.Version <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Version.Value)
+        if me.Version <> Api.DefaultValue.Version then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Version)
         if me.SourceContext <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeMessageSize(me.SourceContext.Value)
         size <- size + me.Mixins.CalculateSize(Api.RepeatedMixinsCodec)
-        if me.Syntax <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Syntax.Value)
+        if me.Syntax <> Api.DefaultValue.Syntax then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Syntax)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Api) =
-        if other.Name <> ValueNone
+        if other.Name <> Api.DefaultValue.Name
         then me.Name <- other.Name
         me.Methods.Add(other.Methods)
         me.Options.Add(other.Options)
-        if other.Version <> ValueNone
+        if other.Version <> Api.DefaultValue.Version
         then me.Version <- other.Version
         if other.SourceContext <> ValueNone
         then
@@ -120,7 +120,7 @@ type Api = {
             then me.SourceContext <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext.empty())
             (me.SourceContext.Value :> global.Google.Protobuf.IMessage<global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext>).MergeFrom(other.SourceContext.Value)
         me.Mixins.Add(other.Mixins)
-        if other.Syntax <> ValueNone
+        if other.Syntax <> Api.DefaultValue.Syntax
         then me.Syntax <- other.Syntax
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -129,13 +129,13 @@ type Api = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Name <- ValueSome(input.ReadString())
+                me.Name <- input.ReadString()
             | 18u ->
                 me.Methods.AddEntriesFrom(&input, Api.RepeatedMethodsCodec)
             | 26u ->
                 me.Options.AddEntriesFrom(&input, Api.RepeatedOptionsCodec)
             | 34u ->
-                me.Version <- ValueSome(input.ReadString())
+                me.Version <- input.ReadString()
             | 42u ->
                 if me.SourceContext.IsNone
                 then me.SourceContext <- ValueSome(global.Google.Protobuf.FSharp.WellKnownTypes.SourceContext.empty())
@@ -143,7 +143,7 @@ type Api = {
             | 50u ->
                 me.Mixins.AddEntriesFrom(&input, Api.RepeatedMixinsCodec)
             | 56u ->
-                me.Syntax <- ValueSome(enum(input.ReadEnum()))
+                me.Syntax <- enum(input.ReadEnum())
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -170,24 +170,24 @@ module Api =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Api._UnknownFields = null
-        Api.Name = ValueNone
+        Api.Name = ""
         Api.Methods = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Method>()
         Api.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
-        Api.Version = ValueNone
+        Api.Version = ""
         Api.SourceContext = ValueNone
         Api.Mixins = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Mixin>()
-        Api.Syntax = ValueNone
+        Api.Syntax = global.Google.Protobuf.FSharp.WellKnownTypes.Syntax.Proto2
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Api._UnknownFields = null
-        Api.Name = ValueNone
+        Api.Name = ""
         Api.Methods = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Method>()
         Api.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
-        Api.Version = ValueNone
+        Api.Version = ""
         Api.SourceContext = ValueNone
         Api.Mixins = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Mixin>()
-        Api.Syntax = ValueNone
+        Api.Syntax = global.Google.Protobuf.FSharp.WellKnownTypes.Syntax.Proto2
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Api>(global.System.Func<_>(empty))
@@ -203,13 +203,13 @@ module Api =
     let RepeatedMixinsCodec = global.Google.Protobuf.FieldCodec.ForMessage(50u, global.Google.Protobuf.FSharp.WellKnownTypes.Mixin.Parser)
 type Method = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Name: ValueOption<string>
-    mutable RequestTypeUrl: ValueOption<string>
-    mutable RequestStreaming: ValueOption<bool>
-    mutable ResponseTypeUrl: ValueOption<string>
-    mutable ResponseStreaming: ValueOption<bool>
+    mutable Name: string
+    mutable RequestTypeUrl: string
+    mutable RequestStreaming: bool
+    mutable ResponseTypeUrl: string
+    mutable ResponseStreaming: bool
     Options: global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>
-    mutable Syntax: ValueOption<global.Google.Protobuf.FSharp.WellKnownTypes.Syntax>
+    mutable Syntax: global.Google.Protobuf.FSharp.WellKnownTypes.Syntax
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Method = {
@@ -224,58 +224,58 @@ type Method = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Name <> ValueNone
+        if me.Name <> Method.DefaultValue.Name
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Name.Value)
-        if me.RequestTypeUrl <> ValueNone
+            output.WriteString(me.Name)
+        if me.RequestTypeUrl <> Method.DefaultValue.RequestTypeUrl
         then
             output.WriteRawTag(18uy)
-            output.WriteString(me.RequestTypeUrl.Value)
-        if me.RequestStreaming <> ValueNone
+            output.WriteString(me.RequestTypeUrl)
+        if me.RequestStreaming <> Method.DefaultValue.RequestStreaming
         then
             output.WriteRawTag(24uy)
-            output.WriteBool(me.RequestStreaming.Value)
-        if me.ResponseTypeUrl <> ValueNone
+            output.WriteBool(me.RequestStreaming)
+        if me.ResponseTypeUrl <> Method.DefaultValue.ResponseTypeUrl
         then
             output.WriteRawTag(34uy)
-            output.WriteString(me.ResponseTypeUrl.Value)
-        if me.ResponseStreaming <> ValueNone
+            output.WriteString(me.ResponseTypeUrl)
+        if me.ResponseStreaming <> Method.DefaultValue.ResponseStreaming
         then
             output.WriteRawTag(40uy)
-            output.WriteBool(me.ResponseStreaming.Value)
+            output.WriteBool(me.ResponseStreaming)
         me.Options.WriteTo(&output, Method.RepeatedOptionsCodec)
-        if me.Syntax <> ValueNone
+        if me.Syntax <> Method.DefaultValue.Syntax
         then
             output.WriteRawTag(56uy)
-            output.WriteEnum(int me.Syntax.Value)
+            output.WriteEnum(int me.Syntax)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Name <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name.Value)
-        if me.RequestTypeUrl <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.RequestTypeUrl.Value)
-        if me.RequestStreaming <> ValueNone then size <- size + 2
-        if me.ResponseTypeUrl <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.ResponseTypeUrl.Value)
-        if me.ResponseStreaming <> ValueNone then size <- size + 2
+        if me.Name <> Method.DefaultValue.Name then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name)
+        if me.RequestTypeUrl <> Method.DefaultValue.RequestTypeUrl then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.RequestTypeUrl)
+        if me.RequestStreaming <> Method.DefaultValue.RequestStreaming then size <- size + 2
+        if me.ResponseTypeUrl <> Method.DefaultValue.ResponseTypeUrl then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.ResponseTypeUrl)
+        if me.ResponseStreaming <> Method.DefaultValue.ResponseStreaming then size <- size + 2
         size <- size + me.Options.CalculateSize(Method.RepeatedOptionsCodec)
-        if me.Syntax <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Syntax.Value)
+        if me.Syntax <> Method.DefaultValue.Syntax then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeEnumSize(int me.Syntax)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Method) =
-        if other.Name <> ValueNone
+        if other.Name <> Method.DefaultValue.Name
         then me.Name <- other.Name
-        if other.RequestTypeUrl <> ValueNone
+        if other.RequestTypeUrl <> Method.DefaultValue.RequestTypeUrl
         then me.RequestTypeUrl <- other.RequestTypeUrl
-        if other.RequestStreaming <> ValueNone
+        if other.RequestStreaming <> Method.DefaultValue.RequestStreaming
         then me.RequestStreaming <- other.RequestStreaming
-        if other.ResponseTypeUrl <> ValueNone
+        if other.ResponseTypeUrl <> Method.DefaultValue.ResponseTypeUrl
         then me.ResponseTypeUrl <- other.ResponseTypeUrl
-        if other.ResponseStreaming <> ValueNone
+        if other.ResponseStreaming <> Method.DefaultValue.ResponseStreaming
         then me.ResponseStreaming <- other.ResponseStreaming
         me.Options.Add(other.Options)
-        if other.Syntax <> ValueNone
+        if other.Syntax <> Method.DefaultValue.Syntax
         then me.Syntax <- other.Syntax
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -284,19 +284,19 @@ type Method = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Name <- ValueSome(input.ReadString())
+                me.Name <- input.ReadString()
             | 18u ->
-                me.RequestTypeUrl <- ValueSome(input.ReadString())
+                me.RequestTypeUrl <- input.ReadString()
             | 24u ->
-                me.RequestStreaming <- ValueSome(input.ReadBool())
+                me.RequestStreaming <- input.ReadBool()
             | 34u ->
-                me.ResponseTypeUrl <- ValueSome(input.ReadString())
+                me.ResponseTypeUrl <- input.ReadString()
             | 40u ->
-                me.ResponseStreaming <- ValueSome(input.ReadBool())
+                me.ResponseStreaming <- input.ReadBool()
             | 50u ->
                 me.Options.AddEntriesFrom(&input, Method.RepeatedOptionsCodec)
             | 56u ->
-                me.Syntax <- ValueSome(enum(input.ReadEnum()))
+                me.Syntax <- enum(input.ReadEnum())
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -323,24 +323,24 @@ module Method =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Method._UnknownFields = null
-        Method.Name = ValueNone
-        Method.RequestTypeUrl = ValueNone
-        Method.RequestStreaming = ValueNone
-        Method.ResponseTypeUrl = ValueNone
-        Method.ResponseStreaming = ValueNone
+        Method.Name = ""
+        Method.RequestTypeUrl = ""
+        Method.RequestStreaming = false
+        Method.ResponseTypeUrl = ""
+        Method.ResponseStreaming = false
         Method.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
-        Method.Syntax = ValueNone
+        Method.Syntax = global.Google.Protobuf.FSharp.WellKnownTypes.Syntax.Proto2
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Method._UnknownFields = null
-        Method.Name = ValueNone
-        Method.RequestTypeUrl = ValueNone
-        Method.RequestStreaming = ValueNone
-        Method.ResponseTypeUrl = ValueNone
-        Method.ResponseStreaming = ValueNone
+        Method.Name = ""
+        Method.RequestTypeUrl = ""
+        Method.RequestStreaming = false
+        Method.ResponseTypeUrl = ""
+        Method.ResponseStreaming = false
         Method.Options = global.Google.Protobuf.Collections.RepeatedField<global.Google.Protobuf.FSharp.WellKnownTypes.Option>()
-        Method.Syntax = ValueNone
+        Method.Syntax = global.Google.Protobuf.FSharp.WellKnownTypes.Syntax.Proto2
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Method>(global.System.Func<_>(empty))
@@ -354,8 +354,8 @@ module Method =
     let RepeatedOptionsCodec = global.Google.Protobuf.FieldCodec.ForMessage(50u, global.Google.Protobuf.FSharp.WellKnownTypes.Option.Parser)
 type Mixin = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Name: ValueOption<string>
-    mutable Root: ValueOption<string>
+    mutable Name: string
+    mutable Root: string
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Mixin = {
@@ -365,27 +365,27 @@ type Mixin = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Name <> ValueNone
+        if me.Name <> Mixin.DefaultValue.Name
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Name.Value)
-        if me.Root <> ValueNone
+            output.WriteString(me.Name)
+        if me.Root <> Mixin.DefaultValue.Root
         then
             output.WriteRawTag(18uy)
-            output.WriteString(me.Root.Value)
+            output.WriteString(me.Root)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Name <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name.Value)
-        if me.Root <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Root.Value)
+        if me.Name <> Mixin.DefaultValue.Name then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Name)
+        if me.Root <> Mixin.DefaultValue.Root then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Root)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Mixin) =
-        if other.Name <> ValueNone
+        if other.Name <> Mixin.DefaultValue.Name
         then me.Name <- other.Name
-        if other.Root <> ValueNone
+        if other.Root <> Mixin.DefaultValue.Root
         then me.Root <- other.Root
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -394,9 +394,9 @@ type Mixin = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Name <- ValueSome(input.ReadString())
+                me.Name <- input.ReadString()
             | 18u ->
-                me.Root <- ValueSome(input.ReadString())
+                me.Root <- input.ReadString()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -423,14 +423,14 @@ module Mixin =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Mixin._UnknownFields = null
-        Mixin.Name = ValueNone
-        Mixin.Root = ValueNone
+        Mixin.Name = ""
+        Mixin.Root = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Mixin._UnknownFields = null
-        Mixin.Name = ValueNone
-        Mixin.Root = ValueNone
+        Mixin.Name = ""
+        Mixin.Root = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Mixin>(global.System.Func<_>(empty))

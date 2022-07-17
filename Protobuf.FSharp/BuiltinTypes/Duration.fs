@@ -34,8 +34,8 @@ module DurationReflection =
     let Descriptor(): global.Google.Protobuf.Reflection.FileDescriptor = descriptorBackingField.Value
 type Duration = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Seconds: ValueOption<int64>
-    mutable Nanos: ValueOption<int32>
+    mutable Seconds: int64
+    mutable Nanos: int32
 } with
     // Start of hand-written code
     static member FromTimeSpan(timeSpan: System.TimeSpan) : Duration =
@@ -43,15 +43,11 @@ type Duration = {
         let seconds = ticks / System.TimeSpan.TicksPerSecond
         let nanos = int ((ticks % System.TimeSpan.TicksPerSecond) * 100L)
         { Duration.empty() with
-            Seconds = ValueSome seconds
-            Nanos = ValueSome nanos
+            Seconds = seconds
+            Nanos = nanos
         }
     member me.ToTimeSpan() : ValueOption<System.TimeSpan> =
-        match me.Seconds with
-        | ValueNone -> ValueNone
-        | ValueSome secs ->
-            let nanos = ValueOption.defaultValue 0 me.Nanos
-            ValueSome(System.TimeSpan(int64 nanos / 100L + secs * System.TimeSpan.TicksPerSecond))
+        ValueSome(System.TimeSpan(int64 me.Nanos / 100L + me.Seconds * System.TimeSpan.TicksPerSecond))
     // End of hand-written code
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Duration = {
@@ -61,27 +57,27 @@ type Duration = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Seconds <> ValueNone
+        if me.Seconds <> Duration.DefaultValue.Seconds
         then
             output.WriteRawTag(8uy)
-            output.WriteInt64(me.Seconds.Value)
-        if me.Nanos <> ValueNone
+            output.WriteInt64(me.Seconds)
+        if me.Nanos <> Duration.DefaultValue.Nanos
         then
             output.WriteRawTag(16uy)
-            output.WriteInt32(me.Nanos.Value)
+            output.WriteInt32(me.Nanos)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Seconds <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt64Size(me.Seconds.Value)
-        if me.Nanos <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Nanos.Value)
+        if me.Seconds <> Duration.DefaultValue.Seconds then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt64Size(me.Seconds)
+        if me.Nanos <> Duration.DefaultValue.Nanos then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Nanos)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Duration) =
-        if other.Seconds <> ValueNone
+        if other.Seconds <> Duration.DefaultValue.Seconds
         then me.Seconds <- other.Seconds
-        if other.Nanos <> ValueNone
+        if other.Nanos <> Duration.DefaultValue.Nanos
         then me.Nanos <- other.Nanos
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -90,9 +86,9 @@ type Duration = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.Seconds <- ValueSome(input.ReadInt64())
+                me.Seconds <- input.ReadInt64()
             | 16u ->
-                me.Nanos <- ValueSome(input.ReadInt32())
+                me.Nanos <- input.ReadInt32()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -119,14 +115,14 @@ module Duration =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Duration._UnknownFields = null
-        Duration.Seconds = ValueNone
-        Duration.Nanos = ValueNone
+        Duration.Seconds = 0L
+        Duration.Nanos = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Duration._UnknownFields = null
-        Duration.Seconds = ValueNone
-        Duration.Nanos = ValueNone
+        Duration.Seconds = 0L
+        Duration.Nanos = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Duration>(global.System.Func<_>(empty))

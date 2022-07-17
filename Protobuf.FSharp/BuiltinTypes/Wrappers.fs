@@ -62,7 +62,7 @@ module WrappersReflection =
     let Descriptor(): global.Google.Protobuf.Reflection.FileDescriptor = descriptorBackingField.Value
 type DoubleValue = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Value: ValueOption<float>
+    mutable Value: float
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : DoubleValue = {
@@ -71,20 +71,20 @@ type DoubleValue = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Value <> ValueNone
+        if me.Value <> DoubleValue.DefaultValue.Value
         then
             output.WriteRawTag(9uy)
-            output.WriteDouble(me.Value.Value)
+            output.WriteDouble(me.Value)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Value <> ValueNone then size <- size + 9
+        if me.Value <> DoubleValue.DefaultValue.Value then size <- size + 9
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: DoubleValue) =
-        if other.Value <> ValueNone
+        if other.Value <> DoubleValue.DefaultValue.Value
         then me.Value <- other.Value
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -93,7 +93,7 @@ type DoubleValue = {
         while tag <> 0u do
             match tag with
             | 9u ->
-                me.Value <- ValueSome(input.ReadDouble())
+                me.Value <- input.ReadDouble()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -120,19 +120,19 @@ module DoubleValue =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         DoubleValue._UnknownFields = null
-        DoubleValue.Value = ValueNone
+        DoubleValue.Value = 0.0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         DoubleValue._UnknownFields = null
-        DoubleValue.Value = ValueNone
+        DoubleValue.Value = 0.0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<DoubleValue>(global.System.Func<_>(empty))
     let ValueFieldNumber = 1
 type FloatValue = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Value: ValueOption<float32>
+    mutable Value: float32
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : FloatValue = {
@@ -141,20 +141,20 @@ type FloatValue = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Value <> ValueNone
+        if me.Value <> FloatValue.DefaultValue.Value
         then
             output.WriteRawTag(13uy)
-            output.WriteFloat(me.Value.Value)
+            output.WriteFloat(me.Value)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Value <> ValueNone then size <- size + 5
+        if me.Value <> FloatValue.DefaultValue.Value then size <- size + 5
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: FloatValue) =
-        if other.Value <> ValueNone
+        if other.Value <> FloatValue.DefaultValue.Value
         then me.Value <- other.Value
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -163,7 +163,7 @@ type FloatValue = {
         while tag <> 0u do
             match tag with
             | 13u ->
-                me.Value <- ValueSome(input.ReadFloat())
+                me.Value <- input.ReadFloat()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -190,19 +190,19 @@ module FloatValue =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         FloatValue._UnknownFields = null
-        FloatValue.Value = ValueNone
+        FloatValue.Value = 0f
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         FloatValue._UnknownFields = null
-        FloatValue.Value = ValueNone
+        FloatValue.Value = 0f
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<FloatValue>(global.System.Func<_>(empty))
     let ValueFieldNumber = 1
 type Int64Value = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Value: ValueOption<int64>
+    mutable Value: int64
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Int64Value = {
@@ -211,20 +211,20 @@ type Int64Value = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Value <> ValueNone
+        if me.Value <> Int64Value.DefaultValue.Value
         then
             output.WriteRawTag(8uy)
-            output.WriteInt64(me.Value.Value)
+            output.WriteInt64(me.Value)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Value <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt64Size(me.Value.Value)
+        if me.Value <> Int64Value.DefaultValue.Value then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt64Size(me.Value)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Int64Value) =
-        if other.Value <> ValueNone
+        if other.Value <> Int64Value.DefaultValue.Value
         then me.Value <- other.Value
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -233,7 +233,7 @@ type Int64Value = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.Value <- ValueSome(input.ReadInt64())
+                me.Value <- input.ReadInt64()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -260,19 +260,19 @@ module Int64Value =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Int64Value._UnknownFields = null
-        Int64Value.Value = ValueNone
+        Int64Value.Value = 0L
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Int64Value._UnknownFields = null
-        Int64Value.Value = ValueNone
+        Int64Value.Value = 0L
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Int64Value>(global.System.Func<_>(empty))
     let ValueFieldNumber = 1
 type UInt64Value = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Value: ValueOption<uint64>
+    mutable Value: uint64
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : UInt64Value = {
@@ -281,20 +281,20 @@ type UInt64Value = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Value <> ValueNone
+        if me.Value <> UInt64Value.DefaultValue.Value
         then
             output.WriteRawTag(8uy)
-            output.WriteUInt64(me.Value.Value)
+            output.WriteUInt64(me.Value)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Value <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeUInt64Size(me.Value.Value)
+        if me.Value <> UInt64Value.DefaultValue.Value then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeUInt64Size(me.Value)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: UInt64Value) =
-        if other.Value <> ValueNone
+        if other.Value <> UInt64Value.DefaultValue.Value
         then me.Value <- other.Value
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -303,7 +303,7 @@ type UInt64Value = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.Value <- ValueSome(input.ReadUInt64())
+                me.Value <- input.ReadUInt64()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -330,19 +330,19 @@ module UInt64Value =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         UInt64Value._UnknownFields = null
-        UInt64Value.Value = ValueNone
+        UInt64Value.Value = 0UL
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         UInt64Value._UnknownFields = null
-        UInt64Value.Value = ValueNone
+        UInt64Value.Value = 0UL
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<UInt64Value>(global.System.Func<_>(empty))
     let ValueFieldNumber = 1
 type Int32Value = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Value: ValueOption<int32>
+    mutable Value: int32
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Int32Value = {
@@ -351,20 +351,20 @@ type Int32Value = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Value <> ValueNone
+        if me.Value <> Int32Value.DefaultValue.Value
         then
             output.WriteRawTag(8uy)
-            output.WriteInt32(me.Value.Value)
+            output.WriteInt32(me.Value)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Value <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Value.Value)
+        if me.Value <> Int32Value.DefaultValue.Value then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeInt32Size(me.Value)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: Int32Value) =
-        if other.Value <> ValueNone
+        if other.Value <> Int32Value.DefaultValue.Value
         then me.Value <- other.Value
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -373,7 +373,7 @@ type Int32Value = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.Value <- ValueSome(input.ReadInt32())
+                me.Value <- input.ReadInt32()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -400,19 +400,19 @@ module Int32Value =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         Int32Value._UnknownFields = null
-        Int32Value.Value = ValueNone
+        Int32Value.Value = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         Int32Value._UnknownFields = null
-        Int32Value.Value = ValueNone
+        Int32Value.Value = 0
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<Int32Value>(global.System.Func<_>(empty))
     let ValueFieldNumber = 1
 type UInt32Value = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Value: ValueOption<uint32>
+    mutable Value: uint32
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : UInt32Value = {
@@ -421,20 +421,20 @@ type UInt32Value = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Value <> ValueNone
+        if me.Value <> UInt32Value.DefaultValue.Value
         then
             output.WriteRawTag(8uy)
-            output.WriteUInt32(me.Value.Value)
+            output.WriteUInt32(me.Value)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Value <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeUInt32Size(me.Value.Value)
+        if me.Value <> UInt32Value.DefaultValue.Value then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeUInt32Size(me.Value)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: UInt32Value) =
-        if other.Value <> ValueNone
+        if other.Value <> UInt32Value.DefaultValue.Value
         then me.Value <- other.Value
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -443,7 +443,7 @@ type UInt32Value = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.Value <- ValueSome(input.ReadUInt32())
+                me.Value <- input.ReadUInt32()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -470,19 +470,19 @@ module UInt32Value =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         UInt32Value._UnknownFields = null
-        UInt32Value.Value = ValueNone
+        UInt32Value.Value = 0u
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         UInt32Value._UnknownFields = null
-        UInt32Value.Value = ValueNone
+        UInt32Value.Value = 0u
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<UInt32Value>(global.System.Func<_>(empty))
     let ValueFieldNumber = 1
 type BoolValue = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Value: ValueOption<bool>
+    mutable Value: bool
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : BoolValue = {
@@ -491,20 +491,20 @@ type BoolValue = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Value <> ValueNone
+        if me.Value <> BoolValue.DefaultValue.Value
         then
             output.WriteRawTag(8uy)
-            output.WriteBool(me.Value.Value)
+            output.WriteBool(me.Value)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Value <> ValueNone then size <- size + 2
+        if me.Value <> BoolValue.DefaultValue.Value then size <- size + 2
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: BoolValue) =
-        if other.Value <> ValueNone
+        if other.Value <> BoolValue.DefaultValue.Value
         then me.Value <- other.Value
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -513,7 +513,7 @@ type BoolValue = {
         while tag <> 0u do
             match tag with
             | 8u ->
-                me.Value <- ValueSome(input.ReadBool())
+                me.Value <- input.ReadBool()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -540,19 +540,19 @@ module BoolValue =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         BoolValue._UnknownFields = null
-        BoolValue.Value = ValueNone
+        BoolValue.Value = false
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         BoolValue._UnknownFields = null
-        BoolValue.Value = ValueNone
+        BoolValue.Value = false
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<BoolValue>(global.System.Func<_>(empty))
     let ValueFieldNumber = 1
 type StringValue = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Value: ValueOption<string>
+    mutable Value: string
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : StringValue = {
@@ -561,20 +561,20 @@ type StringValue = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Value <> ValueNone
+        if me.Value <> StringValue.DefaultValue.Value
         then
             output.WriteRawTag(10uy)
-            output.WriteString(me.Value.Value)
+            output.WriteString(me.Value)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Value <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Value.Value)
+        if me.Value <> StringValue.DefaultValue.Value then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeStringSize(me.Value)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: StringValue) =
-        if other.Value <> ValueNone
+        if other.Value <> StringValue.DefaultValue.Value
         then me.Value <- other.Value
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -583,7 +583,7 @@ type StringValue = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Value <- ValueSome(input.ReadString())
+                me.Value <- input.ReadString()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -610,19 +610,19 @@ module StringValue =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         StringValue._UnknownFields = null
-        StringValue.Value = ValueNone
+        StringValue.Value = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         StringValue._UnknownFields = null
-        StringValue.Value = ValueNone
+        StringValue.Value = ""
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<StringValue>(global.System.Func<_>(empty))
     let ValueFieldNumber = 1
 type BytesValue = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
-    mutable Value: ValueOption<global.Google.Protobuf.ByteString>
+    mutable Value: global.Google.Protobuf.ByteString
 } with
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : BytesValue = {
@@ -631,20 +631,20 @@ type BytesValue = {
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.InternalWriteTo(output: byref<global.Google.Protobuf.WriteContext>) =
-        if me.Value <> ValueNone
+        if me.Value <> BytesValue.DefaultValue.Value
         then
             output.WriteRawTag(10uy)
-            output.WriteBytes(me.Value.Value)
+            output.WriteBytes(me.Value)
         if not <| isNull me._UnknownFields then me._UnknownFields.WriteTo(&output)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.CalculateSize() =
         let mutable size = 0
-        if me.Value <> ValueNone then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeBytesSize(me.Value.Value)
+        if me.Value <> BytesValue.DefaultValue.Value then size <- size + 1 + global.Google.Protobuf.CodedOutputStream.ComputeBytesSize(me.Value)
         if not <| isNull me._UnknownFields then size <- size + me._UnknownFields.CalculateSize()
         size
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member private me.MergeFrom(other: BytesValue) =
-        if other.Value <> ValueNone
+        if other.Value <> BytesValue.DefaultValue.Value
         then me.Value <- other.Value
         me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFrom(me._UnknownFields, other._UnknownFields)
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
@@ -653,7 +653,7 @@ type BytesValue = {
         while tag <> 0u do
             match tag with
             | 10u ->
-                me.Value <- ValueSome(input.ReadBytes())
+                me.Value <- input.ReadBytes()
             | _ ->
                 me._UnknownFields <- global.Google.Protobuf.UnknownFieldSet.MergeFieldFrom(me._UnknownFields, &input)
             tag <- input.ReadTag()
@@ -680,12 +680,12 @@ module BytesValue =
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let internal DefaultValue = {
         BytesValue._UnknownFields = null
-        BytesValue.Value = ValueNone
+        BytesValue.Value = global.Google.Protobuf.ByteString.Empty
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let empty () = {
         BytesValue._UnknownFields = null
-        BytesValue.Value = ValueNone
+        BytesValue.Value = global.Google.Protobuf.ByteString.Empty
     }
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     let Parser = global.Google.Protobuf.MessageParser<BytesValue>(global.System.Func<_>(empty))

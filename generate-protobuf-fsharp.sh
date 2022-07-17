@@ -32,3 +32,5 @@ $protoc_path \
 ./Proto/google/protobuf/timestamp.proto \
 ./Proto/google/protobuf/type.proto \
 ./Proto/google/protobuf/wrappers.proto
+
+echo MAKE SURE TO MOVE ALL HAND-WRITTEN CODE IN timestamp.fs AND duration.fs TO NEWLY GENERATED F# SOURCES!
