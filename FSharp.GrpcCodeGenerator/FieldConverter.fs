@@ -1,12 +1,5 @@
 ﻿[<AutoOpen>]
 module rec FieldConverter
-open System
-
-type OneOfIsSynthetic = bool
-
-type FSField =
-| Single of Field
-| OneOf of OneOf * Field list * OneOfIsSynthetic 
 
 type FieldWriter = {
     WriteMember: FileContext -> unit
@@ -88,7 +81,7 @@ let typeNameWithoutOption (ctx: FileContext, field: Field) =
     | FieldType.Message
     | FieldType.Group ->
         let msg = Helpers.findMessageType ctx field.TypeName.Value
-        Helpers.qualifiedInnerNameFromMessages (msg.Message.Name.Value, msg.ContainerMessages, msg.File)
+        Helpers.qualifiedInnerNameFromMessages (msg.Message.Name.Value, msg.ContainerMessages, msg.File.File)
     | FieldType.Double -> nameof(float)
     | FieldType.Float -> nameof(float32)
     | FieldType.Int64 -> nameof(int64)
@@ -142,7 +135,7 @@ let defaultValueEnum (ctx: FileContext, field: Field) =
     Helpers.qualifiedInnerNameFromMessages (enum.Enum.Name.Value, enum.ContainerMessages, enum.File) + "." + Helpers.enumValueName (enum.Enum.Name.Value, caseName)
     
 let defaultValue (ctx: FileContext, field: Field) =
-    let defaultOrZero = field.DefaultValue |> ValueOption.defaultValue "0"
+    let maybeZero = field.DefaultValue |> ValueOption.defaultValue "0"
 
     let rec helper (ctx: FileContext, field: Field) =
         if needsOptionType (ctx, field)
@@ -155,18 +148,18 @@ let defaultValue (ctx: FileContext, field: Field) =
             | FieldType.Bytes -> defaultValueBytes field
             | FieldType.Bool -> if field.DefaultValue = ValueSome "true" then "true" else "false"
 
-            | FieldType.Double -> if defaultOrZero.Contains '.' then defaultOrZero else defaultOrZero + ".0"
-            | FieldType.Float -> defaultOrZero + "f"
-            | FieldType.Int64 -> defaultOrZero + "L"
-            | FieldType.Uint64 -> defaultOrZero + "UL"
-            | FieldType.Int32 -> defaultOrZero
-            | FieldType.Fixed64 -> defaultOrZero + "UL"
-            | FieldType.Fixed32 -> defaultOrZero + "u"
-            | FieldType.Uint32 -> defaultOrZero + "u"
-            | FieldType.Sfixed32 -> defaultOrZero
-            | FieldType.Sfixed64 -> defaultOrZero + "L"
-            | FieldType.Sint32 -> defaultOrZero
-            | FieldType.Sint64 -> defaultOrZero + "L"
+            | FieldType.Double -> if maybeZero.Contains '.' then maybeZero else maybeZero + ".0"
+            | FieldType.Float -> maybeZero + "f"
+            | FieldType.Int64 -> maybeZero + "L"
+            | FieldType.Uint64 -> maybeZero + "UL"
+            | FieldType.Int32 -> maybeZero
+            | FieldType.Fixed64 -> maybeZero + "UL"
+            | FieldType.Fixed32 -> maybeZero + "u"
+            | FieldType.Uint32 -> maybeZero + "u"
+            | FieldType.Sfixed32 -> maybeZero
+            | FieldType.Sfixed64 -> maybeZero + "L"
+            | FieldType.Sint32 -> maybeZero
+            | FieldType.Sint64 -> maybeZero + "L"
                 
             | FieldType.Message
             | FieldType.Group -> failwith "Not supported"
@@ -197,12 +190,12 @@ let capitalizedTypeName (field: Field) =
     | FieldType.Sint64 -> "SInt64"
     | _ -> failwithf "Unknown field type %A" field.Type
 
-let hasPropertyCheck (ctx: FileContext, msg: Message, field: Field, identifier: string) =
+let hasPropertyCheck (ctx: FileContext, msg: MessageContext, field: Field, identifier: string) =
     if needsOptionType (ctx, field)
-    then $"{identifier}.{propertyName (msg, field)} <> ValueNone"
+    then $"{identifier}.{propertyName (msg.Message, field)} <> ValueNone"
     elif field.Label = ValueSome FieldLabel.Repeated
-    then $"{identifier}.{propertyName (msg, field)}.Count <> 0"
-    else $"{identifier}.{propertyName (msg, field)} <> {Helpers.messageTypeName msg}.DefaultValue.{propertyName(msg, field)}"
+    then $"{identifier}.{propertyName (msg.Message, field)}.Count <> 0"
+    else $"{identifier}.{propertyName (msg.Message, field)} <> {Helpers.fullClassName msg}.DefaultValue.{propertyName(msg.Message, field)}"
 
 let defaultValueAccessIgnoreOption (ctx: FileContext, field: Field) =
     let maybeZero = field.DefaultValue |> ValueOption.defaultValue "0"
@@ -232,10 +225,10 @@ let defaultValueAccessIgnoreOption (ctx: FileContext, field: Field) =
 
     | _ -> failwithf "Unknown field type %A" field.Type
 
-let defaultValueAccess (ctx: FileContext, msg: Message, field: Field) =
+let defaultValueAccess (ctx: FileContext, msg: MessageContext, field: Field) =
     if needsOptionType (ctx, field)
     then "ValueNone"
-    else $"{Helpers.messageTypeName msg}.DefaultValue.{propertyName(msg, field)}"
+    else $"{Helpers.fullClassName msg}.DefaultValue.{propertyName(msg.Message, field)}"
 
 let writeParsingCodeTemplate (ctx: FileContext, field: Field) writeBody =
     if Helpers.isFieldPackable field
@@ -270,8 +263,8 @@ module PrimitiveFieldConverter =
     let writeMember (field: Field, containingType: Message) (ctx: FileContext) =
         ctx.Writer.WriteLine $"mutable {propertyName (containingType, field)}: {typeName (ctx, field)}"
 
-    let writeMemberInit (field: Field, containingType: Message) (ctx: FileContext) =
-        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propertyName (containingType, field)} = {defaultValue (ctx, field)}"
+    let writeMemberInit (field: Field, containingType: MessageContext) (ctx: FileContext) =
+        ctx.Writer.WriteLine $"{Helpers.fullClassNameWithoutGlobal containingType}.{propertyName (containingType.Message, field)} = {defaultValue (ctx, field)}"
 
     let writeOneOfCase (field: Field, containingType: Message) (ctx: FileContext) =
         ctx.Writer.WriteLine $"| {propertyName (containingType, field)} of {typeNameWithoutOption (ctx, field)}"
@@ -285,18 +278,18 @@ module PrimitiveFieldConverter =
             ctx.Writer.Write
                 $"{tagSize} + global.Google.Protobuf.CodedOutputStream.Compute{capitalizedTypeName field}Size({id})"
 
-    let writeSerializedSizeCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeSerializedSizeCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
         let propCheck = hasPropertyCheck (ctx, containingType, field, "me")
         ctx.Writer.Write $"if {propCheck} then size <- size + "
-        writeSerializedSizeCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
+        writeSerializedSizeCodeWithoutCheck (field, containingType.Message) ctx $"me.{propertyAccess (ctx, containingType.Message, field)}"
         ctx.Writer.WriteLine ""
 
-    let writeCloningCode (field: Field, containingType: Message) (ctx: FileContext) =
-        let propName = propertyName (containingType, field)
-        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propName} = me.{propName}"
+    let writeCloningCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
+        let propName = propertyName (containingType.Message, field)
+        ctx.Writer.WriteLine $"{Helpers.fullClassNameWithoutGlobal containingType}.{propName} = me.{propName}"
 
-    let writeMergingCode (field: Field, containingType: Message) (ctx: FileContext) =
-        let propName = propertyName (containingType, field)
+    let writeMergingCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
+        let propName = propertyName (containingType.Message, field)
         let propCheck = hasPropertyCheck (ctx, containingType, field, "other")
         ctx.Writer.WriteLines [
             $"if {propCheck}"
@@ -322,14 +315,14 @@ module PrimitiveFieldConverter =
             $"output.Write{capitalizedTypeName field}({id})"
         ]
 
-    let writeSerializationCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeSerializationCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
         let propCheck = hasPropertyCheck (ctx, containingType, field, "me")
         ctx.Writer.WriteLines [
             $"if {propCheck}"
             "then"
         ]
         ctx.Writer.Indent()
-        writeSerializationCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
+        writeSerializationCodeWithoutCheck (field, containingType.Message) ctx $"me.{propertyAccess (ctx, containingType.Message, field)}"
         ctx.Writer.Outdent()
 
     let writeCodecCode (field: Field) (ctx: FileContext) =
@@ -350,24 +343,24 @@ module PrimitiveFieldConverter =
         writeCodecCode (field) ctx
         ctx.Writer.WriteLine ")"
 
-    let create (field: Field, containingType: Message option) =
+    let create (field: Field, containingType: MessageContext option) =
         match containingType with
         | Some t ->
             {
-                WriteMember = writeMember (field, t)
+                WriteMember = writeMember (field, t.Message)
                 WriteMemberInit = writeMemberInit (field, t)
-                WriteOneOfCase = writeOneOfCase (field, t)
+                WriteOneOfCase = writeOneOfCase (field, t.Message)
                 WriteSerializedSizeCode = writeSerializedSizeCode (field, t)
-                WriteSerializedSizeCodeWithoutCheck = writeSerializedSizeCodeWithoutCheck (field, t)
+                WriteSerializedSizeCodeWithoutCheck = writeSerializedSizeCodeWithoutCheck (field, t.Message)
                 WriteCloningCode = writeCloningCode (field, t)
                 WriteMergingCode = writeMergingCode (field, t)
-                WriteParsingCode = writeParsingCode (field, t)
+                WriteParsingCode = writeParsingCode (field, t.Message)
                 WriteOneOfParsingCode = writeOneOfParsingCode field
                 WriteSerializationCode = writeSerializationCode (field, t)
-                WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
+                WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t.Message)
                 WriteModuleMembers = ignore
                 WriteCodecCode = writeCodecCode (field)
-                WriteExtensionCode = writeExtensionCode (field, Some(t))
+                WriteExtensionCode = writeExtensionCode (field, Some(t.Message))
             }
         | None ->
             { NotImplementedWriter with
@@ -378,43 +371,43 @@ module RepeatedPrimitiveFieldConverter =
     let writeMember (field: Field, containingType: Message) (ctx: FileContext) =
         ctx.Writer.WriteLine $"{propertyName (containingType, field)}: global.Google.Protobuf.Collections.RepeatedField<{typeName (ctx, field)}>"
 
-    let writeMemberInit (field: Field, containingType: Message) (ctx: FileContext) =
-        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propertyName (containingType, field)} = global.Google.Protobuf.Collections.RepeatedField<{typeName (ctx, field)}>()"
+    let writeMemberInit (field: Field, containingType: MessageContext) (ctx: FileContext) =
+        ctx.Writer.WriteLine $"{Helpers.fullClassNameWithoutGlobal containingType}.{propertyName (containingType.Message, field)} = global.Google.Protobuf.Collections.RepeatedField<{typeName (ctx, field)}>()"
 
     let writeOneOfCase (field: Field, containingType: Message) (ctx: FileContext) =
         ctx.Writer.WriteLine $"| {propertyName (containingType, field)} of global.Google.Protobuf.Collections.RepeatedField<{typeName (ctx, field)}>"
 
-    let writeSerializedSizeCodeWithoutCheck (field: Field, containingType: Message) (ctx: FileContext) (id: string) =
-        ctx.Writer.Write $"{id}.CalculateSize({Helpers.messageTypeName containingType}.Repeated{propertyName (containingType, field)}Codec)"
+    let writeSerializedSizeCodeWithoutCheck (field: Field, containingType: MessageContext) (ctx: FileContext) (id: string) =
+        ctx.Writer.Write $"{id}.CalculateSize({Helpers.fullClassName containingType}.Repeated{propertyName (containingType.Message, field)}Codec)"
 
-    let writeSerializedSizeCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeSerializedSizeCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
         ctx.Writer.Write "size <- size + "
-        writeSerializedSizeCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
+        writeSerializedSizeCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType.Message, field)}"
         ctx.Writer.WriteLine ""
 
-    let writeCloningCode (field: Field, containingType: Message) (ctx: FileContext) =
-        let propName = propertyName (containingType, field)
-        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propName} = me.{propName}.Clone()"
+    let writeCloningCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
+        let propName = propertyName (containingType.Message, field)
+        ctx.Writer.WriteLine $"{Helpers.fullClassNameWithoutGlobal containingType}.{propName} = me.{propName}.Clone()"
 
     let writeMergingCode (field: Field, containingType: Message) (ctx: FileContext) =
         let propName = propertyName (containingType, field)
         ctx.Writer.WriteLine $"me.{propName}.Add(other.{propName})"
 
-    let writeParsingCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeParsingCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
         writeParsingCodeTemplate (ctx, field) <| fun () ->
-            ctx.Writer.WriteLine $"me.{propertyName (containingType, field)}.AddEntriesFrom(&input, {Helpers.messageTypeName containingType}.Repeated{propertyName (containingType, field)}Codec)"
+            ctx.Writer.WriteLine $"me.{propertyName (containingType.Message, field)}.AddEntriesFrom(&input, {Helpers.fullClassName containingType}.Repeated{propertyName (containingType.Message, field)}Codec)"
 
-    let writeOneOfParsingCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeOneOfParsingCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
         ctx.Writer.WriteLines [
             $"let value = global.Google.Protobuf.Collections.RepeatedField<{typeName (ctx, field)}>()"
-            $"value.AddEntriesFrom(&input, {Helpers.messageTypeName containingType}.Repeated{propertyName (containingType, field)}Codec)"
+            $"value.AddEntriesFrom(&input, {Helpers.fullClassName containingType}.Repeated{propertyName (containingType.Message, field)}Codec)"
         ]
 
-    let writeSerializationCodeWithoutCheck (field: Field, containingType: Message) (ctx: FileContext) (id: string) =
-        ctx.Writer.WriteLine $"{id}.WriteTo(&output, {Helpers.messageTypeName containingType}.Repeated{propertyName (containingType, field)}Codec)"
+    let writeSerializationCodeWithoutCheck (field: Field, containingType: MessageContext) (ctx: FileContext) (id: string) =
+        ctx.Writer.WriteLine $"{id}.WriteTo(&output, {Helpers.fullClassName containingType}.Repeated{propertyName (containingType.Message, field)}Codec)"
 
-    let writeSerializationCode (field: Field, containingType: Message) (ctx: FileContext) =
-        writeSerializationCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
+    let writeSerializationCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
+        writeSerializationCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType.Message, field)}"
 
     let writeCodecCode (field: Field) (ctx: FileContext) =
         ctx.Writer.Write $"global.Google.Protobuf.FieldCodec.For{capitalizedTypeName field}({Helpers.makeTag field}u)"
@@ -439,24 +432,24 @@ module RepeatedPrimitiveFieldConverter =
         writeCodecCode field ctx
         ctx.Writer.WriteLine ""
 
-    let create (field: Field, containingType: Message option) =
+    let create (field: Field, containingType: MessageContext option) =
         match containingType with
         | Some t ->
             {
-                WriteMember = writeMember (field, t)
+                WriteMember = writeMember (field, t.Message)
                 WriteMemberInit = writeMemberInit (field, t)
-                WriteOneOfCase = writeOneOfCase (field, t)
+                WriteOneOfCase = writeOneOfCase (field, t.Message)
                 WriteSerializedSizeCode = writeSerializedSizeCode (field, t)
                 WriteSerializedSizeCodeWithoutCheck = writeSerializedSizeCodeWithoutCheck (field, t)
                 WriteCloningCode = writeCloningCode (field, t)
-                WriteMergingCode = writeMergingCode (field, t)
+                WriteMergingCode = writeMergingCode (field, t.Message)
                 WriteParsingCode = writeParsingCode (field, t)
                 WriteOneOfParsingCode = writeOneOfParsingCode (field, t)
                 WriteSerializationCode = writeSerializationCode (field, t)
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
-                WriteModuleMembers = writeModuleMembers (field, t)
+                WriteModuleMembers = writeModuleMembers (field, t.Message)
                 WriteCodecCode = writeCodecCode field
-                WriteExtensionCode = writeExtensionCode (field, Some(t))
+                WriteExtensionCode = writeExtensionCode (field, Some(t.Message))
             }
         | None ->
             { NotImplementedWriter with
@@ -464,14 +457,14 @@ module RepeatedPrimitiveFieldConverter =
             }
 
 module EnumFieldConverter =
-    let writeSerializedSizeCodeWithoutCheck (field: Field, containingType: Message) (ctx: FileContext) (id: string) =
+    let writeSerializedSizeCodeWithoutCheck (field: Field) (ctx: FileContext) (id: string) =
         let tagSize = tagSize field
         ctx.Writer.Write $"{tagSize} + global.Google.Protobuf.CodedOutputStream.Compute{capitalizedTypeName field}Size(int {id})"
 
-    let writeSerializedSizeCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeSerializedSizeCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
         let propCheck = hasPropertyCheck (ctx, containingType, field, "me")
         ctx.Writer.Write $"if {propCheck} then size <- size + "
-        writeSerializedSizeCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
+        writeSerializedSizeCodeWithoutCheck field ctx $"me.{propertyAccess (ctx, containingType.Message, field)}"
         ctx.Writer.WriteLine $""
 
     let writeParsingCode (field: Field, containingType: Message) (ctx: FileContext) =
@@ -485,7 +478,7 @@ module EnumFieldConverter =
     let writeOneOfParsingCode (field: Field) (ctx: FileContext) =
         ctx.Writer.WriteLine $"let value = enum(input.ReadEnum()) : {typeNameWithoutOption (ctx, field)}"
 
-    let writeSerializationCodeWithoutCheck (field: Field, containingType: Message) (ctx: FileContext) (id: string) =
+    let writeSerializationCodeWithoutCheck (field: Field) (ctx: FileContext) (id: string) =
         let tagBytes = Helpers.tagBytes field
         let tagBytesString = tagBytes |> Seq.map (sprintf "%iuy") |> String.concat ", "
         ctx.Writer.WriteLines [
@@ -493,14 +486,14 @@ module EnumFieldConverter =
             $"output.Write{capitalizedTypeName field}(int {id})"
         ]
 
-    let writeSerializationCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeSerializationCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
         let propCheck = hasPropertyCheck (ctx, containingType, field, "me")
         ctx.Writer.WriteLines [
             $"if {propCheck}"
             "then"
         ]
         ctx.Writer.Indent()
-        writeSerializationCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
+        writeSerializationCodeWithoutCheck field ctx $"me.{propertyAccess (ctx, containingType.Message, field)}"
         ctx.Writer.Outdent()
 
     let writeCodecCode (field: Field) (ctx: FileContext) =
@@ -521,24 +514,24 @@ module EnumFieldConverter =
         writeCodecCode (field) ctx
         ctx.Writer.WriteLine ")"
 
-    let create (field: Field, containingType: Message option) =
+    let create (field: Field, containingType: MessageContext option) =
         match containingType with
         | Some t ->
             {
-                WriteMember = PrimitiveFieldConverter.writeMember (field, t)
+                WriteMember = PrimitiveFieldConverter.writeMember (field, t.Message)
                 WriteMemberInit = PrimitiveFieldConverter.writeMemberInit (field, t)
-                WriteOneOfCase = PrimitiveFieldConverter.writeOneOfCase (field, t)
+                WriteOneOfCase = PrimitiveFieldConverter.writeOneOfCase (field, t.Message)
                 WriteSerializedSizeCode = writeSerializedSizeCode (field, t)
-                WriteSerializedSizeCodeWithoutCheck = writeSerializedSizeCodeWithoutCheck (field, t)
+                WriteSerializedSizeCodeWithoutCheck = writeSerializedSizeCodeWithoutCheck field
                 WriteCloningCode = PrimitiveFieldConverter.writeCloningCode (field, t)
                 WriteMergingCode = PrimitiveFieldConverter.writeMergingCode (field, t)
-                WriteParsingCode = writeParsingCode (field, t)
+                WriteParsingCode = writeParsingCode (field, t.Message)
                 WriteOneOfParsingCode = writeOneOfParsingCode field
                 WriteSerializationCode = writeSerializationCode (field, t)
-                WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
+                WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck field
                 WriteModuleMembers = ignore
                 WriteCodecCode = writeCodecCode(field)
-                WriteExtensionCode = writeExtensionCode (field, Some(t))
+                WriteExtensionCode = writeExtensionCode (field, Some(t.Message))
             }
         | None ->
             { NotImplementedWriter with
@@ -569,24 +562,24 @@ module RepeatedEnumFieldConverter =
         writeCodecCode field ctx
         ctx.Writer.WriteLine ""
 
-    let create (field: Field, containingType: Message option) =
+    let create (field: Field, containingType: MessageContext option) =
         match containingType with
         | Some t ->
             {
-                WriteMember = RepeatedPrimitiveFieldConverter.writeMember (field, t)
+                WriteMember = RepeatedPrimitiveFieldConverter.writeMember (field, t.Message)
                 WriteMemberInit = RepeatedPrimitiveFieldConverter.writeMemberInit (field, t)
-                WriteOneOfCase = RepeatedPrimitiveFieldConverter.writeOneOfCase (field, t)
+                WriteOneOfCase = RepeatedPrimitiveFieldConverter.writeOneOfCase (field, t.Message)
                 WriteSerializedSizeCode = RepeatedPrimitiveFieldConverter.writeSerializedSizeCode (field, t)
                 WriteSerializedSizeCodeWithoutCheck = RepeatedPrimitiveFieldConverter.writeSerializedSizeCodeWithoutCheck (field, t)
                 WriteCloningCode = RepeatedPrimitiveFieldConverter.writeCloningCode (field, t)
-                WriteMergingCode = RepeatedPrimitiveFieldConverter.writeMergingCode (field, t)
+                WriteMergingCode = RepeatedPrimitiveFieldConverter.writeMergingCode (field, t.Message)
                 WriteParsingCode = RepeatedPrimitiveFieldConverter.writeParsingCode (field, t)
                 WriteOneOfParsingCode = RepeatedPrimitiveFieldConverter.writeOneOfParsingCode (field, t)
                 WriteSerializationCode = RepeatedPrimitiveFieldConverter.writeSerializationCode (field, t)
                 WriteSerializationCodeWithoutCheck = RepeatedPrimitiveFieldConverter.writeSerializationCodeWithoutCheck (field, t)
-                WriteModuleMembers = writeModuleMembers (field, t)
+                WriteModuleMembers = writeModuleMembers (field, t.Message)
                 WriteCodecCode = writeCodecCode field
-                WriteExtensionCode = writeExtensionCode (field, Some(t))
+                WriteExtensionCode = writeExtensionCode (field, Some(t.Message))
             }
         | None ->
             { NotImplementedWriter with
@@ -601,18 +594,18 @@ module MessageFieldConverter =
         then ctx.Writer.Write $"{tagSize} + global.Google.Protobuf.CodedOutputStream.ComputeGroupSize({id})"
         else ctx.Writer.Write $"{tagSize} + global.Google.Protobuf.CodedOutputStream.ComputeMessageSize({id})"
 
-    let writeSerializedSizeCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeSerializedSizeCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
         let propCheck = hasPropertyCheck (ctx, containingType, field, "me")
         ctx.Writer.Write $"if {propCheck} then size <- size + "
-        writeSerializedSizeCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
+        writeSerializedSizeCodeWithoutCheck (field, containingType.Message) ctx $"me.{propertyAccess (ctx, containingType.Message, field)}"
         ctx.Writer.WriteLine ""
 
-    let writeCloningCode (field: Field, containingType: Message) (ctx: FileContext) =
-        let propName = propertyName (containingType, field)
-        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propName} = me.{propName} |> global.Microsoft.FSharp.Core.ValueOption.map (fun x -> (x :> global.Google.Protobuf.IMessage<{typeNameWithoutOption (ctx, field)}>).Clone())"
+    let writeCloningCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
+        let propName = propertyName (containingType.Message, field)
+        ctx.Writer.WriteLine $"{Helpers.fullClassNameWithoutGlobal containingType}.{propName} = me.{propName} |> global.Microsoft.FSharp.Core.ValueOption.map (fun x -> (x :> global.Google.Protobuf.IMessage<{typeNameWithoutOption (ctx, field)}>).Clone())"
 
-    let writeMergingCode (field: Field, containingType: Message) (ctx: FileContext) =
-        let propName = propertyName (containingType, field)
+    let writeMergingCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
+        let propName = propertyName (containingType.Message, field)
         let propCheck = hasPropertyCheck (ctx, containingType, field, "other")
         ctx.Writer.WriteLines [
             $"if {propCheck}"
@@ -658,14 +651,14 @@ module MessageFieldConverter =
             let tagBytesString = tagBytes |> Seq.map (sprintf "%iuy") |> String.concat ", "
             ctx.Writer.WriteLine $"output.WriteRawTag({tagBytesString})"
 
-    let writeSerializationCode (field: Field, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
+    let writeSerializationCode (field: Field, containingType: MessageContext, containerMessages: Message list) (ctx: FileContext) =
         let propCheck = hasPropertyCheck (ctx, containingType, field, "me")
         ctx.Writer.WriteLines [
             $"if {propCheck}"
             "then"
         ]
         ctx.Writer.Indent()
-        writeSerializationCodeWithoutCheck (field, containingType, containerMessages) ctx $"me.{propertyAccess (ctx, containingType, field)}"
+        writeSerializationCodeWithoutCheck (field, containingType.Message, containerMessages) ctx $"me.{propertyAccess (ctx, containingType.Message, field)}"
         ctx.Writer.Outdent()
     
     let writeCodecCode (field: Field, containingType: Message option, containerMessages: Message list) (ctx: FileContext) =
@@ -693,24 +686,24 @@ module MessageFieldConverter =
         writeCodecCode (field, containingType, containerMessages) ctx
         ctx.Writer.WriteLine ")"
 
-    let create (field: Field, containingType: Message option, containerMessages: Message list) =
+    let create (field: Field, containingType: MessageContext option, containerMessages: Message list) =
         match containingType with
         | Some t ->
             {
-                WriteMember = PrimitiveFieldConverter.writeMember (field, t)
+                WriteMember = PrimitiveFieldConverter.writeMember (field, t.Message)
                 WriteMemberInit = PrimitiveFieldConverter.writeMemberInit (field, t)
-                WriteOneOfCase = PrimitiveFieldConverter.writeOneOfCase (field, t)
+                WriteOneOfCase = PrimitiveFieldConverter.writeOneOfCase (field, t.Message)
                 WriteSerializedSizeCode = writeSerializedSizeCode (field, t)
-                WriteSerializedSizeCodeWithoutCheck = writeSerializedSizeCodeWithoutCheck (field, t)
+                WriteSerializedSizeCodeWithoutCheck = writeSerializedSizeCodeWithoutCheck (field, t.Message)
                 WriteCloningCode = writeCloningCode (field, t)
                 WriteMergingCode = writeMergingCode (field, t)
-                WriteParsingCode = writeParsingCode (field, t)
-                WriteOneOfParsingCode = writeOneOfParsingCode (field, t)
+                WriteParsingCode = writeParsingCode (field, t.Message)
+                WriteOneOfParsingCode = writeOneOfParsingCode (field, t.Message)
                 WriteSerializationCode = writeSerializationCode (field, t, containerMessages)
-                WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t, containerMessages)
+                WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t.Message, containerMessages)
                 WriteModuleMembers = ignore
-                WriteCodecCode = writeCodecCode (field, Some(t), containerMessages)
-                WriteExtensionCode = writeExtensionCode (field, Some(t), containerMessages)
+                WriteCodecCode = writeCodecCode (field, Some(t.Message), containerMessages)
+                WriteExtensionCode = writeExtensionCode (field, Some(t.Message), containerMessages)
             }
         | None ->
             { NotImplementedWriter with
@@ -738,24 +731,24 @@ module RepeatedMessageFieldConverter =
         MessageFieldConverter.writeCodecCode (field, Some(containingType), containerMessages) ctx
         ctx.Writer.WriteLine ""
 
-    let create (field: Field, containingType: Message option, containerMessages: Message list) =
+    let create (field: Field, containingType: MessageContext option, containerMessages: Message list) =
         match containingType with
         | Some t ->
             {
-                WriteMember = RepeatedPrimitiveFieldConverter.writeMember (field, t)
+                WriteMember = RepeatedPrimitiveFieldConverter.writeMember (field, t.Message)
                 WriteMemberInit = RepeatedPrimitiveFieldConverter.writeMemberInit (field, t)
-                WriteOneOfCase = RepeatedPrimitiveFieldConverter.writeOneOfCase (field, t)
+                WriteOneOfCase = RepeatedPrimitiveFieldConverter.writeOneOfCase (field, t.Message)
                 WriteSerializedSizeCode = RepeatedPrimitiveFieldConverter.writeSerializedSizeCode (field, t)
                 WriteSerializedSizeCodeWithoutCheck = RepeatedPrimitiveFieldConverter.writeSerializedSizeCodeWithoutCheck (field, t)
                 WriteCloningCode = RepeatedPrimitiveFieldConverter.writeCloningCode (field, t)
-                WriteMergingCode = RepeatedPrimitiveFieldConverter.writeMergingCode (field, t)
+                WriteMergingCode = RepeatedPrimitiveFieldConverter.writeMergingCode (field, t.Message)
                 WriteParsingCode = RepeatedPrimitiveFieldConverter.writeParsingCode (field, t)
                 WriteOneOfParsingCode = RepeatedPrimitiveFieldConverter.writeOneOfParsingCode (field, t)
                 WriteSerializationCode = RepeatedPrimitiveFieldConverter.writeSerializationCode (field, t)
                 WriteSerializationCodeWithoutCheck = RepeatedPrimitiveFieldConverter.writeSerializationCodeWithoutCheck (field, t)
-                WriteModuleMembers = writeModuleMembers (field, t, containerMessages)
-                WriteCodecCode = MessageFieldConverter.writeCodecCode (field, Some(t), containerMessages)
-                WriteExtensionCode = writeExtensionCode (field, Some(t), containerMessages)
+                WriteModuleMembers = writeModuleMembers (field, t.Message, containerMessages)
+                WriteCodecCode = MessageFieldConverter.writeCodecCode (field, Some(t.Message), containerMessages)
+                WriteExtensionCode = writeExtensionCode (field, Some(t.Message), containerMessages)
             }
         | None ->
             { NotImplementedWriter with
@@ -782,43 +775,43 @@ module MapFieldConverter =
     let writeMember (field: Field, containingType: Message) (ctx: FileContext) =
         ctx.Writer.WriteLine $"{propertyName (containingType, field)}: {mapTypeName (ctx, field)}"
 
-    let writeMemberInit (field: Field, containingType: Message) (ctx: FileContext) =
-        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propertyName (containingType, field)} = {mapTypeName (ctx, field)}()"
+    let writeMemberInit (field: Field, containingType: MessageContext) (ctx: FileContext) =
+        ctx.Writer.WriteLine $"{Helpers.fullClassNameWithoutGlobal containingType}.{propertyName (containingType.Message, field)} = {mapTypeName (ctx, field)}()"
 
     let writeOneOfCase (field: Field, containingType: Message) (ctx: FileContext) =
         ctx.Writer.WriteLine $"| {propertyName (containingType, field)} of {mapTypeName (ctx, field)}>"
 
-    let writeSerializedSizeCodeWithoutCheck (field: Field, containingType: Message) (ctx: FileContext) (id: string) =
-        ctx.Writer.Write $"{id}.CalculateSize({Helpers.messageTypeName containingType}.Map{propertyName (containingType, field)}Codec)"
+    let writeSerializedSizeCodeWithoutCheck (field: Field, containingType: MessageContext) (ctx: FileContext) (id: string) =
+        ctx.Writer.Write $"{id}.CalculateSize({Helpers.fullClassName containingType}.Map{propertyName (containingType.Message, field)}Codec)"
 
-    let writeSerializedSizeCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeSerializedSizeCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
         ctx.Writer.Write "size <- size + "
-        writeSerializedSizeCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
+        writeSerializedSizeCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType.Message, field)}"
         ctx.Writer.WriteLine ""
 
-    let writeCloningCode (field: Field, containingType: Message) (ctx: FileContext) =
-        let propName = propertyName (containingType, field)
-        ctx.Writer.WriteLine $"{Helpers.messageTypeName containingType}.{propName} = me.{propName}.Clone()"
+    let writeCloningCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
+        let propName = propertyName (containingType.Message, field)
+        ctx.Writer.WriteLine $"{Helpers.fullClassNameWithoutGlobal containingType}.{propName} = me.{propName}.Clone()"
 
     let writeMergingCode (field: Field, containingType: Message) (ctx: FileContext) =
         let propName = propertyName (containingType, field)
         ctx.Writer.WriteLine $"me.{propName}.Add(other.{propName})"
 
-    let writeParsingCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeParsingCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
         writeParsingCodeTemplate (ctx, field) <| fun () ->
-            ctx.Writer.WriteLine $"me.{propertyName (containingType, field)}.AddEntriesFrom(&input, {Helpers.messageTypeName containingType}.Map{propertyName (containingType, field)}Codec)"
+            ctx.Writer.WriteLine $"me.{propertyName (containingType.Message, field)}.AddEntriesFrom(&input, {Helpers.fullClassName containingType}.Map{propertyName (containingType.Message, field)}Codec)"
 
-    let writeOneOfParsingCode (field: Field, containingType: Message) (ctx: FileContext) =
+    let writeOneOfParsingCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
         ctx.Writer.WriteLines [
             $"let value = {mapTypeName (ctx, field)}()"
-            $"value.AddEntriesFrom(&input, {Helpers.messageTypeName containingType}.Map{propertyName (containingType, field)}Codec)"
+            $"value.AddEntriesFrom(&input, {Helpers.fullClassName containingType}.Map{propertyName (containingType.Message, field)}Codec)"
         ]
 
-    let writeSerializationCodeWithoutCheck (field: Field, containingType: Message) (ctx: FileContext) (id: string) =
-        ctx.Writer.WriteLine $"{id}.WriteTo(&output, {Helpers.messageTypeName containingType}.Map{propertyName (containingType, field)}Codec)"
+    let writeSerializationCodeWithoutCheck (field: Field, containingType: MessageContext) (ctx: FileContext) (id: string) =
+        ctx.Writer.WriteLine $"{id}.WriteTo(&output, {Helpers.fullClassName containingType}.Map{propertyName (containingType.Message, field)}Codec)"
 
-    let writeSerializationCode (field: Field, containingType: Message) (ctx: FileContext) =
-        writeSerializationCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType, field)}"
+    let writeSerializationCode (field: Field, containingType: MessageContext) (ctx: FileContext) =
+        writeSerializationCodeWithoutCheck (field, containingType) ctx $"me.{propertyAccess (ctx, containingType.Message, field)}"
 
     let writeExtensionCode (field: Field, containingType: Message option) (ctx: FileContext) =
         addDeprecatedFlag (ctx, field)
@@ -833,8 +826,8 @@ module MapFieldConverter =
 
     let writeCodecCode (field: Field, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
         let mapEntryType, keyField, valueField = getMapFields (ctx, field)
-        let keyConv = SingleFieldConverterFactory.createWriter (keyField, ctx, Some mapEntryType.Message, containerMessages @ [ containingType ])
-        let valueConv = SingleFieldConverterFactory.createWriter (valueField, ctx, Some mapEntryType.Message, containerMessages @ [ containingType ])
+        let keyConv = SingleFieldConverterFactory.createWriter (keyField, ctx, Some mapEntryType, containerMessages @ [ containingType ])
+        let valueConv = SingleFieldConverterFactory.createWriter (valueField, ctx, Some mapEntryType, containerMessages @ [ containingType ])
         
         ctx.Writer.Write $"{mapTypeName (ctx, field)}.Codec("
         keyConv.WriteCodecCode (ctx)
@@ -847,24 +840,24 @@ module MapFieldConverter =
         writeCodecCode (field, containingType, containerMessages) ctx
         ctx.Writer.WriteLine ""
 
-    let create (field: Field, containingType: Message option, containerMessages: Message list) =
+    let create (field: Field, containingType: MessageContext option, containerMessages: Message list) =
         match containingType with
         | Some t ->
             {
-                WriteMember = writeMember (field, t)
+                WriteMember = writeMember (field, t.Message)
                 WriteMemberInit = writeMemberInit (field, t)
-                WriteOneOfCase = writeOneOfCase (field, t)
+                WriteOneOfCase = writeOneOfCase (field, t.Message)
                 WriteSerializedSizeCode = writeSerializedSizeCode (field, t)
                 WriteSerializedSizeCodeWithoutCheck = writeSerializedSizeCodeWithoutCheck (field, t)
                 WriteCloningCode = writeCloningCode (field, t)
-                WriteMergingCode = writeMergingCode (field, t)
+                WriteMergingCode = writeMergingCode (field, t.Message)
                 WriteParsingCode = writeParsingCode (field, t)
                 WriteOneOfParsingCode = writeOneOfParsingCode (field, t)
                 WriteSerializationCode = writeSerializationCode (field, t)
                 WriteSerializationCodeWithoutCheck = writeSerializationCodeWithoutCheck (field, t)
-                WriteModuleMembers = writeModuleMembers (field, t, containerMessages)
-                WriteCodecCode = writeCodecCode (field, t, containerMessages)
-                WriteExtensionCode = writeExtensionCode (field, Some(t))
+                WriteModuleMembers = writeModuleMembers (field, t.Message, containerMessages)
+                WriteCodecCode = writeCodecCode (field, t.Message, containerMessages)
+                WriteExtensionCode = writeExtensionCode (field, Some(t.Message))
             }
         | None ->
             { NotImplementedWriter with
@@ -872,7 +865,7 @@ module MapFieldConverter =
             }
 
 module SingleFieldConverterFactory =
-    let createWriter (field: Field, ctx: FileContext, containingType: Message option, containerMessages: Message list) : FieldConverter.FieldWriter =
+    let createWriter (field: Field, ctx: FileContext, containingType: MessageContext option, containerMessages: Message list) : FieldConverter.FieldWriter =
         match field.Type.Value with
         | FieldType.Group
         | FieldType.Message ->
@@ -900,14 +893,14 @@ module OneOfFieldConverter =
     let writeMemberInit (oneOf: OneOf, containingType: Message) (ctx: FileContext) =
         ctx.Writer.WriteLine $"{oneOfPropertyName oneOf} = ValueNone"
 
-    let writeSerializedSizeCode (oneOf: OneOf, fields: Field list, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
+    let writeSerializedSizeCode (oneOf: OneOf, fields: Field list, containingType: MessageContext, containerMessages: Message list) (ctx: FileContext) =
         ctx.Writer.WriteLines [
             $"match me.{oneOfPropertyName oneOf} with"
             "| ValueNone -> ()"
         ]
 
         for f in fields do
-            ctx.Writer.Write $"| ValueSome ({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)} x) -> size <- size + "
+            ctx.Writer.Write $"| ValueSome ({oneOfCaseName (oneOf, f, containingType.Message, containerMessages, ctx.File)} x) -> size <- size + "
 
             let conv = SingleFieldConverterFactory.createWriter (f, ctx, Some containingType, containerMessages)
             conv.WriteSerializedSizeCodeWithoutCheck ctx "x"
@@ -924,37 +917,37 @@ module OneOfFieldConverter =
             $"then me.{propName} <- other.{propName}"
         ]
 
-    let writeParsingCode (oneOf: OneOf, fields: Field list, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
+    let writeParsingCode (oneOf: OneOf, fields: Field list, containingType: MessageContext, containerMessages: Message list) (ctx: FileContext) =
         for f in fields do
             writeParsingCodeTemplate (ctx, f) <| fun () ->
                 let conv = SingleFieldConverterFactory.createWriter (f, ctx, Some containingType, containerMessages)
                 conv.WriteOneOfParsingCode ctx
 
-                ctx.Writer.WriteLine $"me.{oneOfPropertyName oneOf} <- ValueSome({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)}(value))"
+                ctx.Writer.WriteLine $"me.{oneOfPropertyName oneOf} <- ValueSome({oneOfCaseName (oneOf, f, containingType.Message, containerMessages, ctx.File)}(value))"
 
-    let writeSerializationCode (oneOf: OneOf, fields: Field list, containingType: Message, containerMessages: Message list) (ctx: FileContext) =
+    let writeSerializationCode (oneOf: OneOf, fields: Field list, containingType: MessageContext, containerMessages: Message list) (ctx: FileContext) =
         ctx.Writer.WriteLines [
             $"match me.{oneOfPropertyName oneOf} with"
             "| ValueNone -> ()"
         ]
         for f in fields do
-            ctx.Writer.WriteLine $"| ValueSome ({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)} x) ->"
+            ctx.Writer.WriteLine $"| ValueSome ({oneOfCaseName (oneOf, f, containingType.Message, containerMessages, ctx.File)} x) ->"
 
             ctx.Writer.Indent()
             let conv = SingleFieldConverterFactory.createWriter (f, ctx, Some containingType, containerMessages)
             conv.WriteSerializationCodeWithoutCheck ctx "x"
             ctx.Writer.Outdent()
 
-    let create (oneOf: OneOf, fields: Field list, containingType: Message option, containerMessages: Message list) =
+    let create (oneOf: OneOf, fields: Field list, containingType: MessageContext option, containerMessages: Message list) =
         match containingType with
         | Some t ->
             {
-                WriteMember = writeMember (oneOf, t, containerMessages)
-                WriteMemberInit = writeMemberInit (oneOf, t)
+                WriteMember = writeMember (oneOf, t.Message, containerMessages)
+                WriteMemberInit = writeMemberInit (oneOf, t.Message)
                 WriteOneOfCase = fun _ -> invalidOp "Nested one of not supported"
                 WriteSerializedSizeCode = writeSerializedSizeCode (oneOf, fields, t, containerMessages)
                 WriteSerializedSizeCodeWithoutCheck = fun _ _ -> invalidOp "Not supported for one of fields"
-                WriteCloningCode = writeCloningCode (oneOf, t)
+                WriteCloningCode = writeCloningCode (oneOf, t.Message)
                 WriteMergingCode = writeMergingCode oneOf
                 WriteParsingCode = writeParsingCode (oneOf, fields, t, containerMessages)
                 WriteOneOfParsingCode = fun _ -> invalidOp "Not supported for one of fields"
@@ -970,7 +963,7 @@ module OneOfFieldConverter =
             }
 
 module FieldConverterFactory =
-    let createWriter (field: FSField, ctx: FileContext, containingType: Message option, containerMessages: Message list) : FieldConverter.FieldWriter =
+    let createWriter (field: FSField, ctx: FileContext, containingType: MessageContext option, containerMessages: Message list) : FieldConverter.FieldWriter =
         match field with
         | Single field -> SingleFieldConverterFactory.createWriter (field, ctx, containingType, containerMessages)
         | OneOf (_, fields, synthetic) when synthetic -> SingleFieldConverterFactory.createWriter (fields.[0], ctx, containingType, containerMessages)

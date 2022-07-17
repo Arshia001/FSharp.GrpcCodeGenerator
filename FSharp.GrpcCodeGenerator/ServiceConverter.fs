@@ -55,7 +55,7 @@ let methodFieldName (method: Method) = $"__Method_{method.Name.Value}"
 
 let protobufTypeNameToFSharpTypeName (ctx: FileContext, name: string) =
     let t = Helpers.findMessageType ctx name
-    Helpers.qualifiedInnerNameFromMessages (t.Message.Name.Value, t.ContainerMessages, t.File)
+    Helpers.qualifiedInnerNameFromMessages (t.Message.Name.Value, t.ContainerMessages, t.File.File)
 
 let hasRequestParam (method: Method) =
     method.ClientStreaming <> ValueSome true

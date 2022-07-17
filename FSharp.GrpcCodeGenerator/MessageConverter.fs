@@ -1,20 +1,10 @@
 ﻿module MessageConverter
 
-type MessageContext = {
-    File: FileContext
-    ContainerMessages: Message list
-    Message: Message
-    OrderedFSFields: FSField list
-}
-
 let typeName ctx = Helpers.messageTypeName ctx.Message
 
 let hasExtensionRange (ctx: MessageContext) = ctx.Message.ExtensionRange.Count > 0
 
 let hasExtensions (ctx: MessageContext) = ctx.Message.Extension.Count > 0
-
-let fullClassName (ctx: MessageContext) =
-    Helpers.qualifiedInnerNameFromMessages (ctx.Message.Name.Value, ctx.ContainerMessages, ctx.File.File)
 
 let addDeprecatedFlag (ctx: MessageContext) =
     match ctx.Message.Options with
@@ -87,10 +77,10 @@ let writeCloneMethod (ctx: MessageContext) =
     ctx.File.Writer.WriteLine $"member me.Clone() : {typeName ctx} = {{"
     ctx.File.Writer.Indent()
     
-    ctx.File.Writer.WriteLine $"{typeName ctx}._UnknownFields = global.Google.Protobuf.UnknownFieldSet.Clone(me._UnknownFields)"
+    ctx.File.Writer.WriteLine $"{Helpers.fullClassNameWithoutGlobal ctx}._UnknownFields = global.Google.Protobuf.UnknownFieldSet.Clone(me._UnknownFields)"
 
     for f in ctx.OrderedFSFields do
-        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx, ctx.ContainerMessages)
         conv.WriteCloningCode ctx.File
 
     if ctx.Message.ExtensionRange.Count > 0
@@ -105,7 +95,7 @@ let writeMessageSerializationMethods (ctx: MessageContext) =
     ctx.File.Writer.Indent()
 
     for f in ctx.OrderedFSFields do
-        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx, ctx.ContainerMessages)
         conv.WriteSerializationCode ctx.File
 
     if hasExtensionRange ctx
@@ -122,7 +112,7 @@ let writeMessageSerializationMethods (ctx: MessageContext) =
     ctx.File.Writer.WriteLine $"let mutable size = 0"
 
     for f in ctx.OrderedFSFields do
-        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx, ctx.ContainerMessages)
         conv.WriteSerializedSizeCode ctx.File
 
     if hasExtensionRange ctx
@@ -139,7 +129,7 @@ let writeMergingMethods (ctx: MessageContext) =
     ctx.File.Writer.Indent()
 
     for f in ctx.OrderedFSFields do
-        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx, ctx.ContainerMessages)
         conv.WriteMergingCode ctx.File
 
     if hasExtensionRange ctx
@@ -168,7 +158,7 @@ let writeMergingMethods (ctx: MessageContext) =
     ctx.File.Writer.WriteLine "match tag with"
     
     for f in ctx.OrderedFSFields do
-        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx, ctx.ContainerMessages)
         conv.WriteParsingCode ctx.File
     
     ctx.File.Writer.WriteLine "| _ ->"
@@ -257,7 +247,7 @@ let writeAdditionalOptionalMethods (ctx: MessageContext) =
             
             // If the oneof field is optional there will only be one case and it has been unwrapped
             if f.Proto3Optional |> ValueOption.defaultWith (fun _ -> false) then
-                ctx.File.Writer.WriteLine (hasPropertyCheck (ctx.File, ctx.Message, f, "me"))
+                ctx.File.Writer.WriteLine (hasPropertyCheck (ctx.File, ctx, f, "me"))
             else
                 ctx.File.Writer.WriteLine $"match me.{propertyName} with"
                 ctx.File.Writer.WriteLine $"| ValueNone -> false"
@@ -280,13 +270,13 @@ let rec writeMessageModule (ctx: MessageContext) =
     ctx.File.Writer.WriteLine "let internal DefaultValue = {"
     ctx.File.Writer.Indent()
 
-    ctx.File.Writer.WriteLine $"{typeName ctx}._UnknownFields = null"
+    ctx.File.Writer.WriteLine $"{Helpers.fullClassNameWithoutGlobal ctx}._UnknownFields = null"
     
     if hasExtensionRange ctx
-    then ctx.File.Writer.WriteLine $"{typeName ctx}._Extensions = null"
+    then ctx.File.Writer.WriteLine $"{Helpers.fullClassNameWithoutGlobal ctx}._Extensions = null"
 
     for f in ctx.OrderedFSFields do
-        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx, ctx.ContainerMessages)
         conv.WriteMemberInit ctx.File
 
     ctx.File.Writer.Outdent()
@@ -303,7 +293,7 @@ let rec writeMessageModule (ctx: MessageContext) =
     then ctx.File.Writer.WriteLine $"{typeName ctx}._Extensions = null"
 
     for f in ctx.OrderedFSFields do
-        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx, ctx.ContainerMessages)
         conv.WriteMemberInit ctx.File
 
     ctx.File.Writer.Outdent()
@@ -316,7 +306,7 @@ let rec writeMessageModule (ctx: MessageContext) =
         ctx.File.Writer.WriteLine $"let {Helpers.fieldConstantName (ctx.Message, f)} = {f.Number.Value}"
 
     for f in ctx.OrderedFSFields do
-        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx, ctx.ContainerMessages)
         conv.WriteModuleMembers ctx.File
 
     if hasNestedGeneratedTypes ctx
@@ -328,7 +318,7 @@ let rec writeMessageModule (ctx: MessageContext) =
             let name = Helpers.snakeToPascalCase false o.Name.Value
             ctx.File.Writer.WriteLine $"type {name} ="
             for f in Helpers.oneOfFields (ctx.Message, o) do
-                let conv = SingleFieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+                let conv = SingleFieldConverterFactory.createWriter (f, ctx.File, Some ctx, ctx.ContainerMessages)
                 conv.WriteOneOfCase ctx.File
 
         for e in ctx.Message.EnumType do
@@ -346,7 +336,7 @@ let rec writeMessageModule (ctx: MessageContext) =
        ctx.File.Writer.Indent()
 
        for e in ctx.Message.Extension do
-           let conv = SingleFieldConverterFactory.createWriter (e, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+           let conv = SingleFieldConverterFactory.createWriter (e, ctx.File, Some ctx, ctx.ContainerMessages)
            conv.WriteExtensionCode ctx.File
 
        ctx.File.Writer.Outdent()
@@ -355,28 +345,7 @@ let rec writeMessageModule (ctx: MessageContext) =
     ctx.File.Writer.Outdent()
 
 and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Message) =
-    let isSyntheticOneOf msg o = 
-        (Helpers.oneOfFields (msg, o)).[0].Proto3Optional |> ValueOption.defaultWith (fun _ -> false)
-    let ctx = {
-        Message = msg
-        File = ctx
-        ContainerMessages = containerMessages
-        OrderedFSFields =
-            let nonOneOfFields =
-                msg.Field
-                |> Seq.filter (fun f -> Helpers.containingOneOf (msg, f) = ValueNone)
-                |> Seq.sortBy (fun f -> f.Number)
-                |> Seq.map (fun f -> Single f)
-
-            let oneOfFields =
-                if isNull msg.OneofDecl
-                then Seq.empty
-                else
-                    msg.OneofDecl
-                    |> Seq.map (fun o -> OneOf (o, Helpers.oneOfFields (msg, o), isSyntheticOneOf msg o))
-
-            Seq.toList <| Seq.append nonOneOfFields oneOfFields
-    }
+    let ctx = Helpers.createMessageContext msg ctx containerMessages
 
     addDeprecatedFlag ctx
 
@@ -389,7 +358,7 @@ and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Messag
     then ctx.File.Writer.WriteLine $"mutable _Extensions: global.Google.Protobuf.ExtensionSet<{typeName ctx}>"
 
     for f in ctx.OrderedFSFields do
-        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx.Message, ctx.ContainerMessages)
+        let conv = FieldConverterFactory.createWriter (f, ctx.File, Some ctx, ctx.ContainerMessages)
         conv.WriteMember ctx.File
         
     ctx.File.Writer.Outdent()

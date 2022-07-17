@@ -36,5 +36,19 @@ type FileContext = {
     Options: Options
 }
 
+type OneOfIsSynthetic = bool
+
+type FSField =
+| Single of Field
+| OneOf of OneOf * Field list * OneOfIsSynthetic 
+
+type MessageContext = {
+    File: FileContext
+    ContainerMessages: Message list
+    Message: Message
+    OrderedFSFields: FSField list
+}
+
+
 module List =
     let init' (l: _ list) = List.take (List.length l - 1) l

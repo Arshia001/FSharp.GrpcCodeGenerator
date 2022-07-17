@@ -98,7 +98,7 @@ let rec writeGeneratedCodeInfo (ctx: FileContext, outerTypeName: string, msg: Me
     ctx.Writer.Write ")"
 
 let writeMessageDescriptors (ctx: FileContext) =
-    let rec helper (ctx: MessageConverter.MessageContext) =
+    let rec helper (ctx: MessageContext) =
         let descriptorAccessor =
             match ctx.ContainerMessages with
             | [] -> $"Descriptor().MessageTypes.[{Helpers.messageIndex (ctx.Message, ctx.File.File.MessageType)}]"
@@ -119,10 +119,10 @@ let writeMessageDescriptors (ctx: FileContext) =
 
     for msg in ctx.File.MessageType do
         helper {
-            MessageConverter.File = ctx
-            MessageConverter.Message = msg
-            MessageConverter.ContainerMessages = []
-            MessageConverter.OrderedFSFields = [] // not needed
+            File = ctx
+            Message = msg
+            ContainerMessages = []
+            OrderedFSFields = [] // not needed
         }
 
 let writeReflectionDescriptor (ctx: FileContext) =

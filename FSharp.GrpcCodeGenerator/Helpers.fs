@@ -143,14 +143,18 @@ let qualifiedInnerName (name: string, outer: string, file: File) =
     then "global." + res + name
     else "global." + res + (outer + "." + name).Replace(".", ".Types.")
 
-let qualifiedInnerNameFromMessages (name: string, containerMessages: Message list, file: File) =
+let qualifiedInnerNameFromMessagesWithOptionalGlobal (name: string, containerMessages: Message list, file: File, includeGlobal) =
     let fileNs =
         let ns = fileNamespace file
         if ns = ""
         then ""
         else ns + "."
     let messages = containerMessages |> Seq.map (fun s -> s.Name.Value + ".Types.") |> String.concat ""
-    "global." + fileNs + messages + name
+    if includeGlobal
+    then "global." + fileNs + messages + name
+    else fileNs + messages + name
+
+let qualifiedInnerNameFromMessages (name, containerMessages, file) = qualifiedInnerNameFromMessagesWithOptionalGlobal (name, containerMessages, file, true)
 
 let reflectionClassName file =
     let ns =
@@ -274,16 +278,51 @@ let flatMapAllFiles fFile fMessage (ctx: FileContext) =
     |> Seq.map (fun file -> flatMapFileTypes fFile (fMessage file) file)
     |> Seq.concat
 
-type FoundMessageInfo = {
-    Message: Message
-    ContainerMessages: Message list
-    File: File
-}
+let oneOfFields (msg: Message, oneOf: OneOf) =
+    let index =
+        msg.OneofDecl
+        |> Seq.indexed
+        |> Seq.filter (fun (_, o) -> o = oneOf)
+        |> Seq.head
+        |> fst
+    msg.Field
+    |> Seq.filter (fun f -> f.OneofIndex = ValueSome index)
+    |> Seq.toList
+
+let containingOneOf (msg: Message, field: Field) =
+    match field.OneofIndex with
+    | ValueSome x when x >= 0 && x < msg.OneofDecl.Count -> ValueSome msg.OneofDecl.[x]
+    | _ -> ValueNone
+
+let createMessageContext msg ctx containerMessages = 
+    let isSyntheticOneOf msg o = 
+        (oneOfFields (msg, o)).[0].Proto3Optional |> ValueOption.defaultWith (fun _ -> false)
+
+    {
+        Message = msg
+        File = ctx
+        ContainerMessages = containerMessages
+        OrderedFSFields =
+            let nonOneOfFields =
+                msg.Field
+                |> Seq.filter (fun f -> containingOneOf (msg, f) = ValueNone)
+                |> Seq.sortBy (fun f -> f.Number)
+                |> Seq.map (fun f -> FSField.Single f)
+
+            let oneOfFields =
+                if isNull msg.OneofDecl
+                then Seq.empty
+                else
+                    msg.OneofDecl
+                    |> Seq.map (fun o -> OneOf (o, oneOfFields (msg, o), isSyntheticOneOf msg o))
+
+            Seq.toList <| Seq.append nonOneOfFields oneOfFields
+    }
 
 let findMessageType (ctx: FileContext) (typeName: string) =
     flatMapAllFiles
         (fun _ -> [])
-        (fun f (msg, container, ns) -> [ { Message = msg; ContainerMessages = List.rev container; File = f}, ns + "." + msg.Name.Value ])
+        (fun f (msg, container, ns) -> [ createMessageContext msg ctx container, ns + "." + msg.Name.Value ])
         ctx
     |> Seq.concat
     |> Seq.filter (fun (_, n) -> n = typeName)
@@ -339,22 +378,6 @@ let makeOptionType (typeName: string) =
     then typeName
     else $"ValueOption<{typeName}>"
 
-let containingOneOf (msg: Message, field: Field) =
-    match field.OneofIndex with
-    | ValueSome x when x >= 0 && x < msg.OneofDecl.Count -> ValueSome msg.OneofDecl.[x]
-    | _ -> ValueNone
-
-let oneOfFields (msg: Message, oneOf: OneOf) =
-    let index =
-        msg.OneofDecl
-        |> Seq.indexed
-        |> Seq.filter (fun (_, o) -> o = oneOf)
-        |> Seq.head
-        |> fst
-    msg.Field
-    |> Seq.filter (fun f -> f.OneofIndex = ValueSome index)
-    |> Seq.toList
-
 let writeGeneratedCodeAttribute (ctx: FileContext) =
     ctx.Writer.WriteLine "[<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]"
 
@@ -385,3 +408,9 @@ let getExtendee (field: Field) =
         field.Extendee.Value.Replace(".google.protobuf", "global.Google.Protobuf.Reflection")
     else
         field.Extendee.Value
+
+let fullClassName (ctx: MessageContext) =
+    qualifiedInnerNameFromMessages (ctx.Message.Name.Value, ctx.ContainerMessages, ctx.File.File)
+
+let fullClassNameWithoutGlobal (ctx: MessageContext) =
+    qualifiedInnerNameFromMessagesWithOptionalGlobal (ctx.Message.Name.Value, ctx.ContainerMessages, ctx.File.File, false)
