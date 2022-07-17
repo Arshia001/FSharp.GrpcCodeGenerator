@@ -344,3 +344,21 @@ healthchecksdb
 
 # VS Code settings
 .vscode
+
+# Auto-generated test code
+/FSharp.GrpcCodeGenerator.TestProtos.FSharp/WellKnownProtos.fs
+/FSharp.GrpcCodeGenerator.TestProtos.FSharp/UnittestProto3Optional.fs
+/FSharp.GrpcCodeGenerator.TestProtos.FSharp/UnittestProto3.fs
+/FSharp.GrpcCodeGenerator.TestProtos.FSharp/UnittestImportPublicProto3.fs
+/FSharp.GrpcCodeGenerator.TestProtos.FSharp/UnittestImportProto3.fs
+/FSharp.GrpcCodeGenerator.TestProtos.FSharp/UnittestCustomOptionsProto3.fs
+/FSharp.GrpcCodeGenerator.TestProtos.FSharp/MapUnittestProto3.fs
+/FSharp.GrpcCodeGenerator.TestProtos.FSharp/Http.fs
+/FSharp.GrpcCodeGenerator.TestProtos.FSharp/Annotations.fs
+/FSharp.GrpcCodeGenerator.TestProtos.CSharp/WellKnownProtos.cs
+/FSharp.GrpcCodeGenerator.TestProtos.CSharp/UnittestProto3Optional.cs
+/FSharp.GrpcCodeGenerator.TestProtos.CSharp/UnittestProto3.cs
+/FSharp.GrpcCodeGenerator.TestProtos.CSharp/UnittestImportPublicProto3.cs
+/FSharp.GrpcCodeGenerator.TestProtos.CSharp/UnittestImportProto3.cs
+/FSharp.GrpcCodeGenerator.TestProtos.CSharp/UnittestCustomOptionsProto3.cs
+/FSharp.GrpcCodeGenerator.TestProtos.CSharp/MapUnittestProto3.cs
