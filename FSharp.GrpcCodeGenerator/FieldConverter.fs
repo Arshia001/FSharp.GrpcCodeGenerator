@@ -907,10 +907,10 @@ module OneOfFieldConverter =
         ]
 
         for f in fields do
-            ctx.Writer.Write $"| ValueSome ({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)} x) -> size <- size + "
+            ctx.Writer.Write $"| ValueSome ({oneOfCaseName (oneOf, f, containingType, containerMessages, ctx.File)} _x) -> size <- size + "
 
             let conv = SingleFieldConverterFactory.createWriter (f, ctx, Some containingType, containerMessages)
-            conv.WriteSerializedSizeCodeWithoutCheck ctx "x"
+            conv.WriteSerializedSizeCodeWithoutCheck ctx "_x"
             ctx.Writer.WriteLine ""
 
     let writeCloningCode (oneOf: OneOf, containingType: Message) (ctx: FileContext) =
