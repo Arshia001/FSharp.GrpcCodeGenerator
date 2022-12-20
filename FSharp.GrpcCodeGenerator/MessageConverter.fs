@@ -16,6 +16,11 @@ let hasExtensions (ctx: MessageContext) = ctx.Message.Extension.Count > 0
 let fullClassName (ctx: MessageContext) =
     Helpers.qualifiedInnerNameFromMessages (ctx.Message.Name.Value, ctx.ContainerMessages, ctx.File.File)
 
+let isSyntheticOneOf msg o = 
+    (Helpers.oneOfFields (msg, o)).[0].Proto3Optional |> ValueOption.defaultWith (fun _ -> false)
+
+let isRealOneOf msg = isSyntheticOneOf msg >> not
+
 let addDeprecatedFlag (ctx: MessageContext) =
     match ctx.Message.Options with
     | ValueSome { Deprecated = ValueSome true } ->
@@ -23,7 +28,8 @@ let addDeprecatedFlag (ctx: MessageContext) =
     | _ -> ()
 
 let hasNestedGeneratedTypes (ctx: MessageContext) =
-    if ctx.Message.EnumType.Count > 0 || ctx.Message.OneofDecl.Count > 0
+    let hasNoRealOneOf = ctx.Message.OneofDecl |> Seq.filter (isRealOneOf ctx.Message) |> Seq.isEmpty
+    if ctx.Message.EnumType.Count > 0 || not hasNoRealOneOf
     then true
     elif ctx.Message.NestedType.Count > 0
     then Seq.exists (not << Helpers.isMapEntryMessage) ctx.Message.NestedType
@@ -324,7 +330,7 @@ let rec writeMessageModule (ctx: MessageContext) =
         ctx.File.Writer.WriteLine "module Types ="
         ctx.File.Writer.Indent()
 
-        for o in ctx.Message.OneofDecl do
+        for o in ctx.Message.OneofDecl |> Seq.filter (isRealOneOf ctx.Message) do
             let name = Helpers.snakeToPascalCase false o.Name.Value
             ctx.File.Writer.WriteLine $"type {name} ="
             for f in Helpers.oneOfFields (ctx.Message, o) do
@@ -355,8 +361,6 @@ let rec writeMessageModule (ctx: MessageContext) =
     ctx.File.Writer.Outdent()
 
 and writeMessage (ctx: FileContext, containerMessages: Message list, msg: Message) =
-    let isSyntheticOneOf msg o = 
-        (Helpers.oneOfFields (msg, o)).[0].Proto3Optional |> ValueOption.defaultWith (fun _ -> false)
     let ctx = {
         Message = msg
         File = ctx
