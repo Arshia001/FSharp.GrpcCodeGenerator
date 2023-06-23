@@ -32,6 +32,9 @@ module TimestampReflection =
             true
         )
     let Descriptor(): global.Google.Protobuf.Reflection.FileDescriptor = descriptorBackingField.Value
+// Start of hand-written code
+[<CustomComparison; CustomEquality>]
+// End of hand-written code
 type Timestamp = {
     mutable _UnknownFields: global.Google.Protobuf.UnknownFieldSet
     mutable Seconds: int64
@@ -56,6 +59,29 @@ type Timestamp = {
     member me.ToDateTimeOffset() : ValueOption<System.DateTimeOffset> =
         let ticks = int64 me.Nanos / 100L + me.Seconds * System.TimeSpan.TicksPerSecond
         ValueSome(System.DateTimeOffset(Timestamp.unixEpoch.AddTicks(ticks)))
+        
+    override this.Equals other =
+       match other with
+       | :? Timestamp as otherTimestamp ->
+           otherTimestamp.Seconds.Equals this.Seconds && otherTimestamp.Nanos.Equals this.Nanos
+       | _ -> false
+
+    override this.GetHashCode() =
+        ((System.Numerics.BigInteger(this.Seconds) <<< 32) + System.Numerics.BigInteger(this.Nanos)).GetHashCode()
+    
+    interface System.IComparable<Timestamp> with
+        member this.CompareTo(other: Timestamp) =
+            if this.Seconds > other.Seconds then 1
+            else if this.Seconds < other.Seconds then -1
+            else if this.Nanos > other.Nanos then 1
+            else if this.Nanos < other.Nanos then -1
+            else 0
+            
+    interface System.IComparable with
+        member this.CompareTo other =
+            match other with
+            | :? Timestamp as otherTimestamp -> (this :> System.IComparable<_>).CompareTo otherTimestamp
+            | _ -> -1
     // End of hand-written code
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Timestamp = {
