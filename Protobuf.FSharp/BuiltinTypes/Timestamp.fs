@@ -82,6 +82,9 @@ type Timestamp = {
             match other with
             | :? Timestamp as otherTimestamp -> (this :> System.IComparable<_>).CompareTo otherTimestamp
             | _ -> -1
+            
+    interface System.IEquatable<Timestamp> with
+        member this.Equals other = this.Equals other
     // End of hand-written code
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Timestamp = {
