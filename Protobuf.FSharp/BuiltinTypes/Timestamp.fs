@@ -59,11 +59,13 @@ type Timestamp = {
     member me.ToDateTimeOffset() : ValueOption<System.DateTimeOffset> =
         let ticks = int64 me.Nanos / 100L + me.Seconds * System.TimeSpan.TicksPerSecond
         ValueSome(System.DateTimeOffset(Timestamp.unixEpoch.AddTicks(ticks)))
+            
+    interface System.IEquatable<Timestamp> with
+        member this.Equals other = other.Seconds.Equals this.Seconds && other.Nanos.Equals this.Nanos
         
     override this.Equals other =
        match other with
-       | :? Timestamp as otherTimestamp ->
-           otherTimestamp.Seconds.Equals this.Seconds && otherTimestamp.Nanos.Equals this.Nanos
+       | :? Timestamp as otherTimestamp -> (this :> System.IEquatable<_>).Equals otherTimestamp
        | _ -> false
 
     override this.GetHashCode() =
@@ -82,9 +84,6 @@ type Timestamp = {
             match other with
             | :? Timestamp as otherTimestamp -> (this :> System.IComparable<_>).CompareTo otherTimestamp
             | _ -> -1
-            
-    interface System.IEquatable<Timestamp> with
-        member this.Equals other = this.Equals other
     // End of hand-written code
     [<global.System.Diagnostics.DebuggerNonUserCodeAttribute>]
     member me.Clone() : Timestamp = {
